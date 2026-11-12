@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Osmanlı Diplomasi Tarihi - Özelleştirilebilir Deneme Sınavı</title>
+    <style>
+        :root {
+            --primary-color: #1b365d;
+            --secondary-color: #c5a059;
+            --accent-color: #d9534f;
+            --success-color: #5cb85c;
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #2c5282);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .exam-info {
+            display: flex;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .timer {
+            font-weight: bold;
+            color: #ffdd57;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Giriş Ekranı */
+        #start-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        #start-screen h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        #start-screen p {
+            color: #666;
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .settings-group {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-group label {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .settings-group select {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+            width: 200px;
+            text-align: center;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background-color: #2c5282;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+
+        /* Soru Ekranı */
+        .question-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #718096;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+        }
+
+        .options-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .option-item {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #fff;
+        }
+
+        .option-item:hover {
+            border-color: var(--secondary-color);
+            background-color: #fcf8f0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-color);
+            background-color: #edf2f7;
+            font-weight: 600;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+
+        .option-item.selected .option-letter {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background-color: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background-color: #cbd5e0;
+        }
+
+        .btn-danger {
+            background-color: var(--accent-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c53030;
+        }
+
+        /* Soru Paleti */
+        .palette-container {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .palette-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #4a5568;
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+            gap: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .palette-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: #fff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .palette-btn.answered {
+            background-color: #e6fffa;
+            border-color: #319795;
+            color: #234e52;
+        }
+
+        .palette-btn.current {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(27, 54, 93, 0.2);
+        }
+
+        /* Sonuç Ekranı */
+        .results-summary {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .score-card {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 15px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .stat-box {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-box span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 5px;
+        }
+
+        .review-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .review-item {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .review-item.correct { border-left: 5px solid var(--success-color); }
+        .review-item.incorrect { border-left: 5px solid var(--accent-color); }
+        .review-item.unanswered { border-left: 5px solid #cbd5e0; }
+
+        .hidden { display: none !important; }
+
+        @media(max-width: 600px) {
+            body { padding: 10px; }
+            header { padding: 15px; }
+            .card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Osmanlı Diplomasi Tarihi</h1>
+        <div class="exam-info" id="exam-info" style="display:none;">
+            <div>Soru: <span id="current-q-num">1</span>/<span id="total-q-label">20</span></div>
+            <div class="timer">Süre: <span id="timer-display">--:--</span></div>
+        </div>
+    </header>
+
+    <!-- GİRİŞ EKRANI -->
+    <div id="start-screen" class="card">
+        <h2>Özelleştirilebilir Deneme Sınavı</h2>
+        <p>Arşivdeki toplam 80 orijinal soru içerisinden istediğiniz sayıda soruyla hızlıca deneme çözebilirsiniz.</p>
+        
+        <div class="settings-group">
+            <label for="question-count-select">Soru Sayısını Seçin:</label>
+            <select id="question-count-select">
+                <option value="10">10 Soru (Hızlı Pratik)</option>
+                <option value="20" selected>20 Soru (Standart AUZEF)</option>
+                <option value="40">40 Soru</option>
+                <option value="80">80 Soru (Tüm Arşiv)</option>
+            </select>
+        </div>
+
+        <button class="btn" onclick="startExam()">Sınavı Başlat</button>
+    </div>
+
+    <!-- SINAV EKRANI -->
+    <div id="exam-screen" class="card hidden">
+        <div class="question-meta">
+            <span id="question-source">Soru Kaynağı</span>
+            <span>4 Yanlış 1 Doğruyu Götürür</span>
+        </div>
+        <div class="question-text" id="question-text">Soru metni yükleniyor...</div>
+        
+        <ul class="options-list" id="options-list"></ul>
+
+        <div class="navigation-buttons">
+            <button class="btn btn-secondary" id="prev-btn" onclick="prevQuestion()">Önceki</button>
+            <button class="btn btn-secondary" onclick="clearAnswer()">Boş Bırak / İşareti Kaldır</button>
+            <button class="btn" id="next-btn" onclick="nextQuestion()">Sonraki</button>
+            <button class="btn btn-danger" onclick="confirmFinish()">Testi Erken Bitir</button>
+        </div>
+
+        <div class="palette-container">
+            <div class="palette-title">Soru Paleti</div>
+            <div class="palette-grid" id="palette-grid"></div>
+        </div>
+    </div>
+
+    <!-- SONUÇ EKRANI -->
+    <div id="result-screen" class="card hidden">
+        <div class="results-summary">
+            <h2>Sınav Tamamlandı</h2>
+            <div class="score-card" id="final-score">0.00</div>
+            <p>100 Üzerinden Puan</p>
+            
+            <div class="stats-grid">
+                <div class="stat-box">Doğru <span id="stat-correct" style="color:var(--success-color);">0</span></div>
+                <div class="stat-box">Yanlış <span id="stat-incorrect" style="color:var(--accent-color);">0</span></div>
+                <div class="stat-box">Boş <span id="stat-unanswered" style="color:#718096;">0</span></div>
+                <div class="stat-box">Net <span id="stat-net">0.00</span></div>
+            </div>
+
+            <button class="btn" onclick="location.reload()">Yeni Sınav Başlat</button>
+        </div>
+
+        <div class="review-section">
+            <h3 style="margin-bottom: 15px; color: var(--primary-color);">Soru Çözüm ve Cevap Analizi</h3>
+            <div id="review-list"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const allQuestions = [
+        // 2023-2024 Bütünleme
+        {source: "2023-2024 Bütünleme - Soru 1", text: "Aşağıdakilerden hangisi Kırım Harbi ve 1856 Paris Antlaşması sürecinde Avrupa ile gelişen ilişkiler sonrası yeni açılan elçiliklerden biri değildir?", options: ["Sofya", "Brüksel", "Torino", "Madrid", "Napoli"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 2", text: "1853-1856 Kırım Harbi sürecinde Osmanlı diplomatları hangi yeni yazışma türü ile ilk defa olarak tanışmışlardır?", options: ["Telgraf", "Telefon", "Posta", "Daktilo", "Şifre"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 3", text: "III. Selim dönemi Nizam-Cedit reformları kapsamında 1793 tarihinden itibaren Avrupa'da daimî elçilikler açılınca, artan bürokrasi için yeni kurumlar oluşturulmuştur. Bu amaçla dışişleriyle daha profesyonel ilgilenmesi için ..... kurulmuştur. Yukarıda verilen boşluğa aşağıdakilerden getirilmelidir?", options: ["Tercüme Odası Dairesi", "Eyalet-i Mümtaze Kalemi", "Vakanüvislik Kalemi", "Hariciye Nezareti Müsteşarlığı", "Mühimme Odası Kalemi"], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 4", text: "1856 Paris Antlaşması'nda kabul edilen Karadeniz'in tarafsızlığına dair maddeler, 1871 yılında hangi ülkenin diplomatik hamleleri ile değiştirilmiştir?", options: ["Rusya", "Yunanistan", "Ukrayna", "Fransa", "Osmanlı"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 5", text: "Kendisini Roma'nın varisi olarak gören Fatih Sultan Mehmet, etkili diplomasinin önemli unsuru olan orduyu büyütmüş ve bürokraside köklü değişiklikler yapmıştır. Sultanın önemli icraatlarından biri devlet sistemini yeni baştan düzenleyen bir ..... hazırlaması olmuştur.", options: ["Tanzimat Fermanı", "ahidname", "kanunname", "Sened-i İttifak", "irade-i seniyye"], correct: 2},
+        {source: "2023-2024 Bütünleme - Soru 6", text: "Osmanlı'da kurumsallaşmanın kısıtlı olduğu ilk dönemlerde fevkalade elçilerin seçiminde diplomatik deneyim ve tecrübe aranmamaktaydı. Bununla birlikte mümkün olduğunca elçilerin saray okulu ..... yetişmiş kişilerden seçilmesine dikkat edilirdi.", options: ["Tıbbiye'den", "rüştiyeden", "Enderun'dan", "medreseden", "Darülfünun'dan"], correct: 2},
+        {source: "2023-2024 Bütünleme - Soru 7", text: "II. Abdülhamit'in diplomaside yürüttüğü denge politikalarında Avrupa'nın hangi yeni gücü önemli bir yere sahip olmuştur?", options: ["Hollanda", "Almanya", "Belçika", "İspanya", "İtalya"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 8", text: "Aşağıdakilerden hangisi İslamiyet öncesi eski Türk devletlerinde, diplomatik temaslar için görevlendirilen kişilere verilen isimlerden biridir?", options: ["Şehbender", "Bitikçi", "Keruks", "Kavas", "Sefir"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 9", text: "İngiltere 1878 Berlin Kongresi öncesi yaptığı diplomatik hamle ile 4 Haziran 1878 tarihli saldırmazlık ve ittifak antlaşması sayesinde aşağıdaki hangi Osmanlı adasına sahip olmuştur?", options: ["Midilli", "Sakız", "Kıbrıs", "Rodos", "Girit"], correct: 2},
+        {source: "2023-2024 Bütünleme - Soru 10", text: "Osmanlı sefiri Yirmisekiz Çelebizade Mehmet Efendi, kaleme aldığı 1720-1721 tarihli sefaretnamesi ile Lale Devri reformlarını etkilemiştir. Bu eserde aşağıdaki hangi ülke hakkında gözlemler paylaşılmıştır?", options: ["İran", "İsveç", "Avusturya", "Rusya", "Fransa"], correct: 4},
+        {source: "2023-2024 Bütünleme - Soru 11", text: "Osmanlı ordusunun Baltacı Mehmet Paşa komutasında Ruslara karşı kesin zaferi sonrasında imzalanan, fakat savaş meydanındaki başarıyı gölgeleyen 23 Temmuz 1711 tarihli antlaşma aşağıdakilerden hangisidir?", options: ["Küçük Kaynarca Antlaşması", "Saint Petersburg Antlaşması", "Ayastefanos Antlaşması", "Edirne Antlaşması", "Prut Antlaşması"], correct: 4},
+        {source: "2023-2024 Bütünleme - Soru 12", text: "Türkiye'nin ilk Hariciye vekili olarak, Osmanlı döneminde de diplomasi deneyimi bulunan hangi devlet adamı atanmıştır?", options: ["Memduh Şevket (Esendal)", "Ali Fuat Paşa (Cebesoy)", "Ahmet Muhtar (Mollaoğlu)", "Bekir Sami Bey (Kunduk)", "Ali Şevki (Berker)"], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 13", text: "Kavalalı Mehmet Ali Paşa İsyanı ve Mısır Meselesi'nin çözümü sürecinde imzalanan 1841 Londra Boğazlar Antlaşması ile Boğazlar'ın statüsünde hangi tarihi değişim kabul edilmiştir?", options: ["Boğazlar'da avcılığın yasaklanması", "Boğazlar'da mutlak Osmanlı hâkimiyetinin kabulü", "Boğazlar'da mutlak Rus hâkimiyetinin onaylanması", "Boğazlar'ın tüm gemilere kapatılması", "Boğazlar'ın büyük devletlerin himayesine girmesi"], correct: 4},
+        {source: "2023-2024 Bütünleme - Soru 14", text: "Osmanlı'da diplomasi teşkilatında ve uygulamalarında Divan-ı Hümayun tercümanları arasında en fazla dil bilen hangi statüyü elde ederdi?", options: ["Kocabaşı", "Mukayyit", "Baştercüman", "Başmüdür", "Mütercim"], correct: 2},
+        {source: "2023-2024 Bütünleme - Soru 15", text: "Yunanistan'a bağımsızlığını veren 3 Şubat 1830 tarihli Londra Antlaşması'na 'kurucu devletler (protecting power)' statüsünde imza atan Avrupa ülkeleri hangileridir?", options: ["İngiltere-Fransa-Rusya", "İngiltere-Prusya-Rusya", "İngiltere-Avusturya-Rusya", "İngiltere-Rusya-Venedik", "İngiltere-Fransa-Prusya"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 16", text: "Osmanlı diplomasi teşkilatında Hariciye nazırının yardımcısı olmak üzere Kasım 1836'da aşağıdaki hangi kurum oluşturulmuştur?", options: ["Teşrifatçılık", "Müsteşarlık", "Kavaslık", "Müdürlük", "Tercümanlık"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 17", text: "Osmanlı Devleti, Birinci Dünya Savaşı başladıktan sonra 1914 tarihinde hangi önemli kararı almış ise de uygulayamamıştır?", options: ["Parlamentonun feshi", "Dış borçların sıfırlanması", "Tek taraflı diplomasiye dönüş", "Kapitülasyonların kaldırılması", "Dış temsilciliklerin kapatılması"], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 18", text: "Alman İmparatoru II. Wilhelm ve ailesi, 1898'deki ikinci Osmanlı ziyaretinde, İstanbul dışında hangi Osmanlı vilayetini ziyaret etmişlerdir?", options: ["Mekke", "Kudüs", "Medine", "Yemen", "Kıbrıs"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 19", text: "Diplomasi tarihi bakımından önemli olan ve Türk Tarih Kurumu (TTK) tarafından basılan 'Osmanlı Sefirleri ve Sefaretnâmeleri' adlı eserin yazarı kimdir?", options: ["Enver Ziya Karal", "İsmail Hakkı Uzunçarşılı", "Carter V. Findley", "Faik Reşit Unat", "İlber Ortaylı"], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 20", text: "Sultan II. Abdülhamit'in 1876'da yeniden düzenlediği diplomasi kurumlarından olan teşrifat birimi aşağıdakilerden hangisidir?", options: ["Hariciye Tahrirat Müdürlüğü", "Umur-ı Hariciye Nezareti", "Hariciye Teşrifatçılığı", "Teşrifat-ı Umumiye Nezareti", "Teşrifat-ı Umumiye Dairesi"], correct: 4},
+
+        // 2024-2025 Bütünleme
+        {source: "2024-2025 Bütünleme - Soru 1", text: "Hariciye Nezareti sonrası Osmanlı diplomatları Avrupa diplomasisinde kullanılan ..... gibi evrak ile işlem yapmaya başladılar.", options: ["rapor, layiha, tezkire", "sirküler, ferman, hüccet", "tutanak, itimatname, nota", "sirküler, rapor, tutanak", "itimatname, arzuhal, berat"], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 2", text: "Osmanlı Devleti Birinci Dünya Savaşı öncesi hangi ülke ile yaptığı 8 Şubat 1914 tarihli antlaşmayla doğuda Ermenilerin meskun olduğu vilayetlere 'müfettiş' sıfatıyla yabancı görevli atamayı kabul etmiştir?", options: ["Amerika", "Rusya", "Ermenistan", "Almanya", "Avusturya"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 3", text: "Osmanlı diplomasi tarihinin önemli kaynakları arasında sefaretnâmeler önemli yer tutmaktadır. Sefaretnâmeler, edebi tür olarak ..... ve siyasi rapor (takrir) özelliklerini içeren bir karışım gibidir.", options: ["fıkra", "hatırat", "makale", "hikâye", "nevsal"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 4", text: "Osmanlı'da Tanzimat sonrası 1856 yılından itibaren modern protokol kurallarının uygulandığı Dolmabahçe Sarayı'nda elçi kabulleri hangi salonda gerçekleşmekteydi?", options: ["Muayede Salonu", "Sünnet Odası", "Mavi Salon", "Giriş Salonu", "Camlı Köşk"], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 5", text: "Alman İmparatoru II. Wilhelm ve eşinin 1889 tarihindeki İstanbul seyahatinde aşağıdaki hangi tarihi mekâna protokol ziyareti yapılmamıştır?", options: ["Ayasofya Cami", "Müze-i Hümayun", "Topkapı Sarayı", "Galatasaray Lisesi", "Beyoğlu Protestan Kilisesi"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 6", text: "Tanzimat reformlarının önemli ismi Mustafa Reşit Paşa, Osmanlı'da resmi yazışmaların ..... yapılması anlayışına öncülük ederek diplomasi tarihinde ayrıca yer edinmiştir.", options: ["Türkçe", "Farsça", "Arapça", "Bulgarca", "Almanca"], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 7", text: "Bizans diplomasisinin kurumsallaşması sürecinde elçilerin niteliği değişirken 'hatip diplomat' özelliğinin yerini hangi diplomat tipi almıştır?", options: ["Kurnaz", "Gözlemci", "Suskun", "Çıkarcı", "Hassas"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 8", text: "III. Selim'in 1797 tarihinde daimi elçi olarak Berlin'e gönderdiği ve Prusya'nın eski İstanbul büyükelçisi büyük şarkiyatçı Von Diez ile yazışmalar yapan Osmanlı sefiri hangisidir?", options: ["Moralı Esseyyid Ali Efendi", "Yusuf Agah Efendi", "Aziz Ali Efendi", "Mahmut Raif Efendi", "Kostaki Musurus Efendi"], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 9", text: "Modern dönem Osmanlı diplomasi tarihine damga vuran ve Tanzimatın diplomat kimlikli öncü devlet adamlarından olan Mehmet Emin Ali Paşa'nın diplomasi kariyeri, 1833 tarihinde hangi kuruma atanması ile başlamıştır?", options: ["Tercüme Odası", "Şehbenderlik Odası", "Mühimme Odası", "Enderun-ı Hümayun", "Tersane-i Amire"], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 10", text: "1699 Karlofça Antlaşması'nın imzalanmasında başdelege olarak görev yapan Reisülküttap Rami Mehmet Efendi (Paşa)'nin müzakerelerde gösterdiği performans Osmanlı diplomatlarının kariyerini nasıl etkilemiştir?", options: ["Geri düşürmüştür.", "Unvanları alınmıştır.", "Önlerini kesmiştir.", "Önlerini açmıştır.", "Kriz çıkmıştır."], correct: 3},
+        {source: "2024-2025 Bütünleme - Soru 11", text: "Osmanlı diplomasi teşkilatını düzenleyen 1881 tarihli 'Saltanat-ı Seniye Şehbenderlerine Dair Nizamname-i Dahili' hangi padişah döneminde çıkarılmıştır?", options: ["Abdülaziz", "II. Abdülhamit", "V. Murat", "II. Mahmut", "Abdülmecit"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 12", text: "Osmanlı klasik döneminde ahidname metinleri, İslam hukuku prensiplerine ve ..... mezhebi esaslarına göre düzenlenirdi.", options: ["Hanefi", "Maliki", "Hanbeli", "Caferi", "Şafi"], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 13", text: "Osmanlı'da 'Nemçe' adıyla kaleme alınan sefaretnâmeler, aşağıdaki hangi Avrupa ülkesi hakkında bilgi vermektedir?", options: ["Prusya", "İngiltere", "Fransa", "Avusturya", "Portekiz"], correct: 3},
+        {source: "2024-2025 Bütünleme - Soru 14", text: "Osmanlı topraklarının paylaşılmasını öngören 1916 tarihli 'Sykes-Picot Antlaşması' hangi iki ülke diplomatı tarafından hazırlanmıştır?", options: ["İngiltere-İtalya", "İtalya-Rusya", "Fransa-Amerika", "Fransa-Rusya", "İngiltere-Fransa"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 15", text: "Osmanlı modern diplomasi uygulamalarının en önemli kurumlarından olan Hariciye Nezareti (Umur-ı Hariciye Nezareti), 1836'da hangi padişah döneminde kurulmuştur?", options: ["III. Mustafa", "III. Selim", "I. Abdülhamit", "Abdülaziz", "II. Mahmut"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 16", text: "Osmanlı tarihinde barışçıl amaçlarla Avrupa'ya diplomatik seyahat gerçekleştiren ilk ve tek padişah hangisidir?", options: ["Abdülmecit", "II. Mahmut", "Mehmet Reşat", "III. Selim", "Abdülaziz"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 17", text: "Rusya ve İngiltere'nin talebi üzerine 19 Aralık 1876'da toplanan İstanbul (Tersane) Konferansı'nda öncelikle hangi uluslararası kriz ele alınmıştır?", options: ["Mülteciler", "Cebel-i Lübnan", "Boğazlar", "Mısır", "Balkan"], correct: 4},
+
+        // 2025-2026 Bütünleme
+        {source: "2025-2026 Bütünleme - Soru 1", text: "Osmanlı Devleti, Birinci Dünya Savaşı başladıktan sonra 1914 tarihinde hangi önemli kararı almış ise de bunu uygulayamamıştır?", options: ["Dış temsilciliklerin kapatılması", "Dış borçların kapatılması", "Parlamentonun feshi", "Kapitülasyonların kaldırılması", "Tek taraflı diplomasiye dönüş"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 2", text: "Osmanlı klasik döneminde Babıâli'de yabancı elçilikler ile yapılan diplomatik görüşmelere hangi görevli katılabilirdi?", options: ["Defterdar", "Teşrifatçı", "Kazasker", "Nakibüleşraf", "Reisülküttap"], correct: 4},
+        {source: "2025-2026 Bütünleme - Soru 3", text: "Sultan III. Selim döneminde sürekli diplomasiye geçiş sonrası protokol kayıtları hangi defterlere kaydedilmeye başlanmıştır?", options: ["Ayniyat Defterleri", "Vukuat Defterleri", "Vakıf Defterleri", "Ruus Defterleri", "Muhasebat Defterleri"], correct: 0},
+        {source: "2025-2026 Bütünleme - Soru 4", text: "Avrupa'daki 1848 İhtilalleri nedeniyle Osmanlı'ya sığınan Macar ve Polonyalı milliyetçilerin Rusya'ya iade edilmemesi üzerine İngiltere'deki gençler hangi Osmanlı elçisinin arabasını sefarethaneye kadar kendileri çekmişlerdir?", options: ["Mahmut Nedim Paşa", "Morali Esseyyit Ali Efendi", "Yusuf Agah Efendi", "Gabriel Noradunkyan Efendi", "Kostaki Musurus Paşa"], correct: 4},
+        {source: "2025-2026 Bütünleme - Soru 5", text: "Kanuni Sultan Süleyman 1536'da hangi ülkeye 'ahidname' verip destekleyerek Avrupa'daki dengelere müdahale etmiştir?", options: ["Avusturya", "Prusya", "Fransa", "Ceneviz", "Venedik"], correct: 2},
+        {source: "2025-2026 Bütünleme - Soru 6", text: "Osmanlı ile İran arasında imzalanan 1847 tarihli Erzurum Antlaşması iki ülke arasındaki hangi sorunu çözmeye yöneliktir?", options: ["Sınır aşiretleri", "Kerbela ve Necef", "Sınır kaçakçılığı", "Dicle ve Fırat nehirleri", "Hazar kaynakları"], correct: 0},
+        {source: "2025-2026 Bütünleme - Soru 7", text: "Aşağıdakilerden hangisi Büyük Selçuklular döneminin ünlü vezirlerinden olan Nizamülmülk'ün, 'Siyasetname' adlı eserinde elçilerin özelliklerine dair yer verdiği hususlardan biri değildir?", options: ["İki yabancı dil bilmesi", "İleri görüşlü olması", "Güzel görünüşlü olması", "Hükümdara hizmeti bilmesi", "Kuran-ı Kerimi ezbere bilmesi"], correct: 4},
+        {source: "2025-2026 Bütünleme - Soru 8", text: "Osmanlı'da Sultan II. Mahmut dönemi modern diplomasi adımlarından biri olan Babıâli Tercüme Odası'nın kurulması ..... sonrasında gerçekleşmiştir.", options: ["1866 Girit İsyanı", "1826 Yeniçeri İsyanı", "1831 Kavalalı İsyanı", "1804 Sırp İsyanı", "1821 Rum İsyanı"], correct: 4},
+        {source: "2025-2026 Bütünleme - Soru 9", text: "III. Selim'in 1797 tarihinde daimi elçi olarak Berlin'e gönderdiği ve Prusya'nın eski İstanbul büyükelçisi büyük şarkiyatçı Von Diez ile yazışmalar yapan Osmanlı sefiri hangisidir?", options: ["Mahmut Raif Efendi", "Kostaki Musurus Efendi", "Yusuf Agah Efendi", "Morali Esseyyid Ali Efendi", "Aziz Ali Efendi"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 10", text: "1856 Paris Antlaşması ile İngiltere, Fransa ve Avusturya, Osmanlı İmparatorluğu hakkında hangi prensibi kabul etmişlerdir?", options: ["Toprak reformu yapılması", "Kapitülasyonların kaldırılması", "Toprak bütünlüğü garantisi", "Toprakların işgal edilmesi", "Maden çıkarılma izni"], correct: 2},
+        {source: "2025-2026 Bütünleme - Soru 11", text: "Osmanlı'da 'Nemçe' adıyla kaleme alınan sefaretnâmeler, hangi Avrupa ülkesi hakkında bilgi vermektedir?", options: ["Prusya", "Rusya", "Portekiz", "Avusturya", "Fransa"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 12", text: "Sultan II. Abdülhamit'in 1876'da diplomasi kurumlarında yaptığı düzenleme sonrası yeni teşrifat ve protokol birimi aşağıdakilerden hangisi olmuştur?", options: ["Hariciye Teşrifatçılığı", "Teşrifat-ı Umumiye Nezareti", "Umur-ı Hariciye Nezareti", "Teşrifat-ı Umumiye Dairesi", "Hariciye Tahrirat Müdürlüğü"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 13", text: "Osmanlı ve Avrupalı diplomatların uzun süre gündeminde kalan ve Akdeniz'i Kızıldeniz'e bağlayan Süveyş Kanalı hangi padişah döneminde açılmıştır?", options: ["Mehmet Reşat", "Vahdettin", "V. Murat", "Abdülaziz", "II. Abdülhamit"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 14", text: "Milli Mücadele'nin başarılı olması sonucu Osmanlı heyetince imzalanan hangi antlaşma asla uygulanamamıştır?", options: ["Paris", "Londra", "Sevr", "Berlin", "Mondros"], correct: 2},
+        {source: "2025-2026 Bütünleme - Soru 15", text: "Osmanlı hariciyesinde görev alan Ermeni vatandaşlardan biri olan Gabriel Noradunkyan Efendi, 1912 Balkan Savaşları sırasında aşağıdaki hangi diplomatik görevde bulunmaktaydı?", options: ["Şehbender", "Mektubi-i Hariciye", "Hariciye Nazırı", "Divan-ı Hümayun Tercümanı", "Atina Sefiri"], correct: 2},
+        {source: "2025-2026 Bütünleme - Soru 16", text: "Osmanlı Devleti, İstanbul suriçinde ve tarihi yarımadada yalnızca hangi ülkeye elçilik binası bulundurma izni vermiştir?", options: ["Avusturya", "İngiltere", "Mısır", "İran", "Rusya"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 17", text: "III. Selim döneminde ilk Paris daimi elçisi olarak atanan Morali Esseyyit Ali Efendi'nin 1797 tarihli Fransa sefaretnâmesinde hangi konu hakkında bilgiye yer verilmemiştir?", options: ["Tersane", "Metro", "Saraylar", "Müzeler", "Rasathane"], correct: 1},
+        {source: "2025-2026 Bütünleme - Soru 18", text: "Osmanlı Devleti'nin buhran döneminde Avusturya ile imzalanan 1606 tarihli Zitvatorok Antlaşması'yla klasik dönemden farklı olarak hangi diplomatik ilkeye uyulmaya başlanmıştır?", options: ["Mütekabiliyet", "Kışkırtma", "Münakaşa", "Meşruiyet", "Muvazaa"], correct: 0},
+        {source: "2025-2026 Bütünleme - Soru 19", text: "İngiltere 1878 Berlin Kongresi öncesi yaptığı diplomatik hamle ile 4 Haziran 1878 tarihli saldırmazlık ve ittifak antlaşması sayesinde aşağıdaki hangi Osmanlı adasına sahip olmuştur?", options: ["Kıbrıs", "Sakız", "Midilli", "Rodos", "Girit"], correct: 0},
+        {source: "2025-2026 Bütünleme - Soru 20", text: "Sultan II. Abdülhamit dönemi dış politikasının belirlenmesinde ve diplomasi uygulamalarında hükümetten ayrı olarak hangi kurum öne çıkmıştır?", options: ["Meclis-i Mebusan", "Yıldız Sarayı", "Encümen-i Daniş", "Hariciye Nezareti", "Şura-yı Devlet"], correct: 1},
+
+        // 2023-2024 Üç Ders
+        {source: "2023-2024 Üç Ders - Soru 1", text: "19. yüzyılda diplomatik temsilciliklerin statüsüne dair çok önemli düzenlemelerin yapıldığı ilk uluslararası etkinlik hangisidir?", options: ["1840 Londra Kongresi", "1856 Paris Kongresi", "1815 Viyana Kongresi", "1890 Petersburg Kongresi", "1878 Berlin Kongresi"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 2", text: "Sultan II. Abdülhamit'in 1876'da diplomasi kurumlarında yaptığı düzenleme sonrası yeni teşrifat ve protokol birimi aşağıdakilerden hangisi olmuştur?", options: ["Teşrifat-ı Umumiye Nezareti", "Hariciye Teşrifatçılığı", "Teşrifat-ı Umumiye Dairesi", "Hariciye Tahrirat Müdürlüğü", "Umur-ı Hariciye Nezareti"], correct: 0},
+        {source: "2023-2024 Üç Ders - Soru 3", text: "Osmanlı diplomasi uygulamasında kara yolu ile gelip Osmanlı sınırından giren elçilik heyetlerini karşılamak üzere aşağıdaki görevlilerden hangisi tayin edilirdi?", options: ["Kişizade", "Balyos", "Konsolos", "Mihmandar", "Beylikçi"], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 4", text: "Aşağıdakilerden hangisi Sultan III. Selim döneminde modern Türk diplomasisinin kurulmasında büyük pay sahibi olan Mehmet Raşit Efendi'nin girişimleri ile uygulanmaya başlanan yeniliklerden biri değildir?", options: ["Dış ilişkilerde güçler dengesine dikkat edilmesi", "İran ile ilişkilerin tamamen kesilmesi", "Dış ilişkilerde devletlerarası hukukun benimsenmesi", "Avrupalılarla ilişkilerde mütekabiliyet esasına uyulması", "Elçilere uygulanan tayınat usulünün kaldırılması"], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 5", text: "1908'de II. Meşrutiyet'in ilanı ile birlikte Osmanlı diplomatlarının aileleri hakkında hangi karar alınmıştır?", options: ["Görevin babadan oğula geçmesi", "Boşanma davalarının kolaylaştırılması", "Eşlere tazminat verilmesi", "Çocukların ücretsiz eğitimi", "Eşlerin görev yerlerine götürülebilmesi"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 6", text: "Bütün İslâm devletlerinde dış ilişkiler ve diplomasi anlayışında kullanılan hukuki ve fıkhi bir terim olan 'Darülharp' kavramı hangi anlamı taşımaktadır?", options: ["Müslüman olmayan ülkelerin toprakları", "Barış görüşmesi yapılan topraklar", "Harp edilmesi yasak topraklar", "Müslüman olan ülkelerin toprakları", "Kutsal topraklar"], correct: 0},
+        {source: "2023-2024 Üç Ders - Soru 7", text: "Osmanlı vatandaşı gayrimüslimlere yeni haklar veren 1856 Islahat Fermanı, Osmanlı ile hangi ülkelerin diplomatları tarafından müşterek olarak hazırlanmıştır?", options: ["Rusya-Yunanistan", "Fransa-Avusturya", "Prusya-Rusya", "İngiltere-Fransa", "İngiltere-Rusya"], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 8", text: "Antik Yunan'da (Grek) diplomatik temaslar ve görüşmeler hangi yöntemle yapılırdı?", options: ["Silahlı olarak", "Ülke dışında", "Kral huzurunda", "Halka açık", "Tarafsız bölgede"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 9", text: "1853-1856 Kırım Harbi sürecinde Osmanlı diplomatları hangi yeni yazışma türü ile ilk defa olarak tanışmışlardır?", options: ["Posta", "Şifre", "Daktilo", "Telefon", "Telgraf"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 10", text: "Yunanistan'a bağımsızlığını veren 3 Şubat 1830 tarihli Londra Antlaşması'na 'kurucu devletler (protecting power)' statüsünde imza atan Avrupa ülkeleri hangileridir?", options: ["İngiltere-Prusya-Rusya", "İngiltere-Fransa-Prusya", "İngiltere-Avusturya-Rusya", "İngiltere-Rusya-Venedik", "İngiltere-Fransa-Rusya"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 11", text: "Klasik dönem Osmanlı diplomasi uygulamalarında Nişancının görev yükü artınca dış politikada hangi kurum öne çıkmıştır?", options: ["Reisülküttaplık", "Şehbenderlik", "Hariciye Müsteşarlığı", "Divan-ı Hümayun Tercümanlığı", "Çavuşbaşılık"], correct: 0},
+        {source: "2023-2024 Üç Ders - Soru 12", text: "Osmanlı ordusunun Baltacı Mehmet Paşa komutasında Ruslara karşı kesin zaferi sonrasında imzalanan, fakat savaş meydanındaki başarıyı gölgeleyen 23 Temmuz 1711 tarihli antlaşma aşağıdakilerden hangisidir?", options: ["Küçük Kaynarca Antlaşması", "Edirne Antlaşması", "Saint Petersburg Antlaşması", "Prut Antlaşması", "Ayastefanos Antlaşması"], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 13", text: "1815 Viyana Kongresi'nde oluşan ve günümüzde de Avrupa Birliği içerisinde güncelliğini koruyan 'Avrupa uyumu' kavramı hangi anlayışa dayanmaktadır?", options: ["Ad Hoc", "Ahde vefa", "Güçler dengesi", "Kapitülasyonlar", "Refah toplumu"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 14", text: "Osmanlı'nın tek taraflı diplomasi uygulamalarında zirve dönemini yaşadığı Kanuni Sultan Süleyman devrinde, Sultanın Avrupa'daki denge siyasetinde ve diplomasi anlayışında, aşağıdaki hangi ülkeye 1536'da kapitülasyon (ahidnâme) verilerek destek sağlanmıştır?", options: ["Yunanistan", "Lehistan", "Fransa", "Rusya", "İngiltere"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 15", text: "Osmanlı'da kurumsallaşmanın kısıtlı olduğu ilk dönemlerde fevkalade elçilerin seçiminde diplomatik deneyim ve tecrübe aranmamaktaydı. Bununla birlikte mümkün olduğunca elçilerin saray okulu ..... yetişmiş kişilerden seçilmesine dikkat edilirdi.", options: ["Enderun'dan", "Darülfünun'dan", "rüştiyeden", "medreseden", "Tıbbiye'den"], correct: 0},
+        {source: "2023-2024 Üç Ders - Soru 16", text: "Rus Çarlığı ile 1774'te imzalanan Küçük Kaynarca Antlaşması'nın en önemli maddelerinden biri Kırım Hanlığı ile Osmanlı'nın bağının kopmasıydı. Bununla birlikte anlaşmaya göre Kırım Tatarlarının dini bakımdan ..... kurumuna bağlılıkları ve hutbenin Osmanlı Padişahı adına okunması kabul edilmişti.", options: ["Reisülküttap", "Hilafet", "Müşavir", "Sadaret", "Hidiv"], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 17", text: "Aşağıdakilerden hangisi klasik dönemden itibaren Osmanlı diplomasi uygulamalarının beslendiği kaynaklardan biri değildir?", options: ["İslam'ın siyasal mirası", "Ordunun kazandığı başarılar", "Rönesans ve Reform aydınlanma fikirleri", "Roma ve Bizans'ın siyasi mirası", "Türk cihan hâkimiyeti anlayışı"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 18", text: "Aşağıdakilerden hangisi Beylikçi Kaleminde muhafaza edilen Osmanlı diplomatik belge türleri arasında yer almamaktadır?", options: ["Antlaşma", "Berat", "Ahidname", "Ferman", "Pasaport"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 19", text: "Aşağıdaki devletlerden hangisi 1878 Berlin Antlaşması sonrası Osmanlı Devleti'nden tam bağımsızlığını kazanmıştır?", options: ["Arnavutluk", "Sırbistan", "Cezayir", "Yunanistan", "İrak"], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 20", text: "Osmanlı diplomasi tarihi için önemli kaynaklardan biri, Osmanlı vatandaşı olup 1912-1913 yıllarında Hariciye Nazırı görevinde bulunan Gabriel Noradunkyan Efendi tarafından Fransızca kaleme alınan 'Recueil D'Actes Internationaux de L'Empire Ottoman' adlı eserdir. Türk hariciyesinde hizmet gören Gabriel Noradunkyan Efendi, Osmanlı'daki hangi millete mensuptur?", options: ["Süryani", "Ermeni", "Bulgar", "Yahudi", "Sırp"], correct: 1}
+    ];
+
+    let questions = [];
+    let currentIdx = 0;
+    let userAnswers = [];
+    let timerInterval = null;
+    let timeLeft = 0;
+
+    function shuffleArray(array) {
+        let arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function startExam() {
+        const countSelect = parseInt(document.getElementById('question-count-select').value);
+        let shuffled = shuffleArray(allQuestions);
+        questions = shuffled.slice(0, countSelect);
+        
+        userAnswers = new Array(questions.length).fill(null);
+        currentIdx = 0;
+        timeLeft = questions.length * 60; // Soru başına 1 dakika süre
+
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('exam-screen').classList.remove('hidden');
+        document.getElementById('exam-info').style.display = 'flex';
+        document.getElementById('total-q-label').textContent = questions.length;
+        
+        initPalette();
+        loadQuestion(0);
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("Süre sona erdi! Sınavınız otomatik olarak bitiriliyor.");
+                finishExam();
+                return;
+            }
+            timeLeft--;
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            document.getElementById('timer-display').textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+        }, 1000);
+    }
+
+    function initPalette() {
+        const grid = document.getElementById('palette-grid');
+        grid.innerHTML = '';
+        questions.forEach((q, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'palette-btn';
+            btn.textContent = idx + 1;
+            btn.id = `palette-btn-${idx}`;
+            btn.onclick = () => goToQuestion(idx);
+            grid.appendChild(btn);
+        });
+        updatePalette();
+    }
+
+    function updatePalette() {
+        questions.forEach((q, idx) => {
+            const btn = document.getElementById(`palette-btn-${idx}`);
+            if(btn) {
+                btn.className = 'palette-btn';
+                if (userAnswers[idx] !== null) btn.classList.add('answered');
+                if (idx === currentIdx) btn.classList.add('current');
+            }
+        });
+    }
+
+    function loadQuestion(idx) {
+        currentIdx = idx;
+        const q = questions[idx];
+        
+        document.getElementById('current-q-num').textContent = idx + 1;
+        document.getElementById('question-source').textContent = q.source;
+        document.getElementById('question-text').textContent = `${idx + 1}. ${q.text}`;
+
+        const optionsList = document.getElementById('options-list');
+        optionsList.innerHTML = '';
+
+        const letters = ['A', 'B', 'C', 'D', 'E'];
+        q.options.forEach((opt, oIdx) => {
+            const li = document.createElement('li');
+            li.className = `option-item ${userAnswers[idx] === oIdx ? 'selected' : ''}`;
+            li.onclick = () => selectOption(oIdx);
+            
+            li.innerHTML = `
+                <div class="option-letter">${letters[oIdx]}</div>
+                <div>${opt}</div>
+            `;
+            optionsList.appendChild(li);
+        });
+
+        document.getElementById('prev-btn').style.display = idx === 0 ? 'none' : 'block';
+        if (idx === questions.length - 1) {
+            document.getElementById('next-btn').textContent = "Son Soru";
+        } else {
+            document.getElementById('next-btn').textContent = "Sonraki";
+        }
+
+        updatePalette();
+    }
+
+    function selectOption(oIdx) {
+        userAnswers[currentIdx] = oIdx;
+        loadQuestion(currentIdx);
+    }
+
+    function clearAnswer() {
+        userAnswers[currentIdx] = null;
+        loadQuestion(currentIdx);
+    }
+
+    function nextQuestion() {
+        if (currentIdx < questions.length - 1) {
+            loadQuestion(currentIdx + 1);
+        } else {
+            confirmFinish();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentIdx > 0) {
+            loadQuestion(currentIdx - 1);
+        }
+    }
+
+    function goToQuestion(idx) {
+        loadQuestion(idx);
+    }
+
+    function confirmFinish() {
+        const unanswered = userAnswers.filter(a => a === null).length;
+        let msg = "Sınavı bitirmek istediğinize emin misiniz?";
+        if (unanswered > 0) {
+            msg = `Boş bıraktığınız ${unanswered} soru var. Yine de testi bitirmek istiyor musunuz?`;
+        }
+        if (confirm(msg)) {
+            finishExam();
+        }
+    }
+
+    function finishExam() {
+        clearInterval(timerInterval);
+        document.getElementById('exam-screen').classList.add('hidden');
+        document.getElementById('exam-info').style.display = 'none';
+        document.getElementById('result-screen').classList.remove('hidden');
+
+        let correct = 0;
+        let incorrect = 0;
+        let unanswered = 0;
+
+        questions.forEach((q, idx) => {
+            const ans = userAnswers[idx];
+            if (ans === null) {
+                unanswered++;
+            } else if (ans === q.correct) {
+                correct++;
+            } else {
+                incorrect++;
+            }
+        });
+
+        let net = correct - (incorrect / 4);
+        if (net < 0) net = 0;
+
+        let score = (net / questions.length) * 100;
+
+        document.getElementById('final-score').textContent = score.toFixed(2);
+        document.getElementById('stat-correct').textContent = correct;
+        document.getElementById('stat-incorrect').textContent = incorrect;
+        document.getElementById('stat-unanswered').textContent = unanswered;
+        document.getElementById('stat-net').textContent = net.toFixed(2);
+
+        const reviewList = document.getElementById('review-list');
+        reviewList.innerHTML = '';
+
+        const letters = ['A', 'B', 'C', 'D', 'E'];
+        questions.forEach((q, idx) => {
+            const ans = userAnswers[idx];
+            let statusClass = 'unanswered';
+            let statusText = 'Boş Bırakıldı';
+
+            if (ans !== null) {
+                if (ans === q.correct) {
+                    statusClass = 'correct';
+                    statusText = 'Doğru';
+                } else {
+                    statusClass = 'incorrect';
+                    statusText = 'Yanlış';
+                }
+            }
+
+            const item = document.createElement('div');
+            item.className = `review-item ${statusClass}`;
+            
+            let userAnsStr = ans !== null ? `${letters[ans]}) ${q.options[ans]}` : 'Boş';
+            let correctAnsStr = `${letters[q.correct]}) ${q.options[q.correct]}`;
+
+            item.innerHTML = `
+                <div style="font-size:0.85rem; color:#718096; margin-bottom:5px;">${q.source} - <strong>${statusText}</strong></div>
+                <div style="font-weight:600; margin-bottom:10px;">${idx + 1}. ${q.text}</div>
+                <div style="font-size:0.95rem; margin-bottom:5px;">Sizin Cevabınız: <span style="font-weight:600; color:${ans === q.correct ? 'var(--success-color)' : 'var(--accent-color)'};">${userAnsStr}</span></div>
+                <div style="font-size:0.95rem;">Doğru Cevap: <span style="font-weight:600; color:var(--success-color);">${correctAnsStr}</span></div>
+            `;
+            reviewList.appendChild(item);
+        });
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Osmanlı Tarihi (1789-1908) - Özelleştirilebilir Deneme Sınavı</title>
+    <style>
+        :root {
+            --primary-color: #1b365d;
+            --secondary-color: #c5a059;
+            --accent-color: #d9534f;
+            --success-color: #5cb85c;
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #2c5282);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .exam-info {
+            display: flex;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .timer {
+            font-weight: bold;
+            color: #ffdd57;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        #start-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        #start-screen h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        #start-screen p {
+            color: #666;
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .settings-group {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-group label {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .settings-group select {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+            width: 220px;
+            text-align: center;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background-color: #2c5282;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+
+        .question-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #718096;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+        }
+
+        .options-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .option-item {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #fff;
+        }
+
+        .option-item:hover {
+            border-color: var(--secondary-color);
+            background-color: #fcf8f0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-color);
+            background-color: #edf2f7;
+            font-weight: 600;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+
+        .option-item.selected .option-letter {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background-color: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background-color: #cbd5e0;
+        }
+
+        .btn-danger {
+            background-color: var(--accent-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c53030;
+        }
+
+        .palette-container {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .palette-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #4a5568;
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+            gap: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .palette-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: #fff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .palette-btn.answered {
+            background-color: #e6fffa;
+            border-color: #319795;
+            color: #234e52;
+        }
+
+        .palette-btn.current {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(27, 54, 93, 0.2);
+        }
+
+        .results-summary {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .score-card {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 15px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .stat-box {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-box span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 5px;
+        }
+
+        .review-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .review-item {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .review-item.correct { border-left: 5px solid var(--success-color); }
+        .review-item.incorrect { border-left: 5px solid var(--accent-color); }
+        .review-item.unanswered { border-left: 5px solid #cbd5e0; }
+
+        .hidden { display: none !important; }
+
+        @media(max-width: 600px) {
+            body { padding: 10px; }
+            header { padding: 15px; }
+            .card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Osmanlı Tarihi (1789-1908)</h1>
+        <div class="exam-info" id="exam-info" style="display:none;">
+            <div>Soru: <span id="current-q-num">1</span>/<span id="total-q-label">20</span></div>
+            <div class="timer">Süre: <span id="timer-display">--:--</span></div>
+        </div>
+    </header>
+
+    <!-- GİRİŞ EKRANI -->
+    <div id="start-screen" class="card">
+        <h2>Özelleştirilebilir Deneme Sınavı</h2>
+        <p>Arşivdeki tüm orijinal Osmanlı Tarihi (1789-1908) soruları içerisinden istediğiniz sayıda soruyla hızlıca deneme çözebilirsiniz.</p>
+        
+        <div class="settings-group">
+            <label for="question-count-select">Soru Sayısını Seçin:</label>
+            <select id="question-count-select">
+                <option value="10">10 Soru (Hızlı Pratik)</option>
+                <option value="20" selected>20 Soru (Standart AUZEF)</option>
+                <option value="40">40 Soru</option>
+                <option value="80">80 Soru (Tüm Arşiv)</option>
+            </select>
+        </div>
+
+        <button class="btn" onclick="startExam()">Sınavı Başlat</button>
+    </div>
+
+    <!-- SINAV EKRANI -->
+    <div id="exam-screen" class="card hidden">
+        <div class="question-meta">
+            <span id="question-source">Soru Kaynağı</span>
+            <span>4 Yanlış 1 Doğruyu Götürür</span>
+        </div>
+        <div class="question-text" id="question-text">Soru metni yükleniyor...</div>
+        
+        <ul class="options-list" id="options-list"></ul>
+
+        <div class="navigation-buttons">
+            <button class="btn btn-secondary" id="prev-btn" onclick="prevQuestion()">Önceki</button>
+            <button class="btn btn-secondary" onclick="clearAnswer()">Boş Bırak / İşareti Kaldır</button>
+            <button class="btn" id="next-btn" onclick="nextQuestion()">Sonraki</button>
+            <button class="btn btn-danger" onclick="confirmFinish()">Testi Erken Bitir</button>
+        </div>
+
+        <div class="palette-container">
+            <div class="palette-title">Soru Paleti</div>
+            <div class="palette-grid" id="palette-grid"></div>
+        </div>
+    </div>
+
+    <!-- SONUÇ EKRANI -->
+    <div id="result-screen" class="card hidden">
+        <div class="results-summary">
+            <h2>Sınav Tamamlandı</h2>
+            <div class="score-card" id="final-score">0.00</div>
+            <p>100 Üzerinden Puan</p>
+            
+            <div class="stats-grid">
+                <div class="stat-box">Doğru <span id="stat-correct" style="color:var(--success-color);">0</span></div>
+                <div class="stat-box">Yanlış <span id="stat-incorrect" style="color:var(--accent-color);">0</span></div>
+                <div class="stat-box">Boş <span id="stat-unanswered" style="color:#718096;">0</span></div>
+                <div class="stat-box">Net <span id="stat-net">0.00</span></div>
+            </div>
+
+            <button class="btn" onclick="location.reload()">Yeni Sınav Başlat</button>
+        </div>
+
+        <div class="review-section">
+            <h3 style="margin-bottom: 15px; color: var(--primary-color);">Soru Çözüm ve Cevap Analizi</h3>
+            <div id="review-list"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const allQuestions = [
+        // --- 1. PDF: 2022-2023 Bütünleme (20 Soru) ---
+        {source: "2022-2023 Bütünleme - Soru 1", text: "Aşağıdakilerden hangisi II. Abdülhamit'in tahta çıkışı sonrası halkın ve ordunun moralini düzeltmek amacıyla yaptığı ziyaretlerden biri değildir?", options: ["Haydarpaşa Hastahanesi'nde yaralı askerleri ziyaret etmesi", "Sadrazam birlikte camileri dolaşıp halkın içine katılması", "93 Harbi sırasında Doğu Cephesi hattına giderek askeri teftiş yapması", "Ulema ile birlikte iftar yemeğine katılması", "Seraskerlik Kapısı'nda subaylarla birlikte yemek yemesi"], correct: 2},
+        {source: "2022-2023 Bütünleme - Soru 2", text: "Osmanlı Devleti'nin 1877-78 Rus savaşında Avrupa'da müttefik bulamamasının önemli sebeplerinden biri aşağıdakilerden hangisidir?", options: ["Avrupalı maden şirketlerine ruhsat verilmemesi", "1875 yılı mali iflası ekonomik kararları", "Kudüs Kutsal Yerler sorunun büyümesi", "Süveyş Kanalı'na ruhsat verilmesi sorunu", "Avrupa'da oluşan Rus hayranlığı"], correct: 1},
+        {source: "2022-2023 Bütünleme - Soru 3", text: "1877-1878 Osmanlı-Rus Savaşı'nın Doğu Cephesi'nde 55 bin mevcutlu seyyar 4. Ordu hangi Osmanlı şehrinde kuvvet bulundurmamıştır?", options: ["Kars", "Ardahan", "Doğu Beyazıt", "Sinop", "Van"], correct: 3},
+        {source: "2022-2023 Bütünleme - Soru 4", text: "1821 Rum İsyanı başlamadan kısa süre önce Sultan II. Mahmut'un merkezi otoriteyi güçlendirme politikaları gereği üzerine asker gönderilen Yanya Valisi aşağıdakilerden hangisidir?", options: ["Kavalalı Mehmet Ali Paşa", "Cezzar Ahmet Paşa", "İşkodraslı Mustafa Paşa", "Tepedelenli Ali Paşa", "Ağa Hüseyin Paşa"], correct: 3},
+        {source: "2022-2023 Bütünleme - Soru 5", text: "Osmanlı'da 1807'de patlak veren Kabakçı Mustafa İsyanı sonrası hangi padişah tahttan indirilmiştir?", options: ["III. Selim", "IV. Mustafa", "II. Osman", "I. Abdülhamit", "V. Murat"], correct: 0},
+        {source: "2022-2023 Bütünleme - Soru 6", text: "Sultan V. Murat, kendisinin tahta çıkmasında önemli rolü bulunan hangi devlet adamını Başkâtip olarak göreve getirmiştir?", options: ["Midhat Paşa", "Ziya Paşa", "Namık Kemal", "Ali Suavi", "İbrahim Şinasi"], correct: 1},
+        {source: "2022-2023 Bütünleme - Soru 7", text: "Mısır İsyanı'nda Mehmet Ali Paşa'yı destekleyen Fransa'nın esas amacı aşağıdakilerden hangisidir?", options: ["Rusya'yı Karadeniz'e hapsetmek", "Mısır tarihine duyulan hayranlık", "İngiltere ile rekabetten kaçınmak", "Osmanlı ile ilişkilerini geliştirmek", "Doğu Akdeniz'de etkin olmak"], correct: 4},
+        {source: "2022-2023 Bütünleme - Soru 8", text: "Kırım Harbi sürecinde İstanbul'da ilk belediye teşkilatı olan Şehremaneti 1854 yılında oluşturulduğunda, hangi eski kurum lağvedilmiştir?", options: ["İhtisap Nezareti", "Hazine-i Hassa Nazırlığı", "Nakibüleşraflık", "Kapıkethüdalığı", "Bostancıbaşılık"], correct: 0},
+        {source: "2022-2023 Bütünleme - Soru 9", text: "Kırım Harbi sonrasında imzalanan 1856 Paris Antlaşması'nın 9. Maddesi'nde Islahat Fermanı'na atıf yapılması, uzun vadede Osmanlı için hangi etkiyi ortaya çıkarmıştır?", options: ["Gayrimüslim taleplerinin son bulması", "Avrupa'dan teknoloji transferinin hızlanması", "Ekonomik yatırımların artması", "Egemenlik haklarına saygı gösterilmesi", "İç işlerine Avrupa müdahalesinin artması"], correct: 4},
+        {source: "2022-2023 Bütünleme - Soru 10", text: "Devlet Salnamesinin yararı görülünce ..... salnameleri de basılmaya başlanmıştır.", options: ["vilayet ve nezaret", "karantina ve sıhhiye", "ihtisap ve şehremaneti", "maliye ve defterdarlık", "emniyet ve jandarma"], correct: 0},
+        {source: "2022-2023 Bütünleme - Soru 11", text: "İngiltere, 1815 Viyana Kongresi sürecinde Akdeniz'de hâkim olduğu hangi idari yapılanmayı 1864 yılında Yunanistan'a devretmiştir?", options: ["Malta Adası", "Oniki Ada", "Gökçeada", "Yedi Ada", "Girit Adası"], correct: 3},
+        {source: "2022-2023 Bütünleme - Soru 12", text: "Sultan II. Abdülhamit, 93 Harbi ardından Meclisi kapatıp mutlak monarşiye dönüş yapınca hangi kurumla ilişkilerinde yeni bir dönem başlamıştır?", options: ["Encümen-i Daniş", "Babıâli", "Ayan Meclisi", "Meclis-i Vala", "Seraskerlik"], correct: 1},
+        {source: "2022-2023 Bütünleme - Soru 13", text: "Ermeni Sorunu'nda önemli bir kırılma noktası olan Ermeni çetecilerin 1905 tarihindeki Sultan II. Abdülhamit suikastı hangi etkinlikte gerçekleşmiştir?", options: ["Cuma selamlığı merasiminde", "Eyüp Sultan Türbesi ziyaretinde", "Kılıç kuşanma merasiminde", "Dolmabahçe Sarayı bahçesinde", "Kutsal emanetler ziyareti esnasında"], correct: 0},
+        {source: "2022-2023 Bütünleme - Soru 14", text: "Sultan Abdülaziz 1876 yılındaki askeri darbe ile tahttan indirilince kendisinin ve ailesinin Dolmabahçe Sarayı'ndaki değerli eşyalarının akıbeti ne olmuştur?", options: ["Dış borç ödemesi için harcanmıştır.", "Hazineye devredilmiştir.", "Yağmalanmıştır.", "Medrese öğrencilerine harcanmıştır.", "Fakir halka dağıtılmıştır."], correct: 2},
+        {source: "2022-2023 Bütünleme - Soru 15", text: "Sultan III. Selim, Nizam-ı Cedit yenilikleri kapsamında milli ekonominin gelişmesi için bazı devlet adamlarından hangi katkıyı yapmalarını istemiştir?", options: ["Vakıf kurarak kiraya vermelerini", "Ticaret gemisi satın alıp işletmelerini", "Sarraflık yaparak gelir elde etmelerini", "Kredi kullanmalarını", "Avrupa malı kullanmalarını"], correct: 1},
+        {source: "2022-2023 Bütünleme - Soru 16", text: "Kızıldeniz ile Akdeniz'i birbirine bağlamak amacıyla 1869 yılında açılan kanal aşağıdakilerden hangisidir?", options: ["Korint", "Panama", "Cebelitarık", "Don-Volga", "Süveyş"], correct: 4},
+        {source: "2022-2023 Bütünleme - Soru 17", text: "Osmanlı'nın ilk anayasası olan Kanun-ı Esasi'nin 12 başlık altındaki toplam 119 maddesi içinde hangi hususa yer verilmemiştir?", options: ["Hükümet politikaları", "Vatandaşların genel hukuku", "Çevre politikaları", "Devletin tanımı", "Maliye politikaları"], correct: 2},
+        {source: "2022-2023 Bütünleme - Soru 18", text: "Yakındoğu, Akdeniz ve Kızıldeniz yoluyla Hint Okyanusu'na açılan stratejik konumdaki Osmanlı toprağı Mısır, II. Abdülhamit devrinde hangi ülke tarafından işgal edilmiştir?", options: ["Amerika", "Almanya", "İngiltere", "Fransa", "İspanya"], correct: 2},
+        {source: "2022-2023 Bütünleme - Soru 19", text: "93 Harbi sonrası Ruslarla imzalanan 1878 tarihli Ayastefanos Antlaşması'nın 16. Maddesinde Ermenilerin hangi unsurlara karşı korunması hususuna yer verilmiştir?", options: ["Dürzi ve Maruniler", "Arnavut ve Boşnaklar", "Kıbti ve Nusayriler", "Kürt ve Çerkezler", "Ortodoks ve Katolik Süryaniler"], correct: 3},
+        {source: "2022-2023 Bütünleme - Soru 20", text: "18. Yüzyılın sonlarına gelindiğinde Osmanlı'nın sınırları Asya'da Yemen-Arabistan Yarımadası, Hint Okyanusu, Basra Körfezi, İran'dan geçip Kafkasya'da Anapa Kalesi'ne kadar uzanmaktaydı. Avrupa'da ise Dinyester Nehri'nin Batı kıyılarından Romanya, Bulgaristan, Yunanistan, Sırbistan ve Arnavutluk'u içine alacak biçimde devam ederek Avusturya'ya kadar dayanıyordu. Kuzey Afrika'da Osmanlı egemenliği devam etmekteydi. Yukarıdaki bilgiye göre Osmanlı için hangi tespit doğru olur?", options: ["Sömürge imparatorluğu haline gelmiştir.", "Sadece Asya devletidir.", "Balkanlar'dan çekilmiştir.", "Denizlerde egemenliğini yitirmiştir.", "Üç kıtada toprağı bulunmaktadır."], correct: 4},
+
+        // --- 2. PDF: 2023-2024 Bütünleme (20 Soru) ---
+        {source: "2023-2024 Bütünleme - Soru 1", text: "Doğu (Şarki) Rumeli Vilayeti, Bulgarlar tarafından 6 Eylül 1885'te işgal edilince asırlar boyunca burayı vatan edinmiş Müslüman-Türkler nasıl bir akıbetle karşılaşmışlardır?", options: ["Meclis seçimlerine katıldılar.", "Eşit vatandaş statüsü kazandılar.", "Mallarına sahip olmaları sağlandı.", "Bütün insani hakları tanındı.", "Katliam ve zulme uğradılar."], correct: 4},
+        {source: "2023-2024 Bütünleme - Soru 2", text: "Sultan Abdülaziz'in tahttan indirilişine dair verilen \"hal\" fetvasında hangi gerekçe öne sürülmüştür?", options: ["Savurgan olduğu ve ekonomiden anlamadığı", "Cinnet geçirdiği ve devlet işinden anlamadığı", "Sağlığına yeterince dikkat etmediği", "Rusya ve Amerika hayranı olduğu", "Diplomasi alanında etkisiz kaldığı"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 3", text: "Osmanlı'nın ilk anayasası olan Kanun-ı Esasi'nin hazırlanmasında önemli katkıları bulunan Midhat Paşa, padişah tarafından aynı anayasanın 113. maddesine göre aşağıdaki hangi ülkeye sürgün edilmiştir?", options: ["Japonya", "İtalya", "İran", "Yunanistan", "Meksika"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 4", text: "Aşağıdaki seçeneklerden hangisi 1856 Islahat Fermanı ile gayrimüslimlere tanınan haklardan biri değildir?", options: ["Bedelli askerlik yapma", "Şeyhülislamlık Meclisi üyeliği", "Kanunlar önünde eşit olma", "Vilayet meclislerine girme", "Din değiştirme hakkı"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 5", text: "Sultan Abdülaziz'e darbe yapan cuntada olan Serasker Hüseyin Avni Paşa, darbeden kısa süre sonra 1876 yılında hangi olay sonucu öldürülmüştür?", options: ["Çerkez Hasan Vakası", "Edirne Vakası", "Vaka-i Vakvakiye", "Kuleli Vakası", "Softalar İsyanı"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 6", text: "1877-78 Osmanlı-Rus Savaşı başlayınca 17 Mayıs 1877 tarihinde ilan edilen cihat fetvası uyarınca aşağıdaki Afrika vilayetlerinin hangilerinden askeri destek gelmiştir?", options: ["Mısır-Tunus", "Trablusgarp-Nijer", "Cezayir-Güney Afrika", "Sudan-Habeşistan", "Çad-Sevakin"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 7", text: "III. Selim dönemi askeri reformları kapsamında 1803'te ahşap olarak inşa edilen Selimiye Kışlası, günümüzde İstanbul'un hangi semtinde bulunmaktadır?", options: ["Üsküdar", "Ümraniye", "Tophane", "Rami", "Zeytinburnu"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 8", text: "Sultan Abdülmecit'e suikast amacıyla 1859'da oluşan \"Fedai Cemiyeti\"nin yargılanması olayı aşağıdaki hangi adla tarihe geçmiştir?", options: ["Vaka-i Hayriye", "Edirne Vakası", "Çırağan Vakası", "Patrona Vakası", "Kuleli Vakası"], correct: 4},
+        {source: "2023-2024 Bütünleme - Soru 9", text: "Türk tarihi alanında önemli çalışmaları bulunan Yusuf Hikmet Bayur'un 10 ciltlik kaynak eseri hangisidir?", options: ["Türk İnkılap Tarihi", "Osmanlı Medeniyeti Tarihi", "Devletlerarası Hukuk ve Siyasi Tarih", "Büyük Tarih Atlası", "Mufassal Osmanlı Tarihi"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 10", text: "Osmanlı tarihinin ilk resmî gazetesi olan Takvim-i Vekayi hangi tarihte yayına başlamıştır?", options: ["1800", "1821", "1831", "1811", "1815"], correct: 2},
+        {source: "2023-2024 Bütünleme - Soru 11", text: "Osmanlı'daki Ermeni terör yapılanmalarını destekleyen Rusya, hangi bölge politikalarında Ermenilerden yararlanacağını anlamıştır?", options: ["Orta Doğu", "Doğu Akdeniz", "Orta Asya", "Kafkasya", "Balkanlar"], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 12", text: "Sultan II. Abdülhamit devrinde Uzakdoğu politikaları kapsamında Japonya ile ilişkilerin geliştirilmesi amacıyla bu ülkeye gönderilen ve dönüşte kaza sonucu 1890'da batan gemi hangisidir?", options: ["İntibah", "Hamidiye", "Yavuz", "Ertuğrul", "Mahmudiye"], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 13", text: "1877-1878 Osmanlı-Rus Savaşı'nda Karadeniz'de sefer yapan hangi Osmanlı karakol gemisi Ruslar tarafından batırılmıştır?", options: ["Yavuz", "Midilli", "Ertuğrul", "İntibah", "Mahmudiye"], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 14", text: "Tanzimat dönemi reformları kapsamında ilk Darülfünun 1846'da hangi amaçla açılmıştır?", options: ["Devlet için yetenekli diplomat yetiştirmek", "Sanayi için tecrübeli usta yetiştirmek", "Devlet için cesur asker yetiştirmek", "Devlet bürokrasisi için bilgili nesil yetiştirmek", "Tarım için bilgili ziraatçı yetiştirmek"], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 15", text: "Aşağıdaki isimlerden hangisi Osmanlı buhran döneminde taşra idaresinde etkili olup devlete isyan etmemiştir?", options: ["Kavalalı Mehmet Ali Paşa", "Tepedelenli Ali Paşa", "Alemdar Mustafa Paşa", "Kara Mahmut Paşa", "Caniklizade Tayyar Mahmut Paşa"], correct: 2},
+        {source: "2023-2024 Bütünleme - Soru 16", text: "Sultan II. Mahmut dönemi reformlarından sonra asırlık Divan-ı Hümayun kurumunun yerini almaya başlamıştır.", options: ["Şura-yı Devlet", "Seraskerlik", "Darülfünun", "Meşihat", "Babıâli"], correct: 4},
+        {source: "2023-2024 Bütünleme - Soru 17", text: "Sultan Abdülaziz döneminde Ahmet Cevdet Paşa'nın girişimleri ile 1868 yılında kurulan Mecelle-i Ahkâm-ı Adliye Cemiyeti tarafından hazırlanan 1851 maddelik Mecelle Kanunları, hukukun hangi alanına mahsustur?", options: ["Borçlar Hukuku", "Deniz Hukuku", "Mezhepler Hukuku", "Ticaret Hukuku", "Medeni Hukuk"], correct: 4},
+        {source: "2023-2024 Bütünleme - Soru 18", text: "Girit Adası'nda çıkan 1866 isyanında, isyancıların esas amacı hangisiydi?", options: ["Osmanlı'yı terk etmek", "Yunanistan'a bağlanmak", "Avrupa'ya iltica etmek", "Cumhuriyet ilan etmek", "Rusya'ya bağlanmak"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 19", text: "93 Harbi sonrası imzalanan 1878 Berlin Antlaşması'nın 61. maddesi ile Osmanlı'nın hangi sorunu tam manasıyla uluslararası bir mesele haline geldi?", options: ["Kutsal Yerler Sorunu", "Mülteciler Sorunu", "Ermeni Sorunu", "Makedonya Sorunu", "Ege Sorunu"], correct: 2},
+        {source: "2023-2024 Bütünleme - Soru 20", text: "Osmanlı'da üyeleri seçimle teşekkül eden ve hicri takvime göre 93 Meclisi olarak anılan kurum hangisidir?", options: ["Meclis-i Hukuk", "Meclis-i Ticaret", "Meclis-i Mebusan", "Meclis-i Hass", "Meclis-i Meşveret"], correct: 2},
+
+        // --- 3. PDF: 2024-2025 Bütünleme (20 Soru) ---
+        {source: "2024-2025 Bütünleme - Soru 1", text: "Sultan Abdülhamit'in tahta çıkışı sonrası 1878 yılında gerçekleşen ve Çırağan Vakası olarak tarihe geçen olayda Ali Suavi'nin hedefi aşağıdakilerden hangisidir?", options: ["Sadrazam Mithat Paşa'yı hedef almak", "Sultan Abdülaziz'i tahttan indiren darbecileri hedef almak", "Sultan V. Murat'ı kaçırıp tahta çıkarmak", "Sultan Abdülaziz'i tekrar tahta çıkarmak", "Sultan V. Murat'a suikast düzenlemek"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 2", text: "II. Abdülhamit dönemi boyunca Avrupa'da destek gören ve Barışçı Haçlı Seferi sloganı ile yürütülen siyonist faaliyetlerin hedefinde hangi Osmanlı toprakları bulunuyordu?", options: ["Filistin", "Mısır", "Yemen", "Kuveyt", "İrak"], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 3", text: "Ermeni Sorunu'nda çete üyelerinin 1896 yılındaki Osmanlı Bankası Baskını sonrası ele geçirilen teröristler hakkında, Avrupalı diplomatların araya girmesiyle hangi karar alınmıştır?", options: ["Kürek cezasına çarptırılmışlardır.", "Müebbet ceza almışlardır.", "İdam edilmişlerdir.", "Beş yıl ceza almışlardır.", "Ceza almadan yurt dışına çıkmışlardır."], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 4", text: "1890 Kumkapı Olayları hangi Ermeni terör örgütü tarafından organize edilmiştir?", options: ["Hınçak", "Kara Haç", "Kilikya", "Bonevolent", "Taşnak"], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 5", text: "1877-78 Osmanlı-Rus Savaşı kahramanlarından olan Gazi Osman Paşa, Tuna Cephesi'nde Rus ordusunun hangi kuşatmasına karşı gösterdiği müdafaa ve direnç ile tarihe geçmiştir?", options: ["Nigbolu", "Plevne", "Rusçuk", "Şıpka", "Ziştovi"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 6", text: "1876'da ilan edilen ilk anayasa Kanun-ı Esasi'ye göre Mebusan Meclisi hangi yöntemle oluşacaktı?", options: ["Kura", "Müzakere", "Atama", "Seçim", "Müşavere"], correct: 3},
+        {source: "2024-2025 Bütünleme - Soru 7", text: "93 Harbi'nde Osmanlı ordusu hangi iki cephede savaşmıştır?", options: ["Balkan-Kanal", "Çanakkale-Galiçya", "Balkan-Kırım", "Yemen-Ahsa", "Balkan-Kafkas"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 8", text: "III. Selim tahta çıktıktan sonra kötü gidişatının sebeplerini anlamak amacıyla hangi meclisi toplamıştır?", options: ["Ayan", "Ulema", "Meşveret", "Mebusan", "Helva"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 9", text: "Aşağıdakilerden hangisi Sultan Abdülaziz'in 1861'de tahta çıktığında ekonomiyi düzeltmek amacıyla attığı adımlardan biri değildir?", options: ["Hazine-i Hassa gelirlerinden üçte birini devlet bütçesine devretmek", "Duyun-ı Umumiye İdaresi'ni kurmak", "Sarayda yüksek maaş alan gereksiz memurları uzaklaştırmak", "Piyasadaki değersiz parayı tedavülden çekip imha etmek", "Saraydaki altın ve gümüş kapları Darphane'ye devretmek"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 10", text: "19. yüzyılda Grek davası yani Bizans'ı tekrar diriltme hayali uğruna kurulan ilk Rum örgütü .... olmuştur.", options: ["Emiki Eterya", "Filiki Eterya", "Kardos", "Pontus", "Mavri Mira"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 11", text: "Tanzimat Dönemi'nde çıkan bütün kanun ve nizamlar hangi eserde toplanmıştır?", options: ["Mecmua", "Düstur", "Nevsal", "Ansiklopedi", "Salname"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 12", text: "Osmanlı'nın 1876 tarihli ilk anayasasında Türkçe ile ilgili hangi önemli karara yer verilmiştir?", options: ["Okullarda Türkçe dışındaki dillerin yasaklanması", "Arapça kelimelerin sadeleştirilmesi", "Farsça kelimelerin çıkarılması", "Gramerin gözden geçirilmesi", "Resmi dil olması"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 13", text: "Osmanlı toprağı Mısır, II. Abdülhamit devrinde hangi ülke tarafından 1882'de işgal edilmiştir?", options: ["İngiltere", "Amerika", "Almanya", "Fransa", "İspanya"], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 14", text: "Kırım Harbi sürecinde 1854 tarihi itibariyle İstanbul'un yönetimine dair hangi karar alınmıştır?", options: ["İlçeler belirlenmiştir.", "Vali atanmıştır.", "Belediye kurulmuştur.", "Vilayet olmuştur.", "Kadastro yapılmıştır."], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 15", text: "Sultan III. Selim, 11 Temmuz 1789 tarihinde savaş halinde olduğu hangi ülkeye karşı İsveç ile ittifak yapmıştır?", options: ["Venedik", "Avusturya", "Amerika", "İspanya", "Rusya"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 16", text: "Devlet Salnamesinin yararı görülünce ..... salnameleri de basılmaya başlanmıştır.", options: ["ihtisap ve şehremaneti", "karantina ve sıhhiye", "zabtiye ve jandarma", "vilayet ve nezaret", "maliye ve defterdarlık"], correct: 3},
+        {source: "2024-2025 Bütünleme - Soru 17", text: "Mısır Meselesi esnasında Kaptanıderya Ahmet Fevzi Paşa hangi olaya sebep olmuştur?", options: ["Mehmet Ali Paşa'ya suikast", "Avrupa'ya firar etme", "Donanmanın Mısır'a kaçırılması", "Buharlı gemi alımı", "Askeri darbe teşebbüsü"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 18", text: "Sultan Abdülaziz'in 1867'deki Avrupa seyahati sonrası hangi ülkelerden silah alımları hızlanmıştır?", options: ["İngiltere-Fransa", "İngiltere-İtalya", "Fransa-Almanya", "İngiltere-Rusya", "Almanya-İtalya"], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 19", text: "Can, mal ve namus emniyeti \n• Din ve mezhep güvencesi \n• Vergi eşitliği \n• Askeri yükümlülükler \n• Din değiştirme \nYukarıdaki maddeler Osmanlı döneminde ilan edilen hangi metinde yer almıştır?", options: ["1808 Senet-i İttifak", "1869 Maarif Nizamnamesi", "1863 Ermeni Millet Nizamnamesi", "1856 Islahat Fermanı", "1876 Kanun-ı Esasi"], correct: 3},
+        {source: "2024-2025 Bütünleme - Soru 20", text: "Sultan Abdülaziz'e darbe yapan cunta içinde yer alan Hüseyin Avni Paşa, hangi görevde bulunuyordu?", options: ["Sadrazam", "Zabtiye Nazırı", "Şura-yı Devlet Reisi", "Serasker", "Şeyhülislam"], correct: 3},
+
+        // --- 4. PDF: 2025-2026 Bütünleme (18 Soru) ---
+        {source: "2025-2026 Bütünleme - Soru 1", text: "1878 Berlin Antlaşması sonrası Rusya ile 8 Şubat 1879 tarihinde imzalanan ve savaş tazminatı ile esirlere dair olan antlaşma aşağıdakilerden hangisidir?", options: ["Peterburg Antlaşması", "Edirne Antlaşması", "Hünkar İskelesi Antlaşması", "Ayastefanos Antlaşması", "İstanbul Antlaşması"], correct: 4},
+        {source: "2025-2026 Bütünleme - Soru 2", text: "I. Padişah kutsaldır ve sorumsuzdur. \nII. Padişah, vekilleri tayin ve azil hakkına sahiptir. \nIII. Padişah kara ve deniz kuvvetlerinin komutanıdır. \nIV. Padişah dinî fetva verme hakkına sahiptir. \nV. Padişah meclisi feshetmek hakkına sahiptir. \nYukarıdaki maddelerden hangisi ya da hangileri 1876 Kanun-ı Esasi'de padişahın yetkileri tanımlanırken yer almamıştır?", options: ["Yalnız I", "II, III ve V", "I, II ve IV", "Yalnız III", "Yalnız IV"], correct: 4},
+        {source: "2025-2026 Bütünleme - Soru 3", text: "Sultan Abdülaziz'in 1867'deki Avrupa seyahati hakkındaki aşağıdaki hangi tespit doğrudur?", options: ["Seyahatin tamamı kara yolu ile yapılmıştır.", "Barışçıl amaçlarla Avrupa'ya yapılan ilk ve son seyahattir.", "Dış borç alımı için seyahate çıkılmıştır.", "Mülteciler sorununun çözümü amaçlıdır.", "Seyahat Avrupa'da ilgi görmemiştir."], correct: 1},
+        {source: "2025-2026 Bütünleme - Soru 4", text: "Sultan II. Abdülhamit'in tahta çıkışı sonrası ilan edilen ilk Osmanlı anayasası hangi adla anılmaktadır?", options: ["Kanunname-i Hümayun", "Kanun-ı Esasi", "Teşkilat-ı Esasiye", "Senet-i İttifak", "Kanun-ı Kadim"], correct: 1},
+        {source: "2025-2026 Bütünleme - Soru 5", text: "19. yüzyılda Grek davası yani Bizans'ı tekrar diriltme hayali uğruna kurulan ilk Rum örgütü .... olmuştur.", options: ["Pontus", "Mavri Mira", "Filiki Eterya", "Etniki Eterya", "Kardos"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 6", text: "Sultan Abdülaziz'e darbe yapan cunta içinde yer alan Hüseyin Avni Paşa, hangi görevde bulunuyordu?", options: ["Serasker", "Sadrazam", "Zabtiye Nazırı", "Şeyhülislam", "Şura-yı Devlet Reisi"], correct: 0},
+        {source: "2025-2026 Bütünleme - Soru 7", text: "93 Harbi sonrası imzalanan 1878 Berlin Antlaşması'nın 61. maddesi ile Osmanlı'nın hangi sorunu tam manasıyla uluslararası bir mesele hâline geldi?", options: ["Makedonya Sorunu", "Mülteciler Sorunu", "Kutsal Yerler Sorunu", "Ege Sorunu", "Ermeni Sorunu"], correct: 4},
+        {source: "2025-2026 Bütünleme - Soru 8", text: "Ermeni isyanları karşısında özellikle Sultan II. Abdülhamit'in ..... tutumu, Avrupalıların müdahale amaçlarını dizginlemiş, hadiselerin kontrolden çıkışını önlemiştir.", options: ["olayları görmezden gelen", "Kararlı ve zaman zaman taviz içeren", "sürekli taviz içeren", "diplomasi yerine gerilimi artıran", "tamamen dış yardıma güvenen"], correct: 1},
+        {source: "2025-2026 Bütünleme - Soru 9", text: "Osmanlı'da 1807'de patlak veren Kabakçı Mustafa İsyanı sonrası hangi padişah tahta çıkmıştır?", options: ["IV. Mustafa", "Abdülmecit", "II. Mahmut", "V. Murat", "Abdülaziz"], correct: 0},
+        {source: "2025-2026 Bütünleme - Soru 10", text: "Sultan Abdülaziz'in 1867'deki Avrupa seyahati sonrası hangi ülkelerden silah alımları hızlanmıştır?", options: ["Almanya-İtalya", "İngiltere-İtalya", "Fransa-Almanya", "İngiltere-Fransa", "İngiltere-Rusya"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 11", text: "Osmanlı tebaası Bulgarlar hangi tarihte bağımsız kiliseye sahip olmuşlardır?", options: ["1870", "1908", "1912", "1878", "1876"], correct: 0},
+        {source: "2025-2026 Bütünleme - Soru 12", text: "Kırım Harbi ardından imzalanan 1856 Paris Antlaşması'nın 9. maddesinde Islahat Fermanı'na atıf yapılması Osmanlı'yı nasıl etkilemiştir?", options: ["İç işlerine Avrupa müdahalesinin artması", "Ekonomik yatırımların artması", "Egemenlik haklarına saygı gösterilmesi", "Avrupa'dan teknoloji transferinin hızlanması", "Gayrimüslim taleplerinin son bulması"], correct: 0},
+        {source: "2025-2026 Bütünleme - Soru 13", text: "Aşağıdakilerden hangisi Sultan Abdülaziz'in tahttan indirildiği 1876 askerî darbesini planlayan \"dörtlü cunta\" içinde yer alan devlet adamlarından biridir?", options: ["Ahmet Cevdet Paşa", "Yusuf Kamil Paşa", "Gazi Osman Paşa", "Deli Fuat Paşa", "Hüseyin Avni Paşa"], correct: 4},
+        {source: "2025-2026 Bütünleme - Soru 14", text: "Sultan II. Abdülhamit devrinde Uzakdoğu politikaları kapsamında Japonya ile ilişkilerin geliştirilmesi amacıyla bu ülkeye gönderilen ve dönüşte kaza sonucu 1890'da batan gemi hangisidir?", options: ["Yavuz", "Ertuğrul", "İntibah", "Hamidiye", "Mahmudiye"], correct: 1},
+        {source: "2025-2026 Bütünleme - Soru 15", text: "Aşağıdakilerden hangisi Sultan III. Selim dönemi Nizam-ı Cedit yeniliklerinin amaçları arasında yer almaktadır?", options: ["Gayrimüslimlerin askere alınması", "Kanun-ı Esasi hazırlanması", "Modern ordu kurulması", "Demiryollarının yaygınlaşması", "Darülfünun kurulması"], correct: 2},
+        {source: "2025-2026 Bütünleme - Soru 16", text: "1877-1878 Osmanlı-Rus Savaşı'nda Karadeniz'de sefer yapan hangi Osmanlı karakol gemisi Ruslar tarafından batırılmıştır?", options: ["Mahmudiye", "Ertuğrul", "Midilli", "İntibah", "Yavuz"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 17", text: "Tanzimat Dönemi'nde çıkan bütün kanun ve nizamlar hangi eserde toplanmıştır?", options: ["Ansiklopedi", "Nevsal", "Mecmua", "Düstur", "Salname"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 18", text: "Tanzimat dönemi eğitim reformları kapsamında ilk darülfünun 1846'da hangi amaçla açılmıştır?", options: ["Hariciye için donanımlı diplomat yetiştirmek", "Sanayi için usta yetiştirmek", "Talimli asker yetiştirmek", "Bürokrasi için bilgili nesil yetiştirmek", "Tarım için ziraatçı yetiştirmek"], correct: 3},
+
+        // --- 5. PDF: Üç Ders 2023-2024 (20 Soru) ---
+        {source: "2023-2024 Üç Ders - Soru 1", text: "93 Harbi sonrası imzalanan 1878 Berlin Antlaşması'nın 61. maddesi ile Osmanlı'nın hangi sorunu tam manasıyla uluslararası bir mesele hâline geldi?", options: ["Ege Sorunu", "Makedonya Sorunu", "Mülteciler Sorunu", "Ermeni Sorunu", "Kutsal Yerler Sorunu"], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 2", text: "Tarih araştırmalarında başucu kaynaklardan biri olan ve 1983'te 3 cilt hâlinde basılan Osmanlı Tarih Deyimleri ve Terimleri Sözlüğü'nün yazarı aşağıdakilerden hangisidir?", options: ["İsmail Hakkı Uzunçarşılı", "İlber Ortaylı", "Mehmet Zeki Pakalın", "Enver Ziya Karal", "Yusuf Hikmet Bayur"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 3", text: "93 Harbi sonrası imzalanan 1878 tarihli Berlin Antlaşması sonrasında Osmanlı toprağı Bosna-Hersek hangi ülke tarafından işgal edilmiştir?", options: ["Almanya", "İngiltere", "Yunanistan", "Bulgaristan", "Avusturya-Macaristan"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 4", text: "Mısır İsyanı'nda Mehmet Ali Paşa'yı destekleyen Fransa'nın esas amacı aşağıdakilerden hangisidir?", options: ["Mısır tarihine duyulan hayranlık", "Osmanlı ile ilişkilerini geliştirmek", "Doğu Akdeniz'de etkin olmak", "Rusya'yı Karadeniz'e hapsetmek", "İngiltere ile rekabetten kaçınmak"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 5", text: "Sultan II. Mahmut dönemi reformlarından sonra asırlık Divan-ı Hümayun kurumunun yerini ..... almaya başlamıştır.", options: ["Şura-yı Devlet", "Babıâli", "Seraskerlik", "Darülfünun", "Meşihat"], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 6", text: "Kırım Harbi sürecinde İstanbul'da ilk belediye teşkilatı olan Şehremaneti 1854 yılında oluşturulduğunda, hangi eski kurum lağvedilmiştir?", options: ["Nakibüleşraflık", "Kapıkethüdalığı", "İhtisap Nezareti", "Bostancıbaşılık", "Hazine-i Hassa Nazırlığı"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 7", text: "Sultan III. Ahmet (1703-1730) dönemi yenilikleri literatürde hangi adla anılmaktadır?", options: ["Tanzimat Devri", "Lale Devri", "Meşrutiyet Devri", "Buhran Devri", "Nizam-ı Cedit Devri"], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 8", text: "Tanzimat Fermanı, klasik Osmanlı devlet sistemindeki ilmiye, kalemiye ve seyfiye üçlü dengesinde kalemiye sınıfının diğerlerine üstünlüğünü gösterdiği için tam manasıyla ..... bir proje görünümü arz eder.", options: ["akademik", "ümmetçi", "sosyalist", "emperyalist", "sivil"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 9", text: "Girit Adası'nda çıkan 1866 isyanında, isyancıların esas amacı hangisiydi?", options: ["Osmanlı'yı terk etmek", "Avrupa'ya iltica etmek", "Yunanistan'a bağlanmak", "Cumhuriyet ilan etmek", "Rusya'ya bağlanmak"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 10", text: "Hıristiyanlar tarafından kutsal sayılan mekânlardan hangisi Kudüs ve çevresinde yer almamaktadır?", options: ["Beytü'l-Lahim", "Tac Mahal", "Kamame Kilisesi", "Hz. Meryem'in Mezarı", "Tahunü'l-Atik Meydanı"], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 11", text: "III. Selim dönemi askeri reformları kapsamında 1803'te ahşap olarak inşa edilen Selimiye Kışlası, günümüzde İstanbul'un hangi semtinde bulunmaktadır?", options: ["Tophane", "Zeytinburnu", "Ümraniye", "Üsküdar", "Rami"], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 12", text: "Sultan Abdülaziz'in 1876'da darbe ile indirilişi sonrası darbecilerin tahta çıkardığı Sultan V. Murat, kısa süre sonra hangi gerekçe ile görevi bırakmak zorunda kalmıştır?", options: ["Erkek çocuğu olmaması nedeniyle", "Sağlık sorunları nedeniyle", "Çok genç olması nedeniyle", "Avrupalıların isteği nedeniyle", "Yolsuzluk iddiaları nedeniyle"], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 13", text: "Osmanlı Devleti'nin 16. Yüzyıl sonlarından itibaren güç kaybetmeye başlamasının ve buhran dönemine girmesinin sebepleri arasında hangisi gösterilemez?", options: ["Toprak sisteminin bozulması", "Portekizlilerle denizlerde mücadele", "Askeri başarısızlıklar", "Ticaret gelirlerinin azalması", "Alman Birliğinin kurulması"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 14", text: "Osmanlı'nın ilk anayasası olan Kanun-ı Esasi'nin hazırlanmasında önemli katkıları bulunan Midhat Paşa, padişah tarafından aynı anayasanın 113. maddesine göre aşağıdaki hangi ülkeye sürgün edilmiştir?", options: ["Japonya", "Yunanistan", "Meksika", "İran", "İtalya"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 15", text: "Aşağıdakilerden hangisi 1804'te başlayan Sırp İsyanının sebeplerinden biri değildir?", options: ["Milliyetçilik akımı", "Avusturya ile yapılan mücadeleler", "Yöneticilerin haksız tutumları", "Demiryolu yatırımı yapılmaması", "Devlet otoritesinin zayıflaması"], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 16", text: "Osmanlı Devleti, 1821 Rum İsyanına katılan Girit Adası'nın yönetimini hangi paşaya vermiştir?", options: ["Kavalalı Mehmet Ali Paşa", "Koca Yusuf Paşa", "Mehmet Emin Ali Paşa", "Keçecizade Fuat Paşa", "Hüsrev Mehmet Paşa"], correct: 0},
+        {source: "2023-2024 Üç Ders - Soru 17", text: "Sultan II. Mahmut dönemi reformları kapsamında yayın hayatına başlayan ilk resmi gazete aşağıdakilerden hangisidir?", options: ["Takvim-i Vekayi", "Takvim-i Buldan", "Tercüman-ı Hakikat", "Ceride-i Askeriye", "Ceride-i Resmiye"], correct: 0},
+        {source: "2023-2024 Üç Ders - Soru 18", text: "Sultan III. Selim, Osmanlı'da devleti temsil eden kırmızı-beyaz ay yıldızlı resmî bayrak hakkında 1793 tarihinde hangi düzenlemeyi yapmıştır?", options: ["Bayrağın ölçütlerine standart getirilmesi", "Bayrağa rozet konulması", "Bayrağın direklere çekilmesinin kural hâline getirilmesi", "Bayrağın sadece ordu tarafından kullanılması", "Bayrak üretiminin şahıslar tarafından yapılması"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 19", text: "Sultan II. Abdülhamit devrinde Uzakdoğu politikaları kapsamında Japonya ile ilişkilerin geliştirilmesi amacıyla bu ülkeye gönderilen ve dönüşte kaza sonucu 1890'da batan gemi hangisidir?", options: ["Hamidiye", "Yavuz", "Mahmudiye", "Ertuğrul", "İntibah"], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 20", text: "Mekke ve Medine'nin tehdit altına düşmesine neden olan Vehhabi İsyanı, hangi paşa tarafından bastırılmıştır?", options: ["Kavalalı Mehmet Ali Paşa", "Koca Yusuf Paşa", "Mustafa Reşit Paşa", "Cezzar Ahmet Paşa", "Alemdar Mustafa Paşa"], correct: 0}
+    ];
+
+    let questions = [];
+    let currentIdx = 0;
+    let userAnswers = [];
+    let timerInterval = null;
+    let timeLeft = 0;
+
+    function shuffleArray(array) {
+        let arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function startExam() {
+        const countSelect = parseInt(document.getElementById('question-count-select').value);
+        let shuffled = shuffleArray(allQuestions);
+        questions = shuffled.slice(0, countSelect);
+        
+        userAnswers = new Array(questions.length).fill(null);
+        currentIdx = 0;
+        timeLeft = questions.length * 60; // Soru başına 1 dakika
+
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('exam-screen').classList.remove('hidden');
+        document.getElementById('exam-info').style.display = 'flex';
+        document.getElementById('total-q-label').textContent = questions.length;
+        
+        initPalette();
+        loadQuestion(0);
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("Süre sona erdi! Sınavınız otomatik olarak bitiriliyor.");
+                finishExam();
+                return;
+            }
+            timeLeft--;
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            document.getElementById('timer-display').textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+        }, 1000);
+    }
+
+    function initPalette() {
+        const grid = document.getElementById('palette-grid');
+        grid.innerHTML = '';
+        questions.forEach((q, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'palette-btn';
+            btn.textContent = idx + 1;
+            btn.id = `palette-btn-${idx}`;
+            btn.onclick = () => goToQuestion(idx);
+            grid.appendChild(btn);
+        });
+        updatePalette();
+    }
+
+    function updatePalette() {
+        questions.forEach((q, idx) => {
+            const btn = document.getElementById(`palette-btn-${idx}`);
+            if(btn) {
+                btn.className = 'palette-btn';
+                if (userAnswers[idx] !== null) btn.classList.add('answered');
+                if (idx === currentIdx) btn.classList.add('current');
+            }
+        });
+    }
+
+    function loadQuestion(idx) {
+        currentIdx = idx;
+        const q = questions[idx];
+        
+        document.getElementById('current-q-num').textContent = idx + 1;
+        document.getElementById('question-source').textContent = q.source;
+        document.getElementById('question-text').textContent = `${idx + 1}. ${q.text}`;
+
+        const optionsList = document.getElementById('options-list');
+        optionsList.innerHTML = '';
+
+        const letters = ['A', 'B', 'C', 'D', 'E'];
+        q.options.forEach((opt, oIdx) => {
+            const li = document.createElement('li');
+            li.className = `option-item ${userAnswers[idx] === oIdx ? 'selected' : ''}`;
+            li.onclick = () => selectOption(oIdx);
+            
+            li.innerHTML = `
+                <div class="option-letter">${letters[oIdx]}</div>
+                <div>${opt}</div>
+            `;
+            optionsList.appendChild(li);
+        });
+
+        document.getElementById('prev-btn').style.display = idx === 0 ? 'none' : 'block';
+        if (idx === questions.length - 1) {
+            document.getElementById('next-btn').textContent = "Son Soru";
+        } else {
+            document.getElementById('next-btn').textContent = "Sonraki";
+        }
+
+        updatePalette();
+    }
+
+    function selectOption(oIdx) {
+        userAnswers[currentIdx] = oIdx;
+        loadQuestion(currentIdx);
+    }
+
+    function clearAnswer() {
+        userAnswers[currentIdx] = null;
+        loadQuestion(currentIdx);
+    }
+
+    function nextQuestion() {
+        if (currentIdx < questions.length - 1) {
+            loadQuestion(currentIdx + 1);
+        } else {
+            confirmFinish();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentIdx > 0) {
+            loadQuestion(currentIdx - 1);
+        }
+    }
+
+    function goToQuestion(idx) {
+        loadQuestion(idx);
+    }
+
+    function confirmFinish() {
+        const unanswered = userAnswers.filter(a => a === null).length;
+        let msg = "Sınavı bitirmek istediğinize emin misiniz?";
+        if (unanswered > 0) {
+            msg = `Boş bıraktığınız ${unanswered} soru var. Yine de testi bitirmek istiyor musunuz?`;
+        }
+        if (confirm(msg)) {
+            finishExam();
+        }
+    }
+
+    function finishExam() {
+        clearInterval(timerInterval);
+        document.getElementById('exam-screen').classList.add('hidden');
+        document.getElementById('exam-info').style.display = 'none';
+        document.getElementById('result-screen').classList.remove('hidden');
+
+        let correct = 0;
+        let incorrect = 0;
+        let unanswered = 0;
+
+        questions.forEach((q, idx) => {
+            const ans = userAnswers[idx];
+            if (ans === null) {
+                unanswered++;
+            } else if (ans === q.correct) {
+                correct++;
+            } else {
+                incorrect++;
+            }
+        });
+
+        let net = correct - (incorrect / 4);
+        if (net < 0) net = 0;
+
+        let score = (net / questions.length) * 100;
+
+        document.getElementById('final-score').textContent = score.toFixed(2);
+        document.getElementById('stat-correct').textContent = correct;
+        document.getElementById('stat-incorrect').textContent = incorrect;
+        document.getElementById('stat-unanswered').textContent = unanswered;
+        document.getElementById('stat-net').textContent = net.toFixed(2);
+
+        const reviewList = document.getElementById('review-list');
+        reviewList.innerHTML = '';
+
+        const letters = ['A', 'B', 'C', 'D', 'E'];
+        questions.forEach((q, idx) => {
+            const ans = userAnswers[idx];
+            let statusClass = 'unanswered';
+            let statusText = 'Boş Bırakıldı';
+
+            if (ans !== null) {
+                if (ans === q.correct) {
+                    statusClass = 'correct';
+                    statusText = 'Doğru';
+                } else {
+                    statusClass = 'incorrect';
+                    statusText = 'Yanlış';
+                }
+            }
+
+            const item = document.createElement('div');
+            item.className = `review-item ${statusClass}`;
+            
+            let userAnsStr = ans !== null ? `${letters[ans]}) ${q.options[ans]}` : 'Boş';
+            let correctAnsStr = `${letters[q.correct]}) ${q.options[q.correct]}`;
+
+            item.innerHTML = `
+                <div style="font-size:0.85rem; color:#718096; margin-bottom:5px;">${q.source} - <strong>${statusText}</strong></div>
+                <div style="font-weight:600; margin-bottom:10px;">${idx + 1}. ${q.text}</div>
+                <div style="font-size:0.95rem; margin-bottom:5px;">Sizin Cevabınız: <span style="font-weight:600; color:${ans === q.correct ? 'var(--success-color)' : 'var(--accent-color)'};">${userAnsStr}</span></div>
+                <div style="font-size:0.95rem;">Doğru Cevap: <span style="font-weight:600; color:var(--success-color);">${correctAnsStr}</span></div>
+            `;
+            reviewList.appendChild(item);
+        });
+    }
+</script>
+
+</body>
+</html>

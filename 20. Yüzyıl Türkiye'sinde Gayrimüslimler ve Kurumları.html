@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>20. Yüzyıl Türkiye'sinde Gayrimüslimler ve Kurumları - Deneme Sınavı</title>
+    <style>
+        :root {
+            --primary-color: #1b365d;
+            --secondary-color: #c5a059;
+            --accent-color: #d9534f;
+            --success-color: #5cb85c;
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #2c5282);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        header h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .exam-info {
+            display: flex;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .timer {
+            font-weight: bold;
+            color: #ffdd57;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        #start-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        #start-screen h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        #start-screen p {
+            color: #666;
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .settings-group {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-group label {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .settings-group select {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+            width: 220px;
+            text-align: center;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background-color: #2c5282;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+
+        .question-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #718096;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+        }
+
+        .options-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .option-item {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #fff;
+        }
+
+        .option-item:hover {
+            border-color: var(--secondary-color);
+            background-color: #fcf8f0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-color);
+            background-color: #edf2f7;
+            font-weight: 600;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+
+        .option-item.selected .option-letter {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background-color: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background-color: #cbd5e0;
+        }
+
+        .btn-danger {
+            background-color: var(--accent-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c53030;
+        }
+
+        .palette-container {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .palette-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #4a5568;
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+            gap: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .palette-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: #fff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .palette-btn.answered {
+            background-color: #e6fffa;
+            border-color: #319795;
+            color: #234e52;
+        }
+
+        .palette-btn.current {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(27, 54, 93, 0.2);
+        }
+
+        .results-summary {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .score-card {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 15px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .stat-box {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-box span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 5px;
+        }
+
+        .review-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .review-item {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .review-item.correct { border-left: 5px solid var(--success-color); }
+        .review-item.incorrect { border-left: 5px solid var(--accent-color); }
+        .review-item.unanswered { border-left: 5px solid #cbd5e0; }
+
+        .hidden { display: none !important; }
+
+        @media(max-width: 600px) {
+            body { padding: 10px; }
+            header { padding: 15px; }
+            .card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>20. Yy. Türkiye'sinde Gayrimüslimler ve Kurumları</h1>
+        <div class="exam-info" id="exam-info" style="display:none;">
+            <div>Soru: <span id="current-q-num">1</span>/<span id="total-q-label">20</span></div>
+            <div class="timer">Süre: <span id="timer-display">--:--</span></div>
+        </div>
+    </header>
+
+    <!-- GİRİŞ EKRANI -->
+    <div id="start-screen" class="card">
+        <h2>Özelleştirilebilir Deneme Sınavı</h2>
+        <p>Arşivdeki tüm orijinal Gayrimüslimler Tarihi soruları içerisinden istediğiniz sayıda soruyla hızlıca deneme çözebilirsiniz.</p>
+        
+        <div class="settings-group">
+            <label for="question-count-select">Soru Sayısını Seçin:</label>
+            <select id="question-count-select">
+                <option value="10">10 Soru (Hızlı Pratik)</option>
+                <option value="20" selected>20 Soru (Standart AUZEF)</option>
+                <option value="40">40 Soru</option>
+                <option value="40">40 Soru (Tüm Arşiv)</option>
+            </select>
+        </div>
+
+        <button class="btn" onclick="startExam()">Sınavı Başlat</button>
+    </div>
+
+    <!-- SINAV EKRANI -->
+    <div id="exam-screen" class="card hidden">
+        <div class="question-meta">
+            <span id="question-source">Soru Kaynağı</span>
+            <span>4 Yanlış 1 Doğruyu Götürür</span>
+        </div>
+        <div class="question-text" id="question-text">Soru metni yükleniyor...</div>
+        
+        <ul class="options-list" id="options-list"></ul>
+
+        <div class="navigation-buttons">
+            <button class="btn btn-secondary" id="prev-btn" onclick="prevQuestion()">Önceki</button>
+            <button class="btn btn-secondary" onclick="clearAnswer()">Boş Bırak / İşareti Kaldır</button>
+            <button class="btn" id="next-btn" onclick="nextQuestion()">Sonraki</button>
+            <button class="btn btn-danger" onclick="confirmFinish()">Testi Erken Bitir</button>
+        </div>
+
+        <div class="palette-container">
+            <div class="palette-title">Soru Paleti</div>
+            <div class="palette-grid" id="palette-grid"></div>
+        </div>
+    </div>
+
+    <!-- SONUÇ EKRANI -->
+    <div id="result-screen" class="card hidden">
+        <div class="results-summary">
+            <h2>Sınav Tamamlandı</h2>
+            <div class="score-card" id="final-score">0.00</div>
+            <p>100 Üzerinden Puan</p>
+            
+            <div class="stats-grid">
+                <div class="stat-box">Doğru <span id="stat-correct" style="color:var(--success-color);">0</span></div>
+                <div class="stat-box">Yanlış <span id="stat-incorrect" style="color:var(--accent-color);">0</span></div>
+                <div class="stat-box">Boş <span id="stat-unanswered" style="color:#718096;">0</span></div>
+                <div class="stat-box">Net <span id="stat-net">0.00</span></div>
+            </div>
+
+            <button class="btn" onclick="location.reload()">Yeni Sınav Başlat</button>
+        </div>
+
+        <div class="review-section">
+            <h3 style="margin-bottom: 15px; color: var(--primary-color);">Soru Çözüm ve Cevap Analizi</h3>
+            <div id="review-list"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const allQuestions = [
+        // --- 1. PDF: 2024-2025 Bütünleme (20 Soru)[cite: 41, 42] ---
+        {source: "2024-2025 Bütünleme - Soru 1", text: "Cumhuriyet'in kuruluş sürecinde Türkiye'nin azınlık politikalarına etki eden temel faktör aşağıdakilerden hangisidir?", options: ["Osmanlı Devleti'nden kalan hukuki düzenlemeler", "Milli Mücadele sırasında Rum Patrikhanesi'nin faaliyetleri", "Lozan Antlaşması'nın hükümleri", "Batılı devletlerin baskıları", "Azınlıkların ekonomik gücü"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 2", text: "Hukuk-ı Aile Kararnamesi hangi yıl çıkarılmıştır?", options: ["1915", "1913", "1916", "1914", "1917"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 3", text: "Misyonerlerin Osmanlı Devleti'ndeki faaliyetlerinin dini amaçlarla sınırlı kalmadığı belirtilmiştir. Misyonerlerin özellikle hangi alanlarda toplumsal hizmet sunarak yerel halkın desteğini kazanmaya çalıştıkları vurgulanmıştır?", options: ["Sadece dini hizmetlerde", "Eğitim ve sağlık alanlarında", "Ticaret ve sanayi alanlarında", "Askeri alanlarda", "Yalnızca eğitim alanında"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 4", text: "Cumhuriyet döneminde Yahudi aydınları arasında Türkleşme politikalarını savunan ünlü isim aşağıdakilerden hangisidir?", options: ["Haim Mose Bejerano", "İshak Haleva", "Haim Nahum", "Rafael David Saban", "Moiz Kohen (Tekin Alp)"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 5", text: "Ermeni Patriği Zaven Efendi, işgallerin sona ermesiyle birlikte hangi stratejiye yönelmiştir?", options: ["Bağımsız bir Ermeni devleti kurmak", "İtilaf Devletleri ile çatışmaya girmek", "Türklerle yeniden yakın ilişkiler kurmaya çalışmak", "Osmanlı Devleti ile müzakere yürütmek", "Yunanistan ile iş birliğini sürdürmek"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 6", text: "1964 yılında Türkiye'de Rum nüfusunun azalmasında aşağıdakilerden hangisi etkili olmuştur?", options: ["Heybeliada Ruhban Okulu'nun kapatılması", "Kıbrıs sorunu", "İkamet, Ticaret ve Seyrisefain Mukavelesi'nin feshi", "1960 Darbesi", "Lozan Antlaşması"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 7", text: "II. Abdülhamit döneminde gayrimüslim millet nizamnameleri ile ilgili tartışmalar yaşanmasının başlıca nedenlerinden biri aşağıdakilerden hangisidir?", options: ["Osmanlı Devleti'nin ekonomik sıkıntıları", "II. Abdülhamit'in bu nizamnameleri devlet egemenliğine aykırı görmesi", "Nizamnamelerin dini liderlerin otoritesini güçlendirmesi", "Gayrimüslim toplulukların devlete sadakatini artırma çabası", "Nizamnamelerin Batılı devletlerin taleplerini karşılamaması"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 8", text: "Lozan Antlaşması'nın imzalanmasına göre Türkiye'de azınlık statüsü aşağıdakilerden hangisine dayanıyordu?", options: ["Etnik köken", "Cinsiyet", "Dil farklılığı", "Dini kimlik", "Sosyal sınıf"], correct: 3},
+        {source: "2024-2025 Bütünleme - Soru 9", text: "\"Arslanyan Meselesi\" olarak adlandırılan ve Ermeni Patrikhanesi içinde yaşanan çatışmaların temel nedeni aşağıdakilerden hangisidir?", options: ["Lozan Antlaşması'na karşı çıkanların sayısının artması", "Ruhanilerin patrik seçiminde tamamen etkisiz kalması", "Medeni Kanun'un uygulanmasıyla ilgili tartışmalar", "Patrik seçimi sürecinin gecikmesi ve idari çatışmaların ortaya çıkması", "Patrikhanenin tamamen kapatılması yönündeki talepler"], correct: 3},
+        {source: "2024-2025 Bütünleme - Soru 10", text: "Cumhuriyet'e geçiş sonrası Ermeni Patrikhanesi'nin devlete uyum sağlamak için attığı önemli adımlardan biri aşağıdakilerden hangisidir?", options: ["Patrikliğin yetkilerini genişletmek amacıyla çalışmalar yapması", "Patrikhane binasını başka bir yere taşımak", "Ermenilerle Müslümanlar arasında resmî bir iş birliği anlaşması imzalamak", "Lozan Antlaşması'nda tanınan aile hukukuna dair haklardan feragat etmesi", "Lozan Antlaşması'ndan çekilmek istemesi"], correct: 3},
+        {source: "2024-2025 Bütünleme - Soru 11", text: "Bulgar Eksarh Vekilliği Türkiye'de resmi olarak ne zaman sonlandırılmıştır?", options: ["1923 yılında", "1933 yılında", "1960 yılında", "1957 yılında", "1945 yılında"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 12", text: "Lozan Antlaşması'na göre elde ettikleri azınlık hakları çerçevesinde Rumlar Cumhuriyet'in ilanı sonrası hangi kanunun hükümlerinden feragat etmiştir?", options: ["Aile hukuku hakları", "Dini haklar", "Ekonomik haklar", "Vakıf hakları", "Eğitim hakları"], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 13", text: "Cumhuriyet döneminde Süryanilerin resmi statüde azınlık okulu açamamaları nasıl bir problem yaratmıştır?", options: ["Dini eğitimle ilgili yasal düzenlemelere uymamaları", "Din ve dil eğitiminin gayr-i resmi okullarla sınırlı kalması", "Devlet okullarında din eğitimi alamamaları", "Süryani gençlerinin yurt dışına göç etmesi", "Süryani çocuklarının askerlikten muaf tutulması"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 14", text: "Hahambaşılık ve Süryani Patrikliği, Milli Mücadele'ye destek vererek hangi hususun haklılığını göstermişlerdir?", options: ["İngiliz desteği almak", "Hristiyan ittifakını güçlendirmek", "Azınlıkların haklarını artırmak", "Yahudilerin bağımsızlığını sağlamak", "Milli Mücadele'nin gayrimüslim aleyhtarı bir faaliyet olmadığı"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 15", text: "Bedel-i askeri uygulamasının kapsamı ve bu uygulamanın cizye ile olan bağlantısı aşağıdakilerden hangisidir?", options: ["Bedel-i askeri, gayrimüslimlerin askerlik hizmetinden muaf tutulmaları karşılığında devlete ödedikleri bir vergi olup, aslında cizyenin farklı bir isimle devamıdır.", "Bedel-i askeri, Osmanlı Devleti'nin asker ihtiyacını karşılamak için başlattığı bir reformdur ve gayrimüslimlere askerlik zorunluluğu getirmiştir.", "Bedel-i askeri, yalnızca Osmanlı'nın doğu vilayetlerinde uygulanan bir vergi olup, cizye ile ilgisi yoktur.", "Bedel-i askeri, Müslüman vatandaşların askeri hizmet yapmamaları karşılığında ödediği bir vergidir ve cizye ile aynı anlama gelmemektedir.", "Bedel-i askeri, yabancıların askeri vergilerden muaf tutulmalarını sağlayan bir düzenlemedir."], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 16", text: "Lozan Antlaşması'nda azınlık haklarına dair maddeler hangi kısımda yer almıştır?", options: ["Ekonomik düzenlemeler kısmında", "Sınır düzenlemeleri bölümünde", "Azınlıkların korunması başlığı altında", "Eğitim reformları bölümünde", "Savaş tazminatları kısmında"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 17", text: "Cumhuriyet dönemi azınlık politikaları hangi kavram üzerine inşa edilmiştir?", options: ["Güvenlik ve kontrol", "Azınlıkların entegrasyonu", "Eğitim ve kültür", "Eşitlik ve haklar", "Ekonomik büyüme"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 18", text: "Papa Eftim, Türk Ortodoks Patrikhanesi'ni kurarken hangi sebeple İstanbul Rum Patrikhanesi'ne karşı çıkmıştır?", options: ["Patrikhanenin Latin Kilisesi ile birleşme girişimleri nedeniyle", "Patrikhanenin Anadolu'daki Rumları koruyamaması nedeniyle", "Patrikhanenin sadece dini meselelerle ilgilenmesi gerektiğini savunduğu için", "Patrikhanenin Yunan işgaliyle iş birliği yapması nedeniyle", "Patrikhanenin Osmanlı Devleti'ne bağlı kalması nedeniyle"], correct: 3},
+        {source: "2024-2025 Bütünleme - Soru 19", text: "Yahudi toplumu içinde cemaatin dini işleriyle ilgilenen mahkeme aşağıdakilerden hangisidir?", options: ["Sinod", "Cismanî Meclis", "Bet-din", "Ruhani Meclis", "Meclis-i Umumi"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 20", text: "Türk Ortodoks Patrikhanesi'nin kurulması hangi şehirde ilan edilmiştir?", options: ["Kayseri", "İzmir", "Ankara", "İstanbul", "Trabzon"], correct: 2},
+
+        // --- 2. PDF: 2025-2026 Bütünleme (20 Soru)[cite: 43, 44] ---
+        {source: "2025-2026 Bütünleme - Soru 1", text: "1964 yılında Türkiye'de Rum nüfusunun azalmasında aşağıdakilerden hangisi etkili olmuştur?", options: ["İkamet, Ticaret ve Seyrisefain Mukavelesi'nin feshi", "Kıbrıs sorunu", "1960 Darbesi", "Heybeliada Ruhban Okulu'nun kapatılması", "Lozan Antlaşması"], correct: 0},
+        {source: "2025-2026 Bütünleme - Soru 2", text: "Varlık Vergisi uygulanma dönemi aşağıdakilerden hangisidir?", options: ["1950 sonrası demokratikleşme döneminde", "Cumhuriyetin ilk yıllarında", "II. Dünya Savaşı sırasında", "Soğuk Savaş döneminde", "1920'lerde"], correct: 2},
+        {source: "2025-2026 Bütünleme - Soru 3", text: "Bulgar Eksarh Vekilliği Türkiye'de resmî olarak ne zaman sonlandırılmıştır?", options: ["1923 yılında", "1933 yılında", "1957 yılında", "1960 yılında", "1945 yılında"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 4", text: "Cumhuriyet dönemi azınlık politikaları hangi kavram üzerine inşa edilmiştir?", options: ["Eşitlik ve haklar", "Azınlıkların entegrasyonu", "Güvenlik ve kontrol", "Eğitim ve kültür", "Ekonomik büyüme"], correct: 1},
+        {source: "2025-2026 Bütünleme - Soru 5", text: "Lozan Antlaşması'nda azınlık haklarına dair maddeler hangi kısımda yer almıştır?", options: ["Eğitim reformları bölümünde", "Sınır düzenlemeleri bölümünde", "Azınlıkların korunması başlığı altında", "Ekonomik düzenlemeler kısmında", "Savaş tazminatları kısmında"], correct: 2},
+        {source: "2025-2026 Bütünleme - Soru 6", text: "Mondros Mütarekesi'nin imzalanmasının ardından İstanbul Rum Patrikhanesi'nin faaliyetleri arasında aşağıdakilerden hangisi sayılamaz?", options: ["Ermeni Patrikhanesi ile iş birliği halinde Milli Mücadele aleyhine çalışmıştır.", "Patrikhanenin Yunanistan'la birleştiğini açıklamıştır.", "Rum okullarında Türkçe eğitimi yasaklatmıştır.", "Venizelos'un patrikhane üzerinde söz sahibi olma talebini reddetmiştir.", "Rum ahalinin artık Osmanlı tebaası olmadıklarını ilan etmiştir."], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 7", text: "Misyonerlik faaliyetlerinden en fazla zarar gören ve güç kaybeden, bu yüzden de devletle iş birliği hâlinde misyonerlerle mücadele etmek için uğraşan kilise merkezi aşağıdakilerden hangisidir?", options: ["Protestan ABCFM/BOARD Teşkilatı", "Ermeni Katolik Patrikhanesi", "Hahambaşılık", "Ermeni Patrikhanesi", "Rum Patrikhanesi"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 8", text: "İlan edilmiş olmasına rağmen hiç uygulanmayan ve kendi milletine hiçbir getirisi olmayan millet nizamnamesi aşağıdakilerden hangisidir?", options: ["Hahamhane Nizamnamesi", "Kanun-ı Esasi", "Ermeni Milleti Nizamnamesi", "Rum Milleti Nizamnamesi", "Protestan Cemaati Nizamnamesi"], correct: 0},
+        {source: "2025-2026 Bütünleme - Soru 9", text: "Heybeliada Ruhban Okulu hangi kanun kapsamında kapatılmıştır?", options: ["Patrikhane Yetkileri Kanunu", "Medeni Kanun", "Varlık Vergisi Kanunu", "Özel Yüksek Okulların Devletleştirilmesi", "Vakıflar Kanunu"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 10", text: "Papa Eftim, hangi önemli olaydan sonra patrikhaneden bağımsızlık yoluna girmiştir?", options: ["Lozan Antlaşması'nın imzalanmasından sonra", "Patrikhanenin Rumların Osmanlı tebaası olmadığını ilan etmesinden sonra", "Patrik Meletios Metaksakis'in seçilmesinden sonra", "Yunan ordusunun İzmir'i işgalinden sonra", "Mondros Mütarekesi'nin imzalanmasından sonra"], correct: 2},
+        {source: "2025-2026 Bütünleme - Soru 11", text: "Yahudi toplumu içinde cemaatin dinî işleriyle ilgilenen mahkeme aşağıdakilerden hangisidir?", options: ["Cismânî Meclis", "Ruhanî Meclis", "Meclis-i Umumi", "Bet-din", "Sinod"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 12", text: "\"Arslanyan Meselesi\" olarak adlandırılan ve Ermeni Patrikhanesi içinde yaşanan çatışmaların temel nedeni aşağıdakilerden hangisidir?", options: ["Patrikhanenin tamamen kapatılması yönündeki talepler", "Patrik seçimi sürecinin gecikmesi ve idari çatışmaların ortaya çıkması", "Ruhanîlerin patrik seçiminde tamamen etkisiz kalması", "Lozan Antlaşması'na karşı çıkanların sayısının artması", "Medeni Kanun'un uygulanmasıyla ilgili tartışmalar"], correct: 1},
+        {source: "2025-2026 Bütünleme - Soru 13", text: "Süryani din adamlarının Cumhuriyet döneminde hangi konuda hükümetle uyumlu hareket ettiği söylenebilir?", options: ["Patrik seçimlerinde hükümetle iş birliği yapmaları", "Lozan Antlaşması'ndan sonra Türk vatandaşı olmaları", "Kilise reformları uygulamaları", "Süryani gençlerinin askere gitmesi", "Medeni Kanun sonrası kılık kıyafet düzenlemesine uyum sağlamaları ve bu konuda öncü rolü üstlenmeleri"], correct: 4},
+        {source: "2025-2026 Bütünleme - Soru 14", text: "Aşağıdakilerden hangisi Milli Mücadele sonrasında, kendi milletlerinin azınlık tanımına alınması taleplerine ve azınlık kavramına itiraz ederek, Türk tanımına ve Türkiye'nin kendi hukukuna bağlı olmak istediğini açıklayan gayrimüslim kurumlarındandır?", options: ["Katolik Patrikliği", "Protestan Vekilliği", "Ermeni Patrikhanesi", "Rum Patrikhanesi", "Hahambaşılık"], correct: 4},
+        {source: "2025-2026 Bütünleme - Soru 15", text: "Cumhuriyet döneminde Yahudi aydınları arasında Türkleşme politikalarını savunan ünlü isim aşağıdakilerden hangisidir?", options: ["Moiz Kohen (Tekin Alp)", "İshak Haleva", "Haim Moşe Bejerano", "Haim Nahum", "Rafael David Saban"], correct: 0},
+        {source: "2025-2026 Bütünleme - Soru 16", text: "Hukuk-ı Aile Kararnamesi hangi tarihte yürürlükten kaldırılmıştır?", options: ["20 Nisan 1920", "10 Mayıs 1917", "19 Haziran 1919", "23 Nisan 1923", "24 Temmuz 1923"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 17", text: "Cumhuriyet'e geçiş sonrası Ermeni Patrikhanesi'nin devlete uyum sağlamak için attığı önemli adımlardan biri aşağıdakilerden hangisidir?", options: ["Lozan Antlaşması'nda tanınan aile hukukuna dair haklardan feragat etmesi", "Ermenilerle Müslümanlar arasında resmi bir iş birliği anlaşması imzalamak", "Patrikhane binasını başka bir yere taşımak", "Patrikliğin yetkilerini genişletmek amacıyla çalışmalar yapması", "Lozan Antlaşması'ndan çekilmek istemesi"], correct: 0},
+        {source: "2025-2026 Bütünleme - Soru 18", text: "Lozan Antlaşması'na göre azınlıkların eğitim hakları nasıl düzenlenmiştir?", options: ["Azınlık okulları tamamen yasaklanmıştır.", "Azınlıklar kendi dillerinde eğitim yapabilir ama Türkçe zorunlu ders olacaktır.", "Azınlık okulları yalnızca dinî eğitim verebilir.", "Azınlıklar sadece Türk okullarında eğitim alabilir.", "Azınlıklar kendi dillerinde eğitim yapamaz."], correct: 1},
+        {source: "2025-2026 Bütünleme - Soru 19", text: "Türk Ortodoks Patrikhanesi'nin kurulma girişimi, hangi dinî topluluğun etkisinden kurtulmak amacıyla desteklenmiştir?", options: ["Ermeni Kilisesi", "Anglikan Kilisesi", "Süryani Kilisesi", "Latin Kilisesi", "İstanbul Rum Patrikhanesi"], correct: 4},
+        {source: "2025-2026 Bütünleme - Soru 20", text: "Meşrutiyet'e geçiş sürecinde, II. Abdülhamit dönemi bürokrasisinin tasfiyesi çerçevesinde dinî liderlerde de değişim yaşanmışken, bu değişimin dışında kalan ve eski lideriyle Meşrutiyet idaresinde de çalışmalarına devam eden dinî merkez neresidir?", options: ["Hahambaşılık", "Rum Patrikhanesi", "Katolik dinî lideri", "Ermeni Patrikhanesi", "Bulgar Eksarhlığı"], correct: 0}
+    ];
+
+    let questions = [];
+    let currentIdx = 0;
+    let userAnswers = [];
+    let timerInterval = null;
+    let timeLeft = 0;
+
+    function shuffleArray(array) {
+        let arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function startExam() {
+        const countSelect = parseInt(document.getElementById('question-count-select').value);
+        let shuffled = shuffleArray(allQuestions);
+        questions = shuffled.slice(0, countSelect);
+        
+        userAnswers = new Array(questions.length).fill(null);
+        currentIdx = 0;
+        timeLeft = questions.length * 60; // Soru başına 1 dakika
+
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('exam-screen').classList.remove('hidden');
+        document.getElementById('exam-info').style.display = 'flex';
+        document.getElementById('total-q-label').textContent = questions.length;
+        
+        initPalette();
+        loadQuestion(0);
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("Süre sona erdi! Sınavınız otomatik olarak bitiriliyor.");
+                finishExam();
+                return;
+            }
+            timeLeft--;
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            document.getElementById('timer-display').textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+        }, 1000);
+    }
+
+    function initPalette() {
+        const grid = document.getElementById('palette-grid');
+        grid.innerHTML = '';
+        questions.forEach((q, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'palette-btn';
+            btn.textContent = idx + 1;
+            btn.id = `palette-btn-${idx}`;
+            btn.onclick = () => goToQuestion(idx);
+            grid.appendChild(btn);
+        });
+        updatePalette();
+    }
+
+    function updatePalette() {
+        questions.forEach((q, idx) => {
+            const btn = document.getElementById(`palette-btn-${idx}`);
+            if(btn) {
+                btn.className = 'palette-btn';
+                if (userAnswers[idx] !== null) btn.classList.add('answered');
+                if (idx === currentIdx) btn.classList.add('current');
+            }
+        });
+    }
+
+    function loadQuestion(idx) {
+        currentIdx = idx;
+        const q = questions[idx];
+        
+        document.getElementById('current-q-num').textContent = idx + 1;
+        document.getElementById('question-source').textContent = q.source;
+        document.getElementById('question-text').textContent = `${idx + 1}. ${q.text}`;
+
+        const optionsList = document.getElementById('options-list');
+        optionsList.innerHTML = '';
+
+        const letters = ['A', 'B', 'C', 'D', 'E'];
+        q.options.forEach((opt, oIdx) => {
+            const li = document.createElement('li');
+            li.className = `option-item ${userAnswers[idx] === oIdx ? 'selected' : ''}`;
+            li.onclick = () => selectOption(oIdx);
+            
+            li.innerHTML = `
+                <div class="option-letter">${letters[oIdx]}</div>
+                <div>${opt}</div>
+            `;
+            optionsList.appendChild(li);
+        });
+
+        document.getElementById('prev-btn').style.display = idx === 0 ? 'none' : 'block';
+        if (idx === questions.length - 1) {
+            document.getElementById('next-btn').textContent = "Son Soru";
+        } else {
+            document.getElementById('next-btn').textContent = "Sonraki";
+        }
+
+        updatePalette();
+    }
+
+    function selectOption(oIdx) {
+        userAnswers[currentIdx] = oIdx;
+        loadQuestion(currentIdx);
+    }
+
+    function clearAnswer() {
+        userAnswers[currentIdx] = null;
+        loadQuestion(currentIdx);
+    }
+
+    function nextQuestion() {
+        if (currentIdx < questions.length - 1) {
+            loadQuestion(currentIdx + 1);
+        } else {
+            confirmFinish();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentIdx > 0) {
+            loadQuestion(currentIdx - 1);
+        }
+    }
+
+    function goToQuestion(idx) {
+        loadQuestion(idx);
+    }
+
+    function confirmFinish() {
+        const unanswered = userAnswers.filter(a => a === null).length;
+        let msg = "Sınavı bitirmek istediğinize emin misiniz?";
+        if (unanswered > 0) {
+            msg = `Boş bıraktığınız ${unanswered} soru var. Yine de testi bitirmek istiyor musunuz?`;
+        }
+        if (confirm(msg)) {
+            finishExam();
+        }
+    }
+
+    function finishExam() {
+        clearInterval(timerInterval);
+        document.getElementById('exam-screen').classList.add('hidden');
+        document.getElementById('exam-info').style.display = 'none';
+        document.getElementById('result-screen').classList.remove('hidden');
+
+        let correct = 0;
+        let incorrect = 0;
+        let unanswered = 0;
+
+        questions.forEach((q, idx) => {
+            const ans = userAnswers[idx];
+            if (ans === null) {
+                unanswered++;
+            } else if (ans === q.correct) {
+                correct++;
+            } else {
+                incorrect++;
+            }
+        });
+
+        let net = correct - (incorrect / 4);
+        if (net < 0) net = 0;
+
+        let score = (net / questions.length) * 100;
+
+        document.getElementById('final-score').textContent = score.toFixed(2);
+        document.getElementById('stat-correct').textContent = correct;
+        document.getElementById('stat-incorrect').textContent = incorrect;
+        document.getElementById('stat-unanswered').textContent = unanswered;
+        document.getElementById('stat-net').textContent = net.toFixed(2);
+
+        const reviewList = document.getElementById('review-list');
+        reviewList.innerHTML = '';
+
+        const letters = ['A', 'B', 'C', 'D', 'E'];
+        questions.forEach((q, idx) => {
+            const ans = userAnswers[idx];
+            let statusClass = 'unanswered';
+            let statusText = 'Boş Bırakıldı';
+
+            if (ans !== null) {
+                if (ans === q.correct) {
+                    statusClass = 'correct';
+                    statusText = 'Doğru';
+                } else {
+                    statusClass = 'incorrect';
+                    statusText = 'Yanlış';
+                }
+            }
+
+            const item = document.createElement('div');
+            item.className = `review-item ${statusClass}`;
+            
+            let userAnsStr = ans !== null ? `${letters[ans]}) ${q.options[ans]}` : 'Boş';
+            let correctAnsStr = `${letters[q.correct]}) ${q.options[q.correct]}`;
+
+            item.innerHTML = `
+                <div style="font-size:0.85rem; color:#718096; margin-bottom:5px;">${q.source} - <strong>${statusText}</strong></div>
+                <div style="font-weight:600; margin-bottom:10px;">${idx + 1}. ${q.text}</div>
+                <div style="font-size:0.95rem; margin-bottom:5px;">Sizin Cevabınız: <span style="font-weight:600; color:${ans === q.correct ? 'var(--success-color)' : 'var(--accent-color)'};">${userAnsStr}</span></div>
+                <div style="font-size:0.95rem;">Doğru Cevap: <span style="font-weight:600; color:var(--success-color);">${correctAnsStr}</span></div>
+            `;
+            reviewList.appendChild(item);
+        });
+    }
+</script>
+
+</body>
+</html>

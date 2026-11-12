@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Osmanlı Teşkilatı ve Kültür Tarihi - Özelleştirilebilir Deneme Sınavı</title>
+    <style>
+        :root {
+            --primary-color: #1b365d;
+            --secondary-color: #c5a059;
+            --accent-color: #d9534f;
+            --success-color: #5cb85c;
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #2c5282);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .exam-info {
+            display: flex;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .timer {
+            font-weight: bold;
+            color: #ffdd57;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        #start-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        #start-screen h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        #start-screen p {
+            color: #666;
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .settings-group {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-group label {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .settings-group select {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+            width: 220px;
+            text-align: center;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background-color: #2c5282;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+
+        .question-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #718096;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+        }
+
+        .options-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .option-item {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #fff;
+        }
+
+        .option-item:hover {
+            border-color: var(--secondary-color);
+            background-color: #fcf8f0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-color);
+            background-color: #edf2f7;
+            font-weight: 600;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+
+        .option-item.selected .option-letter {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background-color: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background-color: #cbd5e0;
+        }
+
+        .btn-danger {
+            background-color: var(--accent-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c53030;
+        }
+
+        .palette-container {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .palette-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #4a5568;
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+            gap: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .palette-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: #fff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .palette-btn.answered {
+            background-color: #e6fffa;
+            border-color: #319795;
+            color: #234e52;
+        }
+
+        .palette-btn.current {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(27, 54, 93, 0.2);
+        }
+
+        .results-summary {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .score-card {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 15px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .stat-box {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-box span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 5px;
+        }
+
+        .review-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .review-item {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .review-item.correct { border-left: 5px solid var(--success-color); }
+        .review-item.incorrect { border-left: 5px solid var(--accent-color); }
+        .review-item.unanswered { border-left: 5px solid #cbd5e0; }
+
+        .hidden { display: none !important; }
+
+        @media(max-width: 600px) {
+            body { padding: 10px; }
+            header { padding: 15px; }
+            .card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Osmanlı Teşkilatı ve Kültür Tarihi</h1>
+        <div class="exam-info" id="exam-info" style="display:none;">
+            <div>Soru: <span id="current-q-num">1</span>/<span id="total-q-label">20</span></div>
+            <div class="timer">Süre: <span id="timer-display">--:--</span></div>
+        </div>
+    </header>
+
+    <!-- GİRİŞ EKRANI -->
+    <div id="start-screen" class="card">
+        <h2>Özelleştirilebilir Deneme Sınavı</h2>
+        <p>Arşivdeki tüm orijinal Osmanlı Teşkilatı ve Kültür Tarihi soruları içerisinden istediğiniz sayıda soruyla hızlıca deneme çözebilirsiniz.</p>
+        
+        <div class="settings-group">
+            <label for="question-count-select">Soru Sayısını Seçin:</label>
+            <select id="question-count-select">
+                <option value="10">10 Soru (Hızlı Pratik)</option>
+                <option value="20" selected>20 Soru (Standart AUZEF)</option>
+                <option value="40">40 Soru</option>
+                <option value="80">80 Soru (Tüm Arşiv)</option>
+            </select>
+        </div>
+
+        <button class="btn" onclick="startExam()">Sınavı Başlat</button>
+    </div>
+
+    <!-- SINAV EKRANI -->
+    <div id="exam-screen" class="card hidden">
+        <div class="question-meta">
+            <span id="question-source">Soru Kaynağı</span>
+            <span>4 Yanlış 1 Doğruyu Götürür</span>
+        </div>
+        <div class="question-text" id="question-text">Soru metni yükleniyor...</div>
+        
+        <ul class="options-list" id="options-list"></ul>
+
+        <div class="navigation-buttons">
+            <button class="btn btn-secondary" id="prev-btn" onclick="prevQuestion()">Önceki</button>
+            <button class="btn btn-secondary" onclick="clearAnswer()">Boş Bırak / İşareti Kaldır</button>
+            <button class="btn" id="next-btn" onclick="nextQuestion()">Sonraki</button>
+            <button class="btn btn-danger" onclick="confirmFinish()">Testi Erken Bitir</button>
+        </div>
+
+        <div class="palette-container">
+            <div class="palette-title">Soru Paleti</div>
+            <div class="palette-grid" id="palette-grid"></div>
+        </div>
+    </div>
+
+    <!-- SONUÇ EKRANI -->
+    <div id="result-screen" class="card hidden">
+        <div class="results-summary">
+            <h2>Sınav Tamamlandı</h2>
+            <div class="score-card" id="final-score">0.00</div>
+            <p>100 Üzerinden Puan</p>
+            
+            <div class="stats-grid">
+                <div class="stat-box">Doğru <span id="stat-correct" style="color:var(--success-color);">0</span></div>
+                <div class="stat-box">Yanlış <span id="stat-incorrect" style="color:var(--accent-color);">0</span></div>
+                <div class="stat-box">Boş <span id="stat-unanswered" style="color:#718096;">0</span></div>
+                <div class="stat-box">Net <span id="stat-net">0.00</span></div>
+            </div>
+
+            <button class="btn" onclick="location.reload()">Yeni Sınav Başlat</button>
+        </div>
+
+        <div class="review-section">
+            <h3 style="margin-bottom: 15px; color: var(--primary-color);">Soru Çözüm ve Cevap Analizi</h3>
+            <div id="review-list"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const allQuestions = [
+        // --- 1. PDF: 2022-2023 Bütünleme (20 Soru)[cite: 45, 46] ---
+        {source: "2022-2023 Bütünleme - Soru 1", text: "Osmanlı Devleti'nde padişahlar tahta çıktığında anneleri mehd-i ulya-yı saltanat tabirine mazhar olur ve ..... merasimi ile Eski Saray'dan Topkapı Sarayı'na getirilirdi. Yukarıdaki boşluğa uygun gelecek ifade aşağıdakilerden hangisidir?", options: ["Valide Alayı", "Düğün Alayı", "Kılıç Alayı", "Muayede", "Sünnet Alayı"], correct: 0},
+        {source: "2022-2023 Bütünleme - Soru 2", text: "Osmanlı eyaletlerinin en kalabalık askeri sınıfını oluşturan birim aşağıdakilerden hangisidir?", options: ["Timarlı sipahiler", "Leventler", "Aşiret birlikleri", "Kapı halkı", "Ulufeli askerler"], correct: 0},
+        {source: "2022-2023 Bütünleme - Soru 3", text: "Osmanlı Sarayı'nda kitap sanatıyla uğraşan sanatçıların atölyelerinin bulunduğu yere verilen ad aşağıdakilerden hangisidir?", options: ["İmarethane", "Darphane", "Nakkaşhane", "Mehterhane", "Cebehane"], correct: 2},
+        {source: "2022-2023 Bütünleme - Soru 4", text: "Osmanlı Sarayı'nda hayırlı saatleri tespit edip zayiçe hazırlamak, kamerî sisteme göre takvim düzenlemek ve Ramazan ayı için imsakiye tertip etmek kimin görevleri idi?", options: ["Kehhal", "Padişah Hocası", "Hekimbaşı", "Reisülküttab", "Müneccimbaşı"], correct: 4},
+        {source: "2022-2023 Bütünleme - Soru 5", text: "Osmanlı Devleti'nde ilk medrese nerede ve hangi tarihte açılmıştır?", options: ["Bursa - 1299", "Edirne - 1321", "İznik - 1330", "İstanbul - 1453", "Konya - 1302"], correct: 2},
+        {source: "2022-2023 Bütünleme - Soru 6", text: "Osmanlı padişahlarının günlük hayatlarında dinlenmek, eğlenmek veya spor faaliyetlerini izlemek üzere İstanbul ve civarındaki çeşitli has bahçe ve kasırlara yaptıkları gezintilere verilen ad aşağıdakilerden hangisidir?", options: ["Ceyb-i hümayun", "Göç-i hümayun", "Tebdil", "Alay", "Biniş-i hümayun"], correct: 4},
+        {source: "2022-2023 Bütünleme - Soru 7", text: "Aşağıdakilerden hangisi Sarayda gerçekleşen dinî içerikli törenlerden değildir?", options: ["Hırka-i Saadet", "Kılıç Kuşanma", "Bayramlaşma", "Cuma Selamlığı", "Surre-i Hümayun"], correct: 1},
+        {source: "2022-2023 Bütünleme - Soru 8", text: "Hangi padişah zamanında Lağımcı ocağı tabya, kale ve köprü yapma, lağım bağlama gibi bir takım teknik bölümlere ayrılarak modernleştirilmiştir?", options: ["I. Abdülhamit", "III. Mustafa", "II. Mahmut", "Abdülmecit", "III. Selim"], correct: 4},
+        {source: "2022-2023 Bütünleme - Soru 9", text: "Osmanlılarda bir padişah ölüp de diğeri tahta cülus ettiğinde önce hangi tören yapılırdı?", options: ["Cenaze", "Divan-ı Hümayun", "Hırka-i Saadet Ziyareti", "Cülus", "Elçi Kabulü"], correct: 3},
+        {source: "2022-2023 Bütünleme - Soru 10", text: "Osmanlı Devleti'nde gelirlerinin tımar olarak dağıtılmayıp tamamının devlet adına toplandığı ve askerin ve eyalet idarecilerinin ücretlerinin ödendikten sonra kalan miktarın devlet hazinesine gönderildiği eyaletlere verilen isim aşağıdakilerden hangisidir?", options: ["Zeametli Eyaletler", "Maaşlı Eyaletler", "Salyaneli Eyaletler", "Sancaklı Eyaletler", "Haslı Eyaletler"], correct: 2},
+        {source: "2022-2023 Bütünleme - Soru 11", text: "Aşağıdakilerden hangisi Divân-ı Hümâyûnun asli üyelerindendir?", options: ["Şeyhülislam", "Reisülküttap", "Beylerbeyi", "Nişancı", "Yeniçeri Ağası"], correct: 3},
+        {source: "2022-2023 Bütünleme - Soru 12", text: "Aşağıdakilerden hangisi Osmanlı ordusunun öncü piyade birliklerine verilen addır?", options: ["Azep", "Şatır", "Deli", "Yaya", "Akıncı"], correct: 0},
+        {source: "2022-2023 Bütünleme - Soru 13", text: "Kaptanpaşa (Cezayir-i Bahr-i Sefid) eyaletine bağlı sancakların idarecilerine sancak beyi yerine kullanılan ifade aşağıdakilerden hangisidir?", options: ["Alay beyi", "Kaptan beyliği", "Beyler beyi", "Derya beyi", "Koca başı"], correct: 3},
+        {source: "2022-2023 Bütünleme - Soru 14", text: "Osmanlı Devleti'nde Yeniçeri Ocağı'nın kaldırılmasından sonra kurulan ordunun adı aşağıdakilerden hangisidir?", options: ["Sekban-ı Cedid", "Hassa Ordusu", "Asakir-i Mansure-i Muhammediye", "Nizam-ı Cedid", "Eşkinci"], correct: 2},
+        {source: "2022-2023 Bütünleme - Soru 15", text: "Osmanlı Sarayı'nda, Bed'i Besmele töreni hangi amaçla yapılır?", options: ["Doğum", "Sünnet", "Bayramlaşma", "Evlilik", "Eğitime başlama"], correct: 4},
+        {source: "2022-2023 Bütünleme - Soru 16", text: "Osmanlı Devleti'nde cülus töreni genellikle nerede yapılırdı?", options: ["Bab-ı Ali", "Bab-ı Hümayun", "Bab-ı Seraskeri", "Babüssaade", "Babüsselam"], correct: 3},
+        {source: "2022-2023 Bütünleme - Soru 17", text: "Aşağıdakilerden hangisi Osmanlı Sarayı'nda devlet yönetimine dair yapılan törenler arasında değildir?", options: ["Sancak-ı Şerif Alayı", "Bayramlaşma", "Kılıç Kuşanma", "Elçi Kabulü", "Cülus"], correct: 1},
+        {source: "2022-2023 Bütünleme - Soru 18", text: "Aşağıdakilerden hangisi tezhip sanatının uygulandığı Osmanlı padişahlarına ait belgelerden biri değildir?", options: ["İrade", "Berat", "Ferman", "Ahidname-i hümayun", "Name-i hümayun"], correct: 0},
+        {source: "2022-2023 Bütünleme - Soru 19", text: "Müderris ve kadıların atama, terfi, nakil ve azil gibi işlemlerinin tamamının kayıt edildiği defterlere verilen ad aşağıdakilerden hangisidir?", options: ["Ahkam", "Ruzname", "Mühimme", "Sicil", "Tahrir"], correct: 1},
+        {source: "2022-2023 Bütünleme - Soru 20", text: "Aşağıda Yeniçeri Ocağı hakkında verilen bilgilerden hangisi yanlıştır?", options: ["Osmanlı merkezi ordusunu temsil ederdi.", "Devlet maaş yerine tımar verirdi.", "Ocağın komutanı Yeniçeri Ağası'dır.", "İlk Yeniçeri kışlası Edirne'dedir.", "Asker kaynağı devşirme sistemiyle sağlanır."], correct: 1},
+
+        // --- 2. PDF: 2023-2024 Bütünleme (20 Soru)[cite: 47, 48, 49] ---
+        {source: "2023-2024 Bütünleme - Soru 1", text: "Aşağıdaki padişahlardan hangisinin cülus merasimi Edirne Sarayı'nda yapılmıştır?", options: ["IV. Mustafa", "II. Abdülhamid", "III. Ahmet", "Abdülmecid", "III. Selim"], correct: 2},
+        {source: "2023-2024 Bütünleme - Soru 2", text: "Osmanlı Devleti'nde gelirlerinin tımar olarak dağıtılmayıp tamamının devlet adına toplandığı ve askerin ve eyalet idarecilerinin ücretlerinin ödendikten sonra kalan miktarın devlet hazinesine gönderildiği eyaletlere verilen isim aşağıdakilerden hangisidir?", options: ["Salyaneli eyaletler", "Haslı eyaletler", "Zeametli eyaletler", "Sancaklı eyaletler", "Maaşlı eyaletler"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 3", text: "Osmanlı hareminde çalışan ve yaşayanların maaşları hangi hazineden ödenirdi?", options: ["Ceyb-i Hümayun", "Hazine-i Amire", "Raht", "Çilhane", "Mansure"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 4", text: "Aşağıdakilerden hangisi tezhip sanatının uygulandığı Osmanlı padişahlarına ait belgelerden biri değildir?", options: ["Name-i hümayun", "Berat", "Ferman", "İrade", "Ahidname-i hümayun"], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 5", text: "Aşağıdakilerden hangisi sarayda gerçekleşen dinî içerikli törenlerden değildir?", options: ["Kılıç Kuşanma", "Surre-i Hümayun", "Bayramlaşma", "Hırka-i Saadet ziyareti", "Cuma Selamlığı"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 6", text: "Medrese sisteminde eğitimini tamamladıktan sonra icazet alarak devletin eğitim, hukuk, merkezi bürokrasi, müftülük ve diğer dini hizmetlerinde görev yapan Müslümanların oluşturduğu meslek grubuna verilen isim aşağıdakilerden hangisidir?", options: ["Ehl-i hiref", "Seyfiye", "İlmiye", "Kalemiye", "Örfiye"], correct: 2},
+        {source: "2023-2024 Bütünleme - Soru 7", text: "Aşağıdakilerden hangisi kuruluştan itibaren Osmanlı padişahlarının örfi kullandıkları unvanlardan biri değildir?", options: ["Hüdavendigar", "Sultan", "Han", "Bey", "Şah"], correct: 4},
+        {source: "2023-2024 Bütünleme - Soru 8", text: "Padişahın kızları ya da kız kardeşleri sultan hanımların nikah törenlerinde onlar adına vekâleti alarak nikâha katılan görevli aşağıdakilerden hangisidir?", options: ["Vezir", "Hasodabaşı", "Bostancıbaşı", "Başgulam Ağası", "Darüsaade Ağası"], correct: 4},
+        {source: "2023-2024 Bütünleme - Soru 9", text: "Osman Gazi'den itibaren savaşlarda öncü kuvvet olarak görev alan ve kapıkullarının teşkilinden sonra özel statüyle hudut boylarında görevlendirilen akıncılar hangi tarihte ortadan kaldırılmıştır?", options: ["1826", "1774", "1876", "1839", "1793"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 10", text: "Aşağıdakilerden hangisi tezhip sanatının kullanıldığı alanlardan biri değildir?", options: ["Ferman", "Gravür", "Minyatür", "Yazma eser", "Tılsımlı gömlek"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 11", text: "Sultan II. Mahmut'un saltanatının ilk yıllarında Alemdar Mustafa Paşa'nın sadrazamlığı döneminde kurulan ancak kısa bir süre sonra lağvedilen ordu aşağıdakilerden hangisidir?", options: ["Hassa ordusu", "Sekban-ı Cedid", "Asakir-i Mansure", "Eşkinci ordusu", "Redif ordusu"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 12", text: "Kılıç kuşanma merasiminin yapılması için hayırlı gün ve saati tespit eden görevliye verilen ad aşağıdakilerden hangisidir?", options: ["Müsahib", "Müneccimbaşı", "Darüssaade Ağası", "Nakibüleşraf", "Muvakkit"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 13", text: "Aşağıda Yeniçeri Ocağı hakkında verilen bilgilerden hangisi yanlıştır?", options: ["İlk Yeniçeri kışlası Edirne'dedir.", "Ocağın komutanı Yeniçeri Ağası'dır.", "Asker kaynağı devşirme sistemiyle sağlanır.", "Devlet maaş yerine tımar verirdi.", "Osmanlı merkezi ordusunu temsil ederdi."], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 14", text: "Aşağıdaki törenlerden hangisinde halk şikâyetlerini doğrudan padişaha ulaştırabilmektedir?", options: ["Bed-i Besmele", "Sur-ı Hümayun", "Surre-i Hümayun", "Cuma Selamlığı", "Viladet-i Hümayun"], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 15", text: "Ordunun, sefere çıkacağı zaman düzenlenen törenin bitiminde növbet çalınarak görkemli bir alayla saraydan çıktıktan sonra Rumeli veya Anadolu tarafına gitmesine göre genellikle âdet üzere bir veya bir kaç gün konakladıkları yerler aşağıdakilerden hangisidir?", options: ["Kağıthane-Arnavudköy", "Silivri-Gebze", "Davutpaşa-Haydarpaşa", "Tuzla-Yeşilköy", "Cerrahpaşa-Beylerbeyi"], correct: 2},
+        {source: "2023-2024 Bütünleme - Soru 16", text: "Osmanlı Devleti'nde Yeniçeri Ocağı'nın kaldırılmasından sonra kurulan ordunun adı aşağıdakilerden hangisidir?", options: ["Eşkinci", "Hassa Ordusu", "Sekban-ı Cedid", "Asakir-i Mansure-i Muhammediye", "Nizam-ı Cedid"], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 17", text: "Osmanlı Devleti'nde Şeyhülislamlık hangi tarihte kurulmuştur?", options: ["1362", "1418", "1521", "1389", "1425"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 18", text: "Müderris ve kadıların atama, terfi, nakil ve azil gibi işlemlerinin tamamının kayıt edildiği defterlere verilen ad aşağıdakilerden hangisidir?", options: ["Mühimme", "Sicil", "Tahrir", "Ahkam", "Ruzname"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 19", text: "Osmanlı diplomatik kuralları gereğince veziriazamların Eflâk-Boğdan voyvodaları, Erdel Beyi gibi tabi devletlerle diğer yabancı devlet adamlarına yazdıkları mektuplarına koydukları işarete verilen ad aşağıdakilerden hangisidir?", options: ["Tuğra", "İmza", "Buyuruldu", "Sahh", "Pençe"], correct: 4},
+        {source: "2023-2024 Bütünleme - Soru 20", text: "Mucidinin Matrakçı Nasuh olduğu ileri sürülen ve ferman, berat gibi padişah ait belgelerle mühimme, ahkam ve şikâyet defterlerinde kullanılan yazı türü hangisidir?", options: ["Rika", "Muhakkak", "Divani", "Reyhani", "Nesih"], correct: 2},
+
+        // --- 3. PDF: 2024-2025 Bütünleme (20 Soru)[cite: 50, 51] ---
+        {source: "2024-2025 Bütünleme - Soru 1", text: "Osmanlı sarayında hayırlı saatleri tespit edip zayiçe hazırlamak, kameri sisteme göre takvim düzenlemek ve Ramazan ayı için imsakiye tertip etmek kimin görevi idi?", options: ["Padişah Hocası", "Kehhal", "Hekimbaşı", "Müneccimbaşı", "Reisülküttab"], correct: 3},
+        {source: "2024-2025 Bütünleme - Soru 2", text: "Padişahların sarayda resmi devlet yönetimini gerçekleştirdiği, yabancı devlet elçilerini dahi huzurunda kabul ettiği en önemli mekân aşağıdakilerden hangisidir?", options: ["Hünkar Sofası", "Kubbealtı", "Has Oda", "Arz Odası", "Babüssaade"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 3", text: "Aşağıdakilerden hangisi tezhip sanatının uygulandığı Osmanlı padişahlarına ait belgelerden biri değildir?", options: ["Ferman", "İrade", "Name-i hümayun", "Ahidname-i hümayun", "Berat"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 4", text: "Osmanlı Devletinde \"Valide Alayı\" genellikle hangi tören sonrasında yapılırdı?", options: ["Muayede", "Surre", "Cülus", "Sur-ı Hümayun", "Veladet-i Hümayun"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 5", text: "Osmanlı tarihinde Nizam-ı Cedid ordusunun ortadan kalkmasına sebep olan isyan aşağıdakilerden hangisidir?", options: ["Kuleli Vakası", "Kabakçı Mustafa", "Suhte Ayaklanması", "Patrona Halil", "31 Mart İsyanı"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 6", text: "Aşağıdakilerden hangisi Cuma Selamlığı töreninde gidilecek camiyi önceden hazır hale getirten ve padişahın seccadesini serdirten görevlidir?", options: ["Yeniçeri Ağası", "Başkullukçu", "Silahdar Ağa", "Hasodabaşı", "Şehremini"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 7", text: "Osmanlı Devletinde asırlar boyunca hükümdarlığı sona eren padişahların anneleri, eşleri, bekar kız çocukları ve hizmetkar kadınların gönderildiği saraya verilen ad aşağıdakilerden hangisidir?", options: ["Beşiktaş Sahilsarayı", "Aynalıkavak Sarayı", "Saray-ı Atik-i Amire", "Dolmabahçe Sarayı", "Topkapı Sarayı"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 8", text: "Aşağıdakilerden hangisi Osmanlı'nın en büyük top döküm imalathanelerine sahip merkezlerinden biri değildir?", options: ["Budin", "İşkodra", "Belgrad", "Gülanber", "Amasra"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 9", text: "Aşağıdaki padişahlardan hangisinin cülus merasimi Edirne Sarayı'nda yapılmıştır?", options: ["Abdülmecid", "II. Abdülhamid", "IV. Mustafa", "III. Selim", "III. Ahmet"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 10", text: "Osmanlı Devleti'nde şeyhülislamlık hangi tarihte kurulmuştur?", options: ["1425", "1521", "1389", "1418", "1362"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 11", text: "Sultan II. Mahmut ile Alemdar Mustafa Paşa arasında Sened-i İttifak hangi tarihte düzenlenmiştir?", options: ["1835", "1808", "1805", "1795", "1820"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 12", text: "Osmanlı Devleti'nde seyyid ve şeriflerin işlerini takip etmek ve davalarına bakmak için kurulan teşkilata verilen ad aşağıdakilerden hangisidir?", options: ["Nakibüleşraflık", "Şeyhülislamlık", "Bab-ı Meşihat", "Kadıaskerlik", "Reisülulema"], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 13", text: "Ordunun sefere çıkacağı zaman düzenlenen törenin bitiminde növbet çalınarak görkemli bir alayla saraydan çıktıktan sonra Rumeli veya Anadolu tarafına gitmesine göre genellikle âdet üzere bir veya bir kaç gün konakladıkları yerler aşağıdakilerden hangisidir?", options: ["Tuzla-Yeşilköy", "Silivri-Gebze", "Cerrahpaşa-Beylerbeyi", "Kağıthane-Arnavudköy", "Davutpaşa-Haydarpaşa"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 14", text: "Nizam-ı Cedid ordusu hangi padişah tarafından kurulmuştur?", options: ["II. Süleyman", "III. Osman", "I. Abdülhamid", "II. Mahmud", "III. Selim"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 15", text: "Osmanlı Devleti'nde ilmiye mensuplarının kullandığı yazı türü aşağıdakilerden hangisidir?", options: ["Talik", "Sülüs", "Nesih", "Rik'a", "Divani"], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 16", text: "Aşağıdakilerden hangisi Osmanlı yazı sanatında kullanılan malzemelerden biri değildir?", options: ["Makta", "Kita", "Devat", "Hokka", "Kamış kalem"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 17", text: "Osmanlı Devleti'nin her yıl düzenli olarak bir emin başkanlığında alayla kutsal mekânlara ve idareci zümresine gönderilen hediyeler, Mekke ve Medine halkına yapılan yardımlar ve ihsanların tamamına verilen ad aşağıdakilerden hangisidir?", options: ["İane ve İhsan", "Bed'-i Besmele", "Surre", "Hırka-i Saadet", "Cülus"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 18", text: "Aşağıdakilerin hangisi Osmanlı Devleti'nde Birun teşkilatına bağlı olarak çalışan görevlilerden biri değildir?", options: ["Hekimbaşı", "Müneccimbaşı", "Hasodabaşı", "Matbah Emini", "Şehremini"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 19", text: "Tımarı sipahiler savaş zamanlarında hangi komutanın kumandasında sefere iştirak ederlerdi?", options: ["Sancakbeyi", "Serasker", "Beylerbeyi", "Alaybeyi", "Yiğitbaşı"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 20", text: "Kılıç kuşanma merasimi nerede yapılırdı?", options: ["Fatih Camii", "Topkapı Sarayı", "Ayasofya", "Eyüp Sultan Türbesi", "Babüssaade"], correct: 3},
+
+        // --- 4. PDF: 2025-2026 Bütünleme (20 Soru)[cite: 52, 53] ---
+        {source: "2025-2026 Bütünleme - Soru 1", text: "Asakir-i Mansure ordusuna yedek olarak kurulan ordu aşağıdakilerden hangisidir?", options: ["Nizam-ı Cedid", "Sekban-ı Cedid", "Eşkinci", "Hassa", "Redif"], correct: 4},
+        {source: "2025-2026 Bütünleme - Soru 2", text: "Osmanlı Devleti'nde Şeyhülislâmlığın merkezdeki teşkilatına verilen ad aşağıdakilerden hangisidir?", options: ["Bab-ı Meşihat", "Babüssaade", "Bab-ı Seraskeri", "Mevali", "Bab-ı Ali"], correct: 0},
+        {source: "2025-2026 Bütünleme - Soru 3", text: "Ordunun sefere çıkacağı zaman düzenlenen törenin bitiminde növbet çalınarak görkemli bir alayla saraydan çıktıktan sonra Rumeli veya Anadolu tarafına gitmesine göre genellikle âdet üzere bir veya bir kaç gün konakladıkları yerler aşağıdakilerden hangisidir?", options: ["Kağıthane-Arnavudköy", "Cerrahpaşa-Beylerbeyi", "Silivri-Gebze", "Davutpaşa-Haydarpaşa", "Tuzla-Yeşilköy"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 4", text: "Aşağıdakilerden hangisi sarayda gerçekleşen dinî içerikli törenlerden değildir?", options: ["Cuma Selamlığı", "Bayramlaşma", "Kılıç Kuşanma", "Hırka-i Saadet ziyareti", "Surre-i Hümayun"], correct: 0},
+        {source: "2025-2026 Bütünleme - Soru 5", text: "Osmanlı Devleti'nde Surre-i Hümayun töreninin düzenleyicisi hangi görevlidir?", options: ["Sadrazam", "Hasodabaşı", "Babüssaade Ağası", "Darüssaade Ağası", "Mabeyn Başkatibi"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 6", text: "Osmanlı Devletinde asırlar boyunca hükümdarlığı sona eren padişahların anneleri, eşleri, bekar kız çocukları ve hizmetkar kadınların gönderildiği saraya verilen ad aşağıdakilerden hangisidir?", options: ["Aynalıkavak Sarayı", "Beşiktaş Sahilsarayı", "Dolmabahçe Sarayı", "Saray-ı Atik-i Amire", "Topkapı Sarayı"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 7", text: "Nakibüleşrafların seyyid ve şerifleri tespit ederek onlara tanınan ayrıcalıklardan istifade etmeleri için düzenledikleri belgeye verilen ad aşağıdakilerden hangisidir?", options: ["Kassam beratı", "Muafiyet fermanı", "Kaime", "Siyadet hücceti", "Tahrirat"], correct: 3},
+        {source: "2025-2026 Bütünleme - Soru 8", text: "Osmanlı diplomatik kuralları gereğince veziriazamların Eflâk-Boğdan voyvodaları, Erdel beyi gibi tâbi devletlerle diğer yabancı devlet adamlarına yazdıkları mektuplarına koydukları işarete verilen ad aşağıdakilerden hangisidir?", options: ["Sahh", "Buyuruldu", "İmza", "Tuğra", "Pençe"], correct: 4},
+        {source: "2025-2026 Bütünleme - Soru 9", text: "Medresedeki akademik faaliyeti yürüten ve ondan sorumlu olan kimse aşağıdakilerden hangisidir?", options: ["Müderris", "Kadı", "Danişmend", "Şeyhülislam", "Hace-i mektep"], correct: 0},
+        {source: "2025-2026 Bütünleme - Soru 10", text: "Başlangıçta seferlerde orduyu komuta eden Osmanlı padişahları daha sonraları vekil olarak hangi devlet görevlisini \"serdar-ı ekrem\" sıfatıyla görevlendirmişlerdir?", options: ["Beylerbeyi", "Sadrazam", "Çavuşbaşı", "Vezir", "Kazasker"], correct: 1},
+        {source: "2025-2026 Bütünleme - Soru 11", text: "Aşağıdakilerden hangisi Osmanlı ordusunun öncü piyade birliklerine verilen addır?", options: ["Akıncı", "Deli", "Şatır", "Yaya", "Azep"], correct: 4},
+        {source: "2025-2026 Bütünleme - Soru 12", text: "Osmanlı eyaletlerinin en kalabalık askeri sınıfını oluşturan birim aşağıdakilerden hangisidir?", options: ["Aşiret birlikleri", "Leventler", "Kapı halkı", "Ulufeli askerler", "Tımarı sipahiler"], correct: 4},
+        {source: "2025-2026 Bütünleme - Soru 13", text: "XVI. asrın ikinci yarısından itibaren ortaya çıkan, minyatürde sade zemin ve anlatımla gerçekçiliğin yansıtıldığı klasik üslûbun en önemli ustası kimdir?", options: ["Nakkaş Osman", "Sinan Bey", "Şiblizade Ahmet", "Matrakçı Nasuh", "Abdullah Nakkaş"], correct: 0},
+        {source: "2025-2026 Bütünleme - Soru 14", text: "Siyakat yazısı Osmanlı Devleti'nde hangi tür evraklarda kullanılmıştır?", options: ["Tapu-Maliye", "Telhis-Takrir", "İrade-Hatt-ı Hümayun", "Kaime-Şukka", "Divan-ı Hümayun"], correct: 0},
+        {source: "2025-2026 Bütünleme - Soru 15", text: "Divan toplantılarının yapılmasının ardından alınan kararların padişaha sunulduğu mekâna verilen isim aşağıdakilerden hangisidir?", options: ["Hasoda", "Hırka-i Saadet Dairesi", "Arz Odası", "Babüssaade", "Bağdat Köşkü"], correct: 2},
+        {source: "2025-2026 Bütünleme - Soru 16", text: "Aşağıdakilerden hangisi Osmanlı Devleti'nde yazma eserler dışında tezhip kullanılan yerlerden biri değildir?", options: ["Tılsımlı gömlekler", "Minyatürler", "Gravürler", "Kubur ve kutular", "Ok ve yaylar"], correct: 2},
+        {source: "2025-2026 Bütünleme - Soru 17", text: "Sultan II. Mahmut ile Alemdar Mustafa Paşa arasında Sened-i İttifak hangi tarihte düzenlenmiştir?", options: ["1795", "1835", "1808", "1805", "1820"], correct: 2},
+        {source: "2025-2026 Bütünleme - Soru 18", text: "Acemi Ocağı'na nefer sağlamak üzere 1363 yılında çıkartılan hangi kanun gereğince savaş esirlerinden yararlanılma yoluna gidilmiştir?", options: ["Acemi Ocağı Kanunu", "Pençik Kanunu", "Yeniçeri Kanunu", "Devşirme Kanunu", "Kapıkulu Kanunu"], correct: 1},
+        {source: "2025-2026 Bütünleme - Soru 19", text: "Padişahların erkek çocuklarının sünnet, kızlarının veya kız kardeşlerinin evlenme düğünlerinde yapılan törenlere verilen ad aşağıdakilerden hangisidir?", options: ["Biniş-i Hümayun", "Sur-ı Hümayun", "Beşik Alayı", "Göç-i Hümayun", "Veladet-i Hümayun"], correct: 1},
+        {source: "2025-2026 Bütünleme - Soru 20", text: "Osmanlı Devleti'nde XVIII. yüzyıldan itibaren sık sık uygulanmaya başlayan padişah ve hareminin farklı saraylarda yaz aylarını geçirmelerine verilen ad aşağıdakilerden hangisidir?", options: ["Biniş-i Hümayun", "Göç-i Hümayun", "Cuma selamlığı", "Huzur mürafaası", "Ceyb-i Hümayun"], correct: 1},
+
+        // --- 5. PDF: Üç Ders 2023-2024 (20 Soru)[cite: 54, 55] ---
+        {source: "2023-2024 Üç Ders - Soru 1", text: "Divan toplantılarının yapılmasının ardından alınan kararların padişaha sunulduğu mekâna verilen isim aşağıdakilerden hangisidir?", options: ["Hırka-i Saadet Dairesi", "Babüssaade", "Arz Odası", "Hasoda", "Bağdat Köşkü"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 2", text: "Osmanlı Devletinde Eski Saray'ın kullanımı hakkında aşağıdakilerden hangisi doğrudur?", options: ["Divan-ı hümayun burada toplanırdı.", "Tahttan ayrılan padişahların annesi, eşleri ve kadın hizmetkârları yaşardı.", "Yabancı elçilerin ağırlandığı bir mekandı.", "Devlet bu saraydan yönetilirdi.", "Padişahın yazlık sarayı idi."], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 3", text: "Osmanlı ordusuna subay ve kalifiyeli personel yetiştirmek amacıyla kurulan Mühendishâne-i Berrî-i Hümayun hangi Osmanlı padişahı zamanında açılmıştır?", options: ["II. Abdülhamit", "II. Mahmut", "III. Selim", "IV. Mustafa", "III. Mustafa"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 4", text: "Aşağıdakilerden hangisi Osmanlı Devleti'nde kapıkulu askeri yetiştirmek üzere uygulanan Devşirme Kanununu açıklayan ifadedir?", options: ["Osmanlı tebaası Müslüman halktan toplanan neferlerdir.", "Osmanlı tebaası Hristiyan çocuklarından toplanırdı.", "Bütün Osmanlı tebaasından asker toplama usulüydü.", "Yabancı tebaadan temin edilirdi", "Savaş esirleri arasından beşte bir oranında toplanırlardı."], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 5", text: "Gureba bölüklerinin başlıca görevi aşağıdakilerden hangisidir?", options: ["Atlı birlikler hâlinde, padişahı bizzat korumak", "Savaşta sancak-ı şerifi ve padişah sancaklarını muhafaza etmek", "Seferde cephanenin muhafazasından sorumlu olmak", "Hazine'nin korunmasını sağlamak", "Mehterhane-i Amire'nin bütün malzemesini korumak"], correct: 0},
+        {source: "2023-2024 Üç Ders - Soru 6", text: "Müderris ve kadıların atama, terfi, nakil ve azil gibi işlemlerinin tamamının kayıt edildiği defterlere verilen ad aşağıdakilerden hangisidir?", options: ["Ahkam", "Sicil", "Mühimme", "Tahrir", "Ruzname"], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 7", text: "Tımarı sipahilerin her türlü masrafı kendilerine ait olmak üzere yetiştirmek zorunda oldukları askerlere verilen ad aşağıdakilerden hangisidir?", options: ["Garib", "Müsellem", "Azeb", "Eşkinci", "Cebelü"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 8", text: "Osmanlı Devleti'nde \"hanedanın en yaşlı ve aklı başında üyesinin tahta çıkması\" usulü hangi tarihten itibaren uygulanmaya başlanmıştır?", options: ["1453", "1586", "1717", "1617", "1685"], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 9", text: "Osmanlı padişahlarının günlük hayatlarında dinlenmek, eğlenmek veya spor faaliyetlerini izlemek üzere İstanbul ve civarındaki çeşitli has bahçe ve kasırlara yaptıkları gezintilere verilen ad aşağıdakilerden hangisidir?", options: ["Tebdil", "Göç-i hümayun", "Ceyb-i hümayun", "Biniş-i hümayun", "Alay"], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 10", text: "Osmanlı sarayında, bed'-i Besmele töreni hangi amaçla yapılır?", options: ["Evlilik", "Bayramlaşma", "Sünnet", "Eğitime başlama", "Doğum"], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 11", text: "Divan-ı Hümayun, Topkapı Sarayı'nın hangi bölümünde yer almaktadır?", options: ["Orta Avlu", "Hasbahçe", "Enderun", "Birun", "Harem"], correct: 0},
+        {source: "2023-2024 Üç Ders - Soru 12", text: "Kazaskerler hakkında aşağıdaki bilgilerden hangisi yanlıştır?", options: ["Sadrazam sefere gittiğinde ona vekâlet ederdi.", "Sefere katılmadığında askerin işleri için Ordu kadısı tayin edilirdi.", "Divan-ı Hümayun dışında kendi konaklarında da şer'i ve hukuki meselelere bakarlardı.", "Sadrazamla cuma divanlarına katılırlardı.", "Divan-ı Hümayun'un asli üyeleri arasında yer almışlardır."], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 13", text: "Osmanlı hareminde çalışan ve yaşayanların maaşları hangi hazineden ödenirdi?", options: ["Ceyb-i Hümayun", "Çilhane", "Raht", "Hazine-i Amire", "Mansure"], correct: 0},
+        {source: "2023-2024 Üç Ders - Soru 14", text: "Osmanlı Devleti'nde Şeyhülislâmlığın merkezdeki teşkilatına verilen ad aşağıdakilerden hangisidir?", options: ["Bab-ı Meşihat", "Bab-ı Ali", "Mevali", "Bab-ı Seraskeri", "Babüssaade"], correct: 0},
+        {source: "2023-2024 Üç Ders - Soru 15", text: "Osmanlı haremine cariye alımından, harem ihtiyaç ve masraflarının görülmesine, Mekke ve Medine'de kurulmuş Haremeyn vakıflarının idaresine kadar pek çok alanda vazifeleri olan görevli aşağıdakilerden hangisidir?", options: ["Hazine Kethüdası", "Hasodabaşı", "Darüssaade Ağası", "Başkapı Gulamı Ağa", "Silahdar Ağa"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 16", text: "Aşağıdakilerden hangisi tezhip sanatının kullanıldığı alanlardan biri değildir?", options: ["Minyatür", "Ferman", "Tılsımlı gömlek", "Yazma eser", "Gravür"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 17", text: "Osmanlı Devleti'nde eyaletin idaresi ve yönetimi hangi devlet görevlisi tarafından gerçekleştirilirdi?", options: ["Sancakbeyi", "Beylerbeyi", "Kazasker", "Ayan", "Şehremini"], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 18", text: "Aşağıdakilerden hangisi Divân-ı Hümâyûnun asli üyelerindendir?", options: ["Yeniçeri Ağası", "Beylerbeyi", "Şeyhülislam", "Nişancı", "Reisülküttap"], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 19", text: "Kaptanpaşa (Cezayir-i Bahr-i Sefid) eyaletine bağlı sancakların idarecilerine sancak beyi yerine kullanılan ifade aşağıdakilerden hangisidir?", options: ["Koca başı", "Kaptan beyliği", "Derya beyi", "Alay beyi", "Beyler beyi"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 20", text: "Osmanlı Devleti'nde protokol gereği yapılan bütün merasimlerin ve harcamalarının kayıt edildiği defterlere verilen ad aşağıdakilerden hangisidir?", options: ["Temettuat", "Kanunname", "Ahkam", "Mühimme", "Teşrifat"], correct: 4}
+    ];
+
+    let questions = [];
+    let currentIdx = 0;
+    let userAnswers = [];
+    let timerInterval = null;
+    let timeLeft = 0;
+
+    function shuffleArray(array) {
+        let arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function startExam() {
+        const countSelect = parseInt(document.getElementById('question-count-select').value);
+        let shuffled = shuffleArray(allQuestions);
+        questions = shuffled.slice(0, countSelect);
+        
+        userAnswers = new Array(questions.length).fill(null);
+        currentIdx = 0;
+        timeLeft = questions.length * 60; // Soru başına 1 dakika
+
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('exam-screen').classList.remove('hidden');
+        document.getElementById('exam-info').style.display = 'flex';
+        document.getElementById('total-q-label').textContent = questions.length;
+        
+        initPalette();
+        loadQuestion(0);
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("Süre sona erdi! Sınavınız otomatik olarak bitiriliyor.");
+                finishExam();
+                return;
+            }
+            timeLeft--;
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            document.getElementById('timer-display').textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+        }, 1000);
+    }
+
+    function initPalette() {
+        const grid = document.getElementById('palette-grid');
+        grid.innerHTML = '';
+        questions.forEach((q, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'palette-btn';
+            btn.textContent = idx + 1;
+            btn.id = `palette-btn-${idx}`;
+            btn.onclick = () => goToQuestion(idx);
+            grid.appendChild(btn);
+        });
+        updatePalette();
+    }
+
+    function updatePalette() {
+        questions.forEach((q, idx) => {
+            const btn = document.getElementById(`palette-btn-${idx}`);
+            if(btn) {
+                btn.className = 'palette-btn';
+                if (userAnswers[idx] !== null) btn.classList.add('answered');
+                if (idx === currentIdx) btn.classList.add('current');
+            }
+        });
+    }
+
+    function loadQuestion(idx) {
+        currentIdx = idx;
+        const q = questions[idx];
+        
+        document.getElementById('current-q-num').textContent = idx + 1;
+        document.getElementById('question-source').textContent = q.source;
+        document.getElementById('question-text').textContent = `${idx + 1}. ${q.text}`;
+
+        const optionsList = document.getElementById('options-list');
+        optionsList.innerHTML = '';
+
+        const letters = ['A', 'B', 'C', 'D', 'E'];
+        q.options.forEach((opt, oIdx) => {
+            const li = document.createElement('li');
+            li.className = `option-item ${userAnswers[idx] === oIdx ? 'selected' : ''}`;
+            li.onclick = () => selectOption(oIdx);
+            
+            li.innerHTML = `
+                <div class="option-letter">${letters[oIdx]}</div>
+                <div>${opt}</div>
+            `;
+            optionsList.appendChild(li);
+        });
+
+        document.getElementById('prev-btn').style.display = idx === 0 ? 'none' : 'block';
+        if (idx === questions.length - 1) {
+            document.getElementById('next-btn').textContent = "Son Soru";
+        } else {
+            document.getElementById('next-btn').textContent = "Sonraki";
+        }
+
+        updatePalette();
+    }
+
+    function selectOption(oIdx) {
+        userAnswers[currentIdx] = oIdx;
+        loadQuestion(currentIdx);
+    }
+
+    function clearAnswer() {
+        userAnswers[currentIdx] = null;
+        loadQuestion(currentIdx);
+    }
+
+    function nextQuestion() {
+        if (currentIdx < questions.length - 1) {
+            loadQuestion(currentIdx + 1);
+        } else {
+            confirmFinish();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentIdx > 0) {
+            loadQuestion(currentIdx - 1);
+        }
+    }
+
+    function goToQuestion(idx) {
+        loadQuestion(idx);
+    }
+
+    function confirmFinish() {
+        const unanswered = userAnswers.filter(a => a === null).length;
+        let msg = "Sınavı bitirmek istediğinize emin misiniz?";
+        if (unanswered > 0) {
+            msg = `Boş bıraktığınız ${unanswered} soru var. Yine de testi bitirmek istiyor musunuz?`;
+        }
+        if (confirm(msg)) {
+            finishExam();
+        }
+    }
+
+    function finishExam() {
+        clearInterval(timerInterval);
+        document.getElementById('exam-screen').classList.add('hidden');
+        document.getElementById('exam-info').style.display = 'none';
+        document.getElementById('result-screen').classList.remove('hidden');
+
+        let correct = 0;
+        let incorrect = 0;
+        let unanswered = 0;
+
+        questions.forEach((q, idx) => {
+            const ans = userAnswers[idx];
+            if (ans === null) {
+                unanswered++;
+            } else if (ans === q.correct) {
+                correct++;
+            } else {
+                incorrect++;
+            }
+        });
+
+        let net = correct - (incorrect / 4);
+        if (net < 0) net = 0;
+
+        let score = (net / questions.length) * 100;
+
+        document.getElementById('final-score').textContent = score.toFixed(2);
+        document.getElementById('stat-correct').textContent = correct;
+        document.getElementById('stat-incorrect').textContent = incorrect;
+        document.getElementById('stat-unanswered').textContent = unanswered;
+        document.getElementById('stat-net').textContent = net.toFixed(2);
+
+        const reviewList = document.getElementById('review-list');
+        reviewList.innerHTML = '';
+
+        const letters = ['A', 'B', 'C', 'D', 'E'];
+        questions.forEach((q, idx) => {
+            const ans = userAnswers[idx];
+            let statusClass = 'unanswered';
+            let statusText = 'Boş Bırakıldı';
+
+            if (ans !== null) {
+                if (ans === q.correct) {
+                    statusClass = 'correct';
+                    statusText = 'Doğru';
+                } else {
+                    statusClass = 'incorrect';
+                    statusText = 'Yanlış';
+                }
+            }
+
+            const item = document.createElement('div');
+            item.className = `review-item ${statusClass}`;
+            
+            let userAnsStr = ans !== null ? `${letters[ans]}) ${q.options[ans]}` : 'Boş';
+            let correctAnsStr = `${letters[q.correct]}) ${q.options[q.correct]}`;
+
+            item.innerHTML = `
+                <div style="font-size:0.85rem; color:#718096; margin-bottom:5px;">${q.source} - <strong>${statusText}</strong></div>
+                <div style="font-weight:600; margin-bottom:10px;">${idx + 1}. ${q.text}</div>
+                <div style="font-size:0.95rem; margin-bottom:5px;">Sizin Cevabınız: <span style="font-weight:600; color:${ans === q.correct ? 'var(--success-color)' : 'var(--accent-color)'};">${userAnsStr}</span></div>
+                <div style="font-size:0.95rem;">Doğru Cevap: <span style="font-weight:600; color:var(--success-color);">${correctAnsStr}</span></div>
+            `;
+            reviewList.appendChild(item);
+        });
+    }
+</script>
+
+</body>
+</html>

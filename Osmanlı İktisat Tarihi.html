@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Osmanlı İktisat Tarihi - Özelleştirilebilir Deneme Sınavı</title>
+    <style>
+        :root {
+            --primary-color: #1b365d;
+            --secondary-color: #c5a059;
+            --accent-color: #d9534f;
+            --success-color: #5cb85c;
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #2c5282);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .exam-info {
+            display: flex;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .timer {
+            font-weight: bold;
+            color: #ffdd57;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        #start-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        #start-screen h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        #start-screen p {
+            color: #666;
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .settings-group {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-group label {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .settings-group select {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+            width: 220px;
+            text-align: center;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background-color: #2c5282;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+
+        .question-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #718096;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+        }
+
+        .options-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .option-item {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #fff;
+        }
+
+        .option-item:hover {
+            border-color: var(--secondary-color);
+            background-color: #fcf8f0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-color);
+            background-color: #edf2f7;
+            font-weight: 600;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+
+        .option-item.selected .option-letter {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background-color: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background-color: #cbd5e0;
+        }
+
+        .btn-danger {
+            background-color: var(--accent-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c53030;
+        }
+
+        .palette-container {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .palette-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #4a5568;
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+            gap: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .palette-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: #fff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .palette-btn.answered {
+            background-color: #e6fffa;
+            border-color: #319795;
+            color: #234e52;
+        }
+
+        .palette-btn.current {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(27, 54, 93, 0.2);
+        }
+
+        .results-summary {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .score-card {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 15px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .stat-box {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-box span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 5px;
+        }
+
+        .review-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .review-item {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .review-item.correct { border-left: 5px solid var(--success-color); }
+        .review-item.incorrect { border-left: 5px solid var(--accent-color); }
+        .review-item.unanswered { border-left: 5px solid #cbd5e0; }
+
+        .hidden { display: none !important; }
+
+        @media(max-width: 600px) {
+            body { padding: 10px; }
+            header { padding: 15px; }
+            .card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Osmanlı İktisat Tarihi</h1>
+        <div class="exam-info" id="exam-info" style="display:none;">
+            <div>Soru: <span id="current-q-num">1</span>/<span id="total-q-label">20</span></div>
+            <div class="timer">Süre: <span id="timer-display">--:--</span></div>
+        </div>
+    </header>
+
+    <!-- GİRİŞ EKRANI -->
+    <div id="start-screen" class="card">
+        <h2>Özelleştirilebilir Deneme Sınavı</h2>
+        <p>Arşivdeki toplam 80 orijinal Osmanlı İktisat Tarihi sorusu içerisinden istediğiniz sayıda soruyla hızlıca deneme çözebilirsiniz.</p>
+        
+        <div class="settings-group">
+            <label for="question-count-select">Soru Sayısını Seçin:</label>
+            <select id="question-count-select">
+                <option value="10">10 Soru (Hızlı Pratik)</option>
+                <option value="20" selected>20 Soru (Standart AUZEF)</option>
+                <option value="40">40 Soru</option>
+                <option value="80">80 Soru (Tüm Arşiv)</option>
+            </select>
+        </div>
+
+        <button class="btn" onclick="startExam()">Sınavı Başlat</button>
+    </div>
+
+    <!-- SINAV EKRANI -->
+    <div id="exam-screen" class="card hidden">
+        <div class="question-meta">
+            <span id="question-source">Soru Kaynağı</span>
+            <span>4 Yanlış 1 Doğruyu Götürür</span>
+        </div>
+        <div class="question-text" id="question-text">Soru metni yükleniyor...</div>
+        
+        <ul class="options-list" id="options-list"></ul>
+
+        <div class="navigation-buttons">
+            <button class="btn btn-secondary" id="prev-btn" onclick="prevQuestion()">Önceki</button>
+            <button class="btn btn-secondary" onclick="clearAnswer()">Boş Bırak / İşareti Kaldır</button>
+            <button class="btn" id="next-btn" onclick="nextQuestion()">Sonraki</button>
+            <button class="btn btn-danger" onclick="confirmFinish()">Testi Erken Bitir</button>
+        </div>
+
+        <div class="palette-container">
+            <div class="palette-title">Soru Paleti</div>
+            <div class="palette-grid" id="palette-grid"></div>
+        </div>
+    </div>
+
+    <!-- SONUÇ EKRANI -->
+    <div id="result-screen" class="card hidden">
+        <div class="results-summary">
+            <h2>Sınav Tamamlandı</h2>
+            <div class="score-card" id="final-score">0.00</div>
+            <p>100 Üzerinden Puan</p>
+            
+            <div class="stats-grid">
+                <div class="stat-box">Doğru <span id="stat-correct" style="color:var(--success-color);">0</span></div>
+                <div class="stat-box">Yanlış <span id="stat-incorrect" style="color:var(--accent-color);">0</span></div>
+                <div class="stat-box">Boş <span id="stat-unanswered" style="color:#718096;">0</span></div>
+                <div class="stat-box">Net <span id="stat-net">0.00</span></div>
+            </div>
+
+            <button class="btn" onclick="location.reload()">Yeni Sınav Başlat</button>
+        </div>
+
+        <div class="review-section">
+            <h3 style="margin-bottom: 15px; color: var(--primary-color);">Soru Çözüm ve Cevap Analizi</h3>
+            <div id="review-list"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const allQuestions = [
+        // --- 1. PDF: 2022-2023 Bütünleme (20 Soru) ---
+        {source: "2022-2023 Bütünleme - Soru 1", text: "Zamanı, gerek teşkilatı yönünden, gerekse sahip olduğu sorumlulukların öneminden dolayı Hazine-i Hassa Nezâreti'nin en fazla revaçta olduğu zamandır. Yukarıdaki boşluğa gelecek padişah aşağıdakilerden hangisidir?", options: ["V. Murad", "II. Mahmud", "Mehmed Reşad", "Abdülmecid", "II. Abdülhamid"], correct: 4},
+        {source: "2022-2023 Bütünleme - Soru 2", text: "Fakir halkın vergilerden ezilmesini önlemek için zamanla bölgelerin zenginleri tarafından olağanüstü konan vergileri karşılamak üzere kurulmuş kurumlara verilen ad aşağıdakilerden hangisidir?", options: ["Hayır Kurumları", "Vergi Sandıkları", "Orta Sandıkları", "İmaret Vakfı", "Avarız Sandıkları"], correct: 4},
+        {source: "2022-2023 Bütünleme - Soru 3", text: "Redif Hazinesinin kuruluş amacı aşağıdakilerden hangisidir?", options: ["Nezaret bütçelerinin oluşturulması için fon sağlanması", "Osmanlı Sarayının et ve erzak ihtiyacının karşılanması", "Asakir-i Mansure'nin yedek ordusunun masraflarının karşılanması", "Eyaletlerin harcamaları için ayrı bir fon oluşturulması", "İstanbul şehrinin zahire ve yakacak ihtiyacının karşılanması"], correct: 2},
+        {source: "2022-2023 Bütünleme - Soru 4", text: "Osmanlı Devleti'nde çoğunlukla yılda bir kez kurulan, toptan veya perakende olarak hem yerli hem de yabancı ürünlerin satıldığı yere verilen ad aşağıdakilerden hangisidir?", options: ["Panayır", "Pazar", "Kervansaray", "Bedesten", "Kapan"], correct: 0},
+        {source: "2022-2023 Bütünleme - Soru 5", text: "Osmanlı Devleti'nde kalemiye grubundaki bazı memurlara, sınır boylarında bulunan camilerde vazifeli hatip ve imamlara verilen tımarın adı aşağıdakilerden hangisidir?", options: ["Eşkinci", "Mensuhat", "Mustahfiz", "Hizmet", "Sepet"], correct: 2},
+        {source: "2022-2023 Bütünleme - Soru 6", text: "Resmini ödeyerek gümrüklerden geçirilen mallardan tekrar vergi alınmaması için sahiplerine verilen resmî belgenin adı aşağıdakilerden hangisidir?", options: ["Sadaret Tezkiresi", "Borç Tezkiresi", "İbraz Tezkiresi", "Eda Tezkiresi", "Hazine Tezkiresi"], correct: 3},
+        {source: "2022-2023 Bütünleme - Soru 7", text: "Darphane Nezareti'nin adı 1 Şubat 1850 tarihinde hangi kuruma çevrilmiştir?", options: ["Rusumat", "Evkaf", "Maliye", "Ceyb-i Hümayun", "Hazine-i Hassa"], correct: 4},
+        {source: "2022-2023 Bütünleme - Soru 8", text: "Osmanlı Devleti'nde altın ve gümüş paranın bir arada basıldığı devreye verilen ad aşağıdakilerden hangisidir?", options: ["Monometalizm", "Mecidiye", "Sikke-i mahbub", "Tağşiş", "Bimetalizm"], correct: 4},
+        {source: "2022-2023 Bütünleme - Soru 9", text: "Osmanlı Devleti Defterdarlık tabirini hangi devletten almıştır?", options: ["Büyük Selçuklular", "Anadolu Selçukluları", "Memluklular", "İlhanlılar", "Sasaniler"], correct: 3},
+        {source: "2022-2023 Bütünleme - Soru 10", text: "Osmanlı Devleti'nde her tuzlanın tuzunun satılabildiği ..... adı verilen bir bölgesi vardı.", options: ["örü", "çarşı", "han", "kapan", "bedesten"], correct: 0},
+        {source: "2022-2023 Bütünleme - Soru 11", text: "Dirlik sahiplerinin kendilerine verilen toprakla orantılı olarak beslemek ve yetiştirmek zorunda oldukları askere verilen ad aşağıdakilerden hangisidir?", options: ["Cebelü", "Saruca", "Kapı Halkı", "Levend", "Kapı Kulu"], correct: 0},
+        {source: "2022-2023 Bütünleme - Soru 12", text: "Dünya'da İktisat Tarihi'ne başlangıç olan iktisat tarihi kürsüsü kim tarafından kurulmuştur?", options: ["Toynbee", "Ashley", "Ricardo", "Cunningham", "Rogers"], correct: 1},
+        {source: "2022-2023 Bütünleme - Soru 13", text: "Tımarın, dirlik sahibinin gösterdiği yararlılıklara uygun olarak sonradan genişletilen kısmına verilen ad aşağıdakilerden hangisidir?", options: ["Terakki", "Kılıç", "Tahsis", "Arttırma", "Zam"], correct: 0},
+        {source: "2022-2023 Bütünleme - Soru 14", text: "Sadece gayrimüslim erkeklerden savaşlara katılmamaları karşılığında alınan ve mali güçlerine göre üç sınıf üzerinden toplanan baş vergisi aşağıdakilerden hangisidir?", options: ["Çift", "Harac", "Ösür", "Cizye", "Bennak"], correct: 3},
+        {source: "2022-2023 Bütünleme - Soru 15", text: "1802'de gayri müslim tebaadan isteyenlere, dış ticaret yapma hakkının tanınıp berat verilmesiyle ortaya çıkan tüccar sınıfı aşağıdakilerden hangisidir?", options: ["Yabancı Tüccar", "Avrupa Tüccarı", "Müstemen Tüccar", "Hayriye Tüccarı", "Reaya Tüccar"], correct: 3},
+        {source: "2022-2023 Bütünleme - Soru 16", text: "13 Mart 1874'ten itibaren geçerli olarak kaldırılan kara gümrüklerinde bazı mallar hariç tutulmuştur. Aşağıdakilerden hangisi bu mallardan biri değildir?", options: ["Tütün", "Tuz", "Şeker", "Enfiye", "Müskirat"], correct: 2},
+        {source: "2022-2023 Bütünleme - Soru 17", text: "İstanbul Emtia Gümrük Emaneti 1861 yılında aşağıdaki kurumlardan hangisine dönüşmüştür?", options: ["Ticaret Nezareti", "Emtia Müdüriyeti", "Rusumat Emaneti", "Nafia Nezareti", "Gümrük Nezareti"], correct: 2},
+        {source: "2022-2023 Bütünleme - Soru 18", text: "Mukabele Kaleminin görevi aşağıdakilerden hangisidir?", options: ["Yave ve kaçgunlar", "Kapıkullarının maaş işlemleri", "Salyanelerin işlemleri", "Kalemler arası yazışma", "Kale görevlilerinin kayıtları"], correct: 1},
+        {source: "2022-2023 Bütünleme - Soru 19", text: "Osmanlı Devleti'nde Hazine-i Âmire'nin dışında fazla nakit, sikke kesmekte kullanılan altın ve gümüş külçeleri, mücevherler ve kıymetli eşyaların muhafaza edildiği hazineye verilen ad aşağıdakilerden hangisidir?", options: ["İrad-ı Cedid", "Enderun", "Darphane", "Zahire", "Mansure"], correct: 1},
+        {source: "2022-2023 Bütünleme - Soru 20", text: "Hangi padişah döneminde Darphane, eminlik yerine nazırlıkla idare edilen itibarlı bir kurum haline gelmiştir?", options: ["I. Abdülhamit", "III. Ahmet", "I. Mahmut", "III. Selim", "IV. Mustafa"], correct: 2},
+
+        // --- 2. PDF: 2023-2024 Bütünleme (20 Soru) ---
+        {source: "2023-2024 Bütünleme - Soru 1", text: "Sipahilerin, timarları dâhilindeki reayanın kızlarının evlenmeleri sırasında damattan aldıkları vergi aşağıdakilerden hangisidir?", options: ["Zemin", "Haraç", "Bive", "İspenç", "Arus"], correct: 4},
+        {source: "2023-2024 Bütünleme - Soru 2", text: "Hangi padişah döneminde Darphane, eminlik yerine nazırlıkla idare edilen itibarlı bir kurum haline gelmiştir?", options: ["III. Ahmet", "I. Mahmut", "I. Abdülhamit", "IV. Mustafa", "III. Selim"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 3", text: "Sipahilerin kendilerinin ve ailelerinin işlettikleri arazilere verilen ad aşağıdakilerden hangisidir?", options: ["Miri Arazi", "Hassa Çiftliği", "Sipahi Çiftliği", "Çiftlik-i Hümayun", "Timar Arazisi"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 4", text: "Osmanlı Devleti'nin tespit edilebilen ilk bütçesi hangi padişah zamanına aittir?", options: ["Kanuni Sultan Süleyman", "Fatih Sultan Mehmet", "II. Murat", "II. Selim", "II. Beyazıt"], correct: 4},
+        {source: "2023-2024 Bütünleme - Soru 5", text: "Sadece gayrimüslim erkeklerden savaşlara katılmamaları karşılığında alınan ve mali güçlerine göre üç sınıf üzerinden toplanan baş vergisi aşağıdakilerden hangisidir?", options: ["Öşür", "Bennak", "Harac", "Çift", "Cizye"], correct: 4},
+        {source: "2023-2024 Bütünleme - Soru 6", text: "Dünyada İktisat Tarihi'ne başlangıç olan iktisat tarihi kürsüsü kim tarafından kurulmuştur?", options: ["Rogers", "Ricardo", "Cunningham", "Ashley", "Toynbee"], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 7", text: "Defterdarlığın ortadan kalkıp Maliye Nezareti'nin kurulma tarihi aşağıdakilerden hangisidir?", options: ["1840", "1837", "1839", "1844", "1834"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 8", text: "Redif Hazinesi'nin kuruluş amacı aşağıdakilerden hangisidir?", options: ["Osmanlı sarayının et ve erzak ihtiyacının karşılanması", "Nezaret bütçelerinin oluşturulması için fon sağlanması", "İstanbul şehrinin zahire ve yakacak ihtiyacının karşılanması", "Asakir-i Mansure'nin yedek ordusunun masraflarının karşılanması", "Eyaletlerin harcamaları için ayrı bir fon oluşturulması"], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 9", text: "Mukataaların ömür boyu satılmak yerine hisselere bölünerek sehm denilen hisse senetlerine göre satılması ve satın alanlara kâr payının dağıtılması yöntemine verilen ad aşağıdakilerden hangisidir?", options: ["Esham", "İltizam", "Malikane", "Kaime", "Emanet"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 10", text: "İlk faizsiz kaimeler, 20 ve 10 kuruşluk küçük küpürler hâlinde hangi tarihte basılmıştır?", options: ["1843", "1905", "1888", "1862", "1850"], correct: 4},
+        {source: "2023-2024 Bütünleme - Soru 11", text: "Osmanlı başkenti İstanbul'a zeytin, zeytinyağı ve kuru meyveler gemilerle genellikle nereden getirilirdi?", options: ["Karadeniz", "Cezayir", "Ege", "Kıbrıs", "Akdeniz"], correct: 2},
+        {source: "2023-2024 Bütünleme - Soru 12", text: "Osmanlı sikkesi olarak ilk ..... para Fatih'in saltanatında 1478'de basılmış ve 1640'a kadar saflığını korumuştur.", options: ["altın", "bronz", "metal", "gümüş", "bakır"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 13", text: "1802'de gayrimüslim tebaadan isteyenlere, dış ticaret yapma hakkının tanınıp berat verilmesiyle ortaya çıkan tüccar sınıfı aşağıdakilerden hangisidir?", options: ["Avrupa tüccarı", "Müstemen tüccar", "Reaya tüccar", "Hayriye tüccarı", "Yabancı tüccar"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 14", text: "Muhdes adı verilen sonradan kurulmuş kara gümrükleri hangi tarihte ortadan kaldırılmıştır?", options: ["1876", "1843", "1856", "1902", "1839"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 15", text: "Aşağıdakilerden hangisi Osmanlı saraylarının buz ihtiyacını sağlayan idaredir?", options: ["Erzak Anbarı", "Istabl-ı Amire", "Karhane İdaresi", "Matbah-ı Amire", "Hububat Anbarı"], correct: 2},
+        {source: "2023-2024 Bütünleme - Soru 16", text: "Osmanlı idaresine geçen topraklar mirî haline gelerek çiftçi-köylüye daimî ve irsî kiracısı hâlinde dağıtıldığında alınan her mahsulden bir kısmının ..... adı altında aynî yani mahsul olarak devlete ödenmesi karar altına alınmıştır.", options: ["Cizye", "Asiyab", "Sürsat", "Öşür", "Avarız"], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 17", text: "Osmanlı Devleti'nde her tuzlanın tuzunun satılabildiği ..... adı verilen bir bölgesi vardı.", options: ["çarşı", "bedesten", "kapan", "örü", "han"], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 18", text: "Osmanlı Devleti'nde 1857 yılında çıkartılan hangi nizamname ile malların rayice bırakılan kara gümrüklerinin ödenmesinden sonra getirildikleri liman gümrüklerinde rayiç fiyatın yüksek olması durumunda aradaki farkın tüccardan tahsil edilmesi karar altına alınmıştır?", options: ["Gümrük Nizamnamesi", "Ticaret Nizamnamesi", "Mahreç Nizamnamesi", "Kara Gümrüğü Kanunu", "Emval Nizamnamesi"], correct: 2},
+        {source: "2023-2024 Bütünleme - Soru 19", text: "Aşağıdakilerden hangisi bir timar çeşidi değildir?", options: ["Eşkinci", "Tahsis", "Hizmet", "Mensuhat", "Mustahfiz"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 20", text: "Hangi tarihten itibaren Osmanlı iç ticaretinde artık yabancılara düzenlenen tarifelerdeki oranlar geçerli olmaya başlamıştır?", options: ["1774", "1855", "1839", "1841", "1892"], correct: 2},
+
+        // --- 3. PDF: 2024-2025 Bütünleme (20 Soru) ---
+        {source: "2024-2025 Bütünleme - Soru 1", text: "Hangi tarihten itibaren Osmanlı iç ticaretinde artık yabancılara düzenlenen tarifelerdeki oranlar geçerli olmaya başlamıştır?", options: ["1841", "1839", "1892", "1774", "1855"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 2", text: "Tanzimat sonrası bütün örfi vergiler yerine ve herkesin gelirine göre toplanan verginin adı aşağıdakilerden hangisidir?", options: ["Emlak vergisi", "Cihadiye vergisi", "Kazanç vergisi", "Vergi-yi mahsusa", "Şahsi vergi"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 3", text: "Timar sisteminin hukuken bertaraf edilmesini ve zirai topraklarda özel mülkiyetin ağırlık kazanmasını sağlayan Arazi Kanunnamesi hangi tarihte çıkarılmıştır?", options: ["1881", "1856", "1840", "1892", "1858"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 4", text: "Resmini ödeyerek gümrüklerden geçirilen mallardan tekrar vergi alınmaması için sahiplerine verilen resmî belgenin adı aşağıdakilerden hangisidir?", options: ["Sadaret tezkiresi", "Eda tezkiresi", "Hazine tezkiresi", "Borç tezkiresi", "İbraz tezkiresi"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 5", text: "Osmanlı Devleti ilk olarak hangi devlete Osmanlı topraklarında ticaret yapma hakkını tanımıştır?", options: ["İngiltere", "Venedik", "Rus", "Ceneviz", "Fransa"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 6", text: "Klasik dönem Osmanlı Devleti'nin uyguladığı üç temel iktisadi ilke aşağıdakilerden hangisidir?", options: ["Kapitalizm-Fiskalizm-Oryantalizm", "Gelenekçilik-Merkantalizm-Kapitalizm", "Fiskalizm-Liberalizm-Sosyalizm", "Kapitalizm-Tradisyonalizm-Merkantalizm", "İaşe-Fiskalizm-Gelenekçilik"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 7", text: "Aşağıdakilerden hangisi Osmanlı padişahlarının kıymetli mücevherlerle kuşanmış eğer ve koşum takımlarının muhafaza edildiği iç hazine birimidir?", options: ["Çilhane", "İfraz", "Hilat", "Bodrum", "Raht"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 8", text: "\"Emanetle idare\" tabirinin doğru açıklama şekli aşağıdakilerden hangisidir?", options: ["Emin güvenilir kişilerin idaresi", "Kayd-ı hayat tarzıyla idare", "Devlet tesisinin özelleştirilmesi", "Mukataanın timara verilmesi", "Mukataanın devlet memuruyla idaresi"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 9", text: "Osmanlı sikkesi olarak ilk ..... para Fatih'in saltanatında 1478'de basılmış ve 1640'a kadar saflığını korumuştur.", options: ["altın", "bakır", "bronz", "gümüş", "metal"], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 10", text: "Dış ticarette söz sahibi ahidnameli devlet tüccarına Osmanlı Devleti'nin verdiği ad aşağıdakilerden hangisidir?", options: ["Avrupa tüccarı", "Muaccele", "Müstecir", "Müstemen", "Hayriye"], correct: 3},
+        {source: "2024-2025 Bütünleme - Soru 11", text: "Aşağıdakilerden hangisi başdefterdarın yardımcılarından biri değildir?", options: ["Sergi Nazırı", "Hazinedarbaşı", "Veznedarbaşı", "Cizye Başbakikulu", "Başbakikulu"], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 12", text: "II. Meşrutiyet'in ilanından Cumhuriyet'e kadar Hazine-i Hassa hangi birim tarafından idare edilmiştir?", options: ["Müdürlük", "Eminlik", "Komisyon", "Muhassıllık", "Nezaret"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 13", text: "Osmanlı başkenti İstanbul'a zeytin, zeytinyağı ve kuru meyveler gemilerle genellikle nereden getirilirdi?", options: ["Karadeniz", "Akdeniz", "Cezayir", "Ege", "Kıbrıs"], correct: 3},
+        {source: "2024-2025 Bütünleme - Soru 14", text: "Mukataaların ömür boyu satılmak yerine hisselere bölünerek sehm denilen hisse senetlerine göre satılması ve satın alanlara kâr payının dağıtılması yöntemine verilen ad aşağıdakilerden hangisidir?", options: ["Esham", "İltizam", "Malikane", "Kaime", "Emanet"], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 15", text: "Osmanlı idaresine geçen topraklar mirî haline gelerek çiftçi-köylüye daimî ve irsî kiracısı hâlinde dağıtıldığında alınan her mahsulden bir kısmının ..... adı altında aynî yani mahsul olarak devlete ödenmesi karar altına alınmıştır.", options: ["avarız", "asiyab", "öşür", "cizye", "sürsat"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 16", text: "Osmanlı Devleti'nde 1857 yılında çıkartılan hangi nizamname ile malların rayice bırakılan kara gümrüklerinin ödenmesinden sonra getirildikleri liman gümrüklerinde rayiç fiyatın yüksek olması durumunda aradaki farkın tüccardan tahsil edilmesi karar altına alınmıştır?", options: ["Ticaret Nizamnamesi", "Gümrük Nizamnamesi", "Mahreç Nizamnamesi", "Kara Gümrüğü Kanunu", "Emval Nizamnamesi"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 17", text: "Tanzimat'ın ilanından sonra yapılan yeni ekonomik uygulamalar doğrultusunda Darphane-i Amire hangi kurum tarafından idare edilmiştir?", options: ["İhtisap Nezareti", "Ticaret Nezareti", "Meskukat-ı Hümayun Müdürlüğü", "Muhasebe Müdürlüğü", "Matbaa-i Amire Müdürlüğü"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 18", text: "Sipahilerin, timarları dahilindeki reayanın kızlarının evlenmeleri sırasında damattan aldıkları vergi aşağıdakilerden hangisidir?", options: ["Haraç", "Bive", "Arus", "Zemin", "İspenç"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 19", text: "Osmanlı Devleti'nde hangi padişah devrinden itibaren bazı istisnalar dışında paranın sadece İstanbul Darphanesi'nde darp edilmesi kararı alınmıştır?", options: ["I. Mahmud", "III. Mustafa", "III. Selim", "I. Abdülhamid", "II. Mahmud"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 20", text: "Tanzimat sonrası devletin gelirlerine göre giderlerinin tayin edilerek sınırlandırılıp dengelenmesine verilen ad aşağıdakilerden hangisidir?", options: ["Tahsis usulü", "Egzersiz usulü", "Muhasebe bilançosu", "Bütçe usulü", "Envanter"], correct: 3},
+
+        // --- 4. PDF: Üç Ders 2023-2024 (20 Soru) ---
+        {source: "2023-2024 Üç Ders - Soru 1", text: "İstanbul Emtia Gümrük Emaneti 1861 yılında aşağıdaki kurumlardan hangisine dönüşmüştür?", options: ["Rusumat Emaneti", "Gümrük Nezareti", "Nafia Nezareti", "Emtia Müdüriyeti", "Ticaret Nezareti"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 2", text: "Sadece gayrimüslim erkeklerden savaşlara katılmamaları karşılığında alınan ve mali güçlerine göre üç sınıf üzerinden toplanan baş vergisi aşağıdakilerden hangisidir?", options: ["Cizye", "Bennak", "Çift", "Harac", "Ösür"], correct: 0},
+        {source: "2023-2024 Üç Ders - Soru 3", text: "Hangi tarihten itibaren Osmanlı iç ticaretinde artık yabancılara düzenlenen tarifelerdeki oranlar geçerli olmaya başlamıştır?", options: ["1892", "1841", "1839", "1774", "1855"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 4", text: "İlk faizsiz kaimeler, 20 ve 10 kuruşluk küçük küpürler hâlinde hangi tarihte basılmıştır?", options: ["1888", "1843", "1850", "1905", "1862"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 5", text: "Sergi Halifesi'nin görevi aşağıdakilerden hangisidir?", options: ["Hazineye giren altın ve gümüşleri tartmak", "Hazine muamelelerinin defterini tutmak", "Hazinedeki mevcut paranın kontrolünü yapmak", "Hazineye giren ve çıkan paranın hesabını yapmak", "Hazineden ödenen paralara dair resmi belge hazırlamak"], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 6", text: "Osmanlı Devleti'nde her tuzlanın tuzunun satılabildiği ..... adı verilen bir bölgesi vardı.", options: ["örü", "kapan", "han", "bedesten", "çarşı"], correct: 0},
+        {source: "2023-2024 Üç Ders - Soru 7", text: "Sipahilerin kendilerinin ve ailelerinin işlettikleri arazilere verilen ad aşağıdakilerden hangisidir?", options: ["Sipahi Çiftliği", "Miri Arazi", "Timar Arazisi", "Hassa Çiftliği", "Çiftlik-i Hümayun"], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 8", text: "Tanzimat sonrası hazine hesaplarının tutuluşuyla ilgili bütün görevleri üstlenen kaleme ne ad verilmiştir?", options: ["Maliye Muhasebesi", "Haremeyn Muhasebeciliği", "Tahsil Kalemi", "Rumeli Varidatı", "Anadolu Muhasebeciliği"], correct: 0},
+        {source: "2023-2024 Üç Ders - Soru 9", text: "Mukataaların ömür boyu satılmak yerine hisselere bölünerek sehm denilen hisse senetlerine göre satılması ve satın alanlara kâr payının dağıtılması yöntemine verilen ad aşağıdakilerden hangisidir?", options: ["Kaime", "Emanet", "İltizam", "Esham", "Malikane"], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 10", text: "Osmanlı başkenti İstanbul'a zeytin, zeytinyağı ve kuru meyveler gemilerle genellikle nereden getirilirdi?", options: ["Karadeniz", "Kıbrıs", "Ege", "Akdeniz", "Cezayir"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 11", text: "Redif Hazinesi'nin kuruluş amacı aşağıdakilerden hangisidir?", options: ["Nezaret bütçelerinin oluşturulması için fon sağlanması", "Asakir-i Mansure'nin yedek ordusunun masraflarının karşılanması", "Osmanlı sarayının et ve erzak ihtiyacının karşılanması", "İstanbul şehrinin zahire ve yakacak ihtiyacının karşılanması", "Eyaletlerin harcamaları için ayrı bir fon oluşturulması"], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 12", text: "Mefruşat-ı Hümayun idaresinin görevi aşağıdakilerden hangisidir?", options: ["Saray mutfaklarını idare etmek", "Sarayların döşeme ve tefrişini yapmak", "Padişaha ait binek hayvanlarına bakmak", "Sarayların inşa ve onarımını yapmak", "Saraylardaki eşyanın tamirini yapmak"], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 13", text: "Hangi defterdarlık hiyerarşide ilk sırada yer almaktadır?", options: ["Mansure defterdarlığı", "Rumeli defterdarlığı", "Arap ve Acem defterdarlığı", "Tuna defterdarlığı", "Anadolu defterdarlığı"], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 14", text: "Aşağıdakilerden hangisi veznedarbaşının görevleri arasında yer almaz?", options: ["Hazinenin tahsilat ve tediyatına nezaret etmek", "Hazinenin açılış ve kapanışını yapmak", "Altın ve gümüşleri tartmak, gerekirse sikke eritmek", "Hazinedeki meskûkâtı muayene etmek", "Hazineden ödenecek paraların sergilerini hazırlamak"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 15", text: "Dünyada İktisat Tarihi'ne başlangıç olan iktisat tarihi kürsüsü kim tarafından kurulmuştur?", options: ["Cunningham", "Ashley", "Rogers", "Toynbee", "Ricardo"], correct: 0},
+        {source: "2023-2024 Üç Ders - Soru 16", text: "Aşağıdakilerden hangisi iktisat tarihinin arşiv kaynakları arasında değildir?", options: ["Avarız defterleri", "Tahrir defterleri", "Arkeolojik bulgular", "Hazine hesapları", "Kadı sicilleri"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 17", text: "Aşağıdakilerden hangisi Ceyb-i Hümayun Hazinesi'nin gelir kaynaklarından biri değildir?", options: ["Padişah hasları", "Mısır irsaliyesi", "Eflak vergisi", "Darphane faizleri", "Vakıf gelirleri"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 18", text: "Hazineye ait gelirleri mümkün olduğu kadar yüksek düzeye çıkarmaya çalışmak ve ulaştığı düzeyin altına inmesini engellemek Osmanlı Devleti'nin hangi temel iktisadi ilkesidir?", options: ["Kapitalizm", "Gelenekçilik", "Tradisyonalizm", "Provizyonizm", "Fiskalizm"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 19", text: "Osmanlı Devleti'nin tespit edilebilen ilk bütçesi hangi padişah zamanına aittir?", options: ["II. Selim", "II. Murat", "Fatih Sultan Mehmet", "II. Beyazıt", "Kanuni Sultan Süleyman"], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 20", text: "Mart 1840'tan itibaren Osmanlı padişahına ..... adı verilen aylık 12.500 keselik bir maaş bağlanmıştır. Yukarıdaki metinde boş bırakılan yere aşağıdakilerden hangisi getirilmelidir?", options: ["ceyb-i hümayun", "hazine-i hassa", "iç hazine", "tahsisat-ı seniyye", "enderun hazinesi"], correct: 3}
+    ];
+
+    let questions = [];
+    let currentIdx = 0;
+    let userAnswers = [];
+    let timerInterval = null;
+    let timeLeft = 0;
+
+    function shuffleArray(array) {
+        let arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function startExam() {
+        const countSelect = parseInt(document.getElementById('question-count-select').value);
+        let shuffled = shuffleArray(allQuestions);
+        questions = shuffled.slice(0, countSelect);
+        
+        userAnswers = new Array(questions.length).fill(null);
+        currentIdx = 0;
+        timeLeft = questions.length * 60; // Soru başına 1 dakika
+
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('exam-screen').classList.remove('hidden');
+        document.getElementById('exam-info').style.display = 'flex';
+        document.getElementById('total-q-label').textContent = questions.length;
+        
+        initPalette();
+        loadQuestion(0);
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("Süre sona erdi! Sınavınız otomatik olarak bitiriliyor.");
+                finishExam();
+                return;
+            }
+            timeLeft--;
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            document.getElementById('timer-display').textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+        }, 1000);
+    }
+
+    function initPalette() {
+        const grid = document.getElementById('palette-grid');
+        grid.innerHTML = '';
+        questions.forEach((q, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'palette-btn';
+            btn.textContent = idx + 1;
+            btn.id = `palette-btn-${idx}`;
+            btn.onclick = () => goToQuestion(idx);
+            grid.appendChild(btn);
+        });
+        updatePalette();
+    }
+
+    function updatePalette() {
+        questions.forEach((q, idx) => {
+            const btn = document.getElementById(`palette-btn-${idx}`);
+            if(btn) {
+                btn.className = 'palette-btn';
+                if (userAnswers[idx] !== null) btn.classList.add('answered');
+                if (idx === currentIdx) btn.classList.add('current');
+            }
+        });
+    }
+
+    function loadQuestion(idx) {
+        currentIdx = idx;
+        const q = questions[idx];
+        
+        document.getElementById('current-q-num').textContent = idx + 1;
+        document.getElementById('question-source').textContent = q.source;
+        document.getElementById('question-text').textContent = `${idx + 1}. ${q.text}`;
+
+        const optionsList = document.getElementById('options-list');
+        optionsList.innerHTML = '';
+
+        const letters = ['A', 'B', 'C', 'D', 'E'];
+        q.options.forEach((opt, oIdx) => {
+            const li = document.createElement('li');
+            li.className = `option-item ${userAnswers[idx] === oIdx ? 'selected' : ''}`;
+            li.onclick = () => selectOption(oIdx);
+            
+            li.innerHTML = `
+                <div class="option-letter">${letters[oIdx]}</div>
+                <div>${opt}</div>
+            `;
+            optionsList.appendChild(li);
+        });
+
+        document.getElementById('prev-btn').style.display = idx === 0 ? 'none' : 'block';
+        if (idx === questions.length - 1) {
+            document.getElementById('next-btn').textContent = "Son Soru";
+        } else {
+            document.getElementById('next-btn').textContent = "Sonraki";
+        }
+
+        updatePalette();
+    }
+
+    function selectOption(oIdx) {
+        userAnswers[currentIdx] = oIdx;
+        loadQuestion(currentIdx);
+    }
+
+    function clearAnswer() {
+        userAnswers[currentIdx] = null;
+        loadQuestion(currentIdx);
+    }
+
+    function nextQuestion() {
+        if (currentIdx < questions.length - 1) {
+            loadQuestion(currentIdx + 1);
+        } else {
+            confirmFinish();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentIdx > 0) {
+            loadQuestion(currentIdx - 1);
+        }
+    }
+
+    function goToQuestion(idx) {
+        loadQuestion(idx);
+    }
+
+    function confirmFinish() {
+        const unanswered = userAnswers.filter(a => a === null).length;
+        let msg = "Sınavı bitirmek istediğinize emin misiniz?";
+        if (unanswered > 0) {
+            msg = `Boş bıraktığınız ${unanswered} soru var. Yine de testi bitirmek istiyor musunuz?`;
+        }
+        if (confirm(msg)) {
+            finishExam();
+        }
+    }
+
+    function finishExam() {
+        clearInterval(timerInterval);
+        document.getElementById('exam-screen').classList.add('hidden');
+        document.getElementById('exam-info').style.display = 'none';
+        document.getElementById('result-screen').classList.remove('hidden');
+
+        let correct = 0;
+        let incorrect = 0;
+        let unanswered = 0;
+
+        questions.forEach((q, idx) => {
+            const ans = userAnswers[idx];
+            if (ans === null) {
+                unanswered++;
+            } else if (ans === q.correct) {
+                correct++;
+            } else {
+                incorrect++;
+            }
+        });
+
+        let net = correct - (incorrect / 4);
+        if (net < 0) net = 0;
+
+        let score = (net / questions.length) * 100;
+
+        document.getElementById('final-score').textContent = score.toFixed(2);
+        document.getElementById('stat-correct').textContent = correct;
+        document.getElementById('stat-incorrect').textContent = incorrect;
+        document.getElementById('stat-unanswered').textContent = unanswered;
+        document.getElementById('stat-net').textContent = net.toFixed(2);
+
+        const reviewList = document.getElementById('review-list');
+        reviewList.innerHTML = '';
+
+        const letters = ['A', 'B', 'C', 'D', 'E'];
+        questions.forEach((q, idx) => {
+            const ans = userAnswers[idx];
+            let statusClass = 'unanswered';
+            let statusText = 'Boş Bırakıldı';
+
+            if (ans !== null) {
+                if (ans === q.correct) {
+                    statusClass = 'correct';
+                    statusText = 'Doğru';
+                } else {
+                    statusClass = 'incorrect';
+                    statusText = 'Yanlış';
+                }
+            }
+
+            const item = document.createElement('div');
+            item.className = `review-item ${statusClass}`;
+            
+            let userAnsStr = ans !== null ? `${letters[ans]}) ${q.options[ans]}` : 'Boş';
+            let correctAnsStr = `${letters[q.correct]}) ${q.options[q.correct]}`;
+
+            item.innerHTML = `
+                <div style="font-size:0.85rem; color:#718096; margin-bottom:5px;">${q.source} - <strong>${statusText}</strong></div>
+                <div style="font-weight:600; margin-bottom:10px;">${idx + 1}. ${q.text}</div>
+                <div style="font-size:0.95rem; margin-bottom:5px;">Sizin Cevabınız: <span style="font-weight:600; color:${ans === q.correct ? 'var(--success-color)' : 'var(--accent-color)'};">${userAnsStr}</span></div>
+                <div style="font-size:0.95rem;">Doğru Cevap: <span style="font-weight:600; color:var(--success-color);">${correctAnsStr}</span></div>
+            `;
+            reviewList.appendChild(item);
+        });
+    }
+</script>
+
+</body>
+</html>

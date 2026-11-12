@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sömürgecilik Tarihi - Özelleştirilebilir Deneme Sınavı</title>
+    <style>
+        :root {
+            --primary-color: #1b365d;
+            --secondary-color: #c5a059;
+            --accent-color: #d9534f;
+            --success-color: #5cb85c;
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #2c5282);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .exam-info {
+            display: flex;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .timer {
+            font-weight: bold;
+            color: #ffdd57;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        #start-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        #start-screen h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        #start-screen p {
+            color: #666;
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .settings-group {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-group label {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .settings-group select {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+            width: 220px;
+            text-align: center;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background-color: #2c5282;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+
+        .question-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #718096;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+        }
+
+        .options-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .option-item {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #fff;
+        }
+
+        .option-item:hover {
+            border-color: var(--secondary-color);
+            background-color: #fcf8f0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-color);
+            background-color: #edf2f7;
+            font-weight: 600;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+
+        .option-item.selected .option-letter {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background-color: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background-color: #cbd5e0;
+        }
+
+        .btn-danger {
+            background-color: var(--accent-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c53030;
+        }
+
+        .palette-container {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .palette-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #4a5568;
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+            gap: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .palette-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: #fff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .palette-btn.answered {
+            background-color: #e6fffa;
+            border-color: #319795;
+            color: #234e52;
+        }
+
+        .palette-btn.current {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(27, 54, 93, 0.2);
+        }
+
+        .results-summary {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .score-card {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 15px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .stat-box {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-box span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 5px;
+        }
+
+        .review-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .review-item {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .review-item.correct { border-left: 5px solid var(--success-color); }
+        .review-item.incorrect { border-left: 5px solid var(--accent-color); }
+        .review-item.unanswered { border-left: 5px solid #cbd5e0; }
+
+        .hidden { display: none !important; }
+
+        @media(max-width: 600px) {
+            body { padding: 10px; }
+            header { padding: 15px; }
+            .card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Sömürgecilik Tarihi</h1>
+        <div class="exam-info" id="exam-info" style="display:none;">
+            <div>Soru: <span id="current-q-num">1</span>/<span id="total-q-label">20</span></div>
+            <div class="timer">Süre: <span id="timer-display">--:--</span></div>
+        </div>
+    </header>
+
+    <!-- GİRİŞ EKRANI -->
+    <div id="start-screen" class="card">
+        <h2>Özelleştirilebilir Deneme Sınavı</h2>
+        <p>Arşivdeki tüm orijinal Sömürgecilik Tarihi soruları içerisinden istediğiniz sayıda soruyla hızlıca deneme çözebilirsiniz.</p>
+        
+        <div class="settings-group">
+            <label for="question-count-select">Soru Sayısını Seçin:</label>
+            <select id="question-count-select">
+                <option value="10">10 Soru (Hızlı Pratik)</option>
+                <option value="20" selected>20 Soru (Standart AUZEF)</option>
+                <option value="40">40 Soru</option>
+                <option value="80">80 Soru (Tüm Arşiv)</option>
+            </select>
+        </div>
+
+        <button class="btn" onclick="startExam()">Sınavı Başlat</button>
+    </div>
+
+    <!-- SINAV EKRANI -->
+    <div id="exam-screen" class="card hidden">
+        <div class="question-meta">
+            <span id="question-source">Soru Kaynağı</span>
+            <span>4 Yanlış 1 Doğruyu Götürür</span>
+        </div>
+        <div class="question-text" id="question-text">Soru metni yükleniyor...</div>
+        
+        <ul class="options-list" id="options-list"></ul>
+
+        <div class="navigation-buttons">
+            <button class="btn btn-secondary" id="prev-btn" onclick="prevQuestion()">Önceki</button>
+            <button class="btn btn-secondary" onclick="clearAnswer()">Boş Bırak / İşareti Kaldır</button>
+            <button class="btn" id="next-btn" onclick="nextQuestion()">Sonraki</button>
+            <button class="btn btn-danger" onclick="confirmFinish()">Testi Erken Bitir</button>
+        </div>
+
+        <div class="palette-container">
+            <div class="palette-title">Soru Paleti</div>
+            <div class="palette-grid" id="palette-grid"></div>
+        </div>
+    </div>
+
+    <!-- SONUÇ EKRANI -->
+    <div id="result-screen" class="card hidden">
+        <div class="results-summary">
+            <h2>Sınav Tamamlandı</h2>
+            <div class="score-card" id="final-score">0.00</div>
+            <p>100 Üzerinden Puan</p>
+            
+            <div class="stats-grid">
+                <div class="stat-box">Doğru <span id="stat-correct" style="color:var(--success-color);">0</span></div>
+                <div class="stat-box">Yanlış <span id="stat-incorrect" style="color:var(--accent-color);">0</span></div>
+                <div class="stat-box">Boş <span id="stat-unanswered" style="color:#718096;">0</span></div>
+                <div class="stat-box">Net <span id="stat-net">0.00</span></div>
+            </div>
+
+            <button class="btn" onclick="location.reload()">Yeni Sınav Başlat</button>
+        </div>
+
+        <div class="review-section">
+            <h3 style="margin-bottom: 15px; color: var(--primary-color);">Soru Çözüm ve Cevap Analizi</h3>
+            <div id="review-list"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const allQuestions = [
+        // --- 1. PDF: 2022-2023 Bütünleme (20 Soru) ---
+        {source: "2022-2023 Bütünleme - Soru 1", text: "Sömürgecilik tarihi göz önünde bulundurulduğunda aşağıdakilerden hangisi güçlü devletler tarafından bir bölgenin sömürgeleştirilmesi sürecinde kullanılan araçlardan değildir?", options: ["Misyonerlik faaliyetleri", "Donanma gücü", "Kamuoyu baskısı", "Diplomasi", "Askeri müdahale"], correct: 2},
+        {source: "2022-2023 Bütünleme - Soru 2", text: "1898'de Faşoda'da İngiltere ile çatışma noktasına gelen Fransa, Batı Sudan'dan aşağıdaki yerlerin hangisi karşılığında vazgeçmiştir?", options: ["Madagaskar", "Nijer", "Orta Afrika", "Çad", "Tunus"], correct: 1},
+        {source: "2022-2023 Bütünleme - Soru 3", text: "İspanya'nın Güney Amerika'daki sömürgelerinin büyük bölümünü kaybetmeye başlamasında etkili olan gelişme aşağıdakilerden hangisidir?", options: ["ABD ile yaptığı savaşta yenilmesi", "İngiltere'nin 1588'de İspanyol armadasını yenmesi", "Portekiz'in 1648'de bağımsızlığını tekrar kazanması", "Fransa'nın 1659'da İspanya'yı yenmesi", "Napolyon'un İspanya'yı işgali"], correct: 4},
+        {source: "2022-2023 Bütünleme - Soru 4", text: "Aşağıdakilerden hangisi 1763 tarihli Paris Antlaşmasıyla sona eren Yedi Yıl Savaşlarının sonuçlarından biridir?", options: ["Büyük bir Protestan nüfus Fransa'nın kontrolü altına girdi.", "İngiltere On Üç Koloni'de bazı ticari kısıtlamalara gitti.", "Kuzey Amerika'daki Fransız toprakları iki katına çıktı.", "Fransa Kuzey Amerika ticaretini ele geçirdi.", "İngiltere Kuzey Amerika'daki üstünlüğünü kaybetti."], correct: 1},
+        {source: "2022-2023 Bütünleme - Soru 5", text: "Çin'de 1898'de başlayan Boxer ayaklanması hakkında aşağıdakilerden hangisi yanlıştır?", options: ["Ayaklanmaya katılanlar kendilerine Yihequan yani dürüst ve uyumlu yumruklar adını vermişlerdir.", "Çin Hükümeti ayaklanmacıları hiçbir şekilde desteklememiştir.", "Ayaklanmanın çıkmasında Çin'de 19. yüzyılın ortasında görülmeye başlayan yabancı düşmanlığı etkili olmuştur.", "Ayaklanmanın hedefinde Çin'deki Avrupa ile Japonya nüfuzu ve bununla gelen Hristiyanlaşma bulunuyordu.", "Avrupalıların ayaklanmacılara verdikleri isim olan Boxer boksçu anlamına gelir."], correct: 1},
+        {source: "2022-2023 Bütünleme - Soru 6", text: "Afrika kıtasında Hristiyan misyonerlik faaliyetleri ve sömürgecilik arasındaki ilişki düşünüldüğünde aşağıdakilerden hangisi yanlıştır?", options: ["Misyonerler kimi zaman yerel yöneticilere sömürgecilerin himayesini kabul etme telkininde bulunmuşlardır.", "Katolik misyonerlerin faaliyetleri bazı bölgelerde krallar tarafından yasaklanmıştır.", "Afrika misyonerlikle, 19. yüzyılda kıtaya yapılan yoğun keşif seyahatleri esnasında tanışmıştır.", "Yerel yöneticileri Hristiyanlaştırmanın sömürge faaliyetlerinde bazı kolaylıklar sağlayacağı düşünülmüştür.", "Hristiyanlığı kabul eden bazı Afrikalı krallar, arka plandaki siyasi hesapları anlayınca sert tepkiler vermiştir."], correct: 2},
+        {source: "2022-2023 Bütünleme - Soru 7", text: "Seyahatleriyle Britanya Afrika Birliği'nin kurucularını, Nijer Nehri'nin ve Tinbüktü şehrinin bulunmasını destekleyen keşif gezileri yapmaları yönünde etkileyen seyyah kimdir?", options: ["James Bruce", "Henry Nicholls", "Alexander Gordon Laing", "Simon Lucas", "Mungo Park"], correct: 4},
+        {source: "2022-2023 Bütünleme - Soru 8", text: "Faaliyetlerine 1885'te başlayan ve kısa süre sonra Alman Hükümetinden imtiyaz almayı başaran Alman Doğu Afrika Şirketinin kurucusu kimdir?", options: ["Carl Jühlke", "Frederick Lugard", "Joseph Thomson", "John Kirk", "Carl Peters"], correct: 4},
+        {source: "2022-2023 Bütünleme - Soru 9", text: "Hindistan'a ilk önce ulaşarak sömürgecilik faaliyetlerine başlayan devlet aşağıdakilerden hangisidir?", options: ["İngiltere", "Fransa", "Portekiz", "Hollanda", "İspanya"], correct: 2},
+        {source: "2022-2023 Bütünleme - Soru 10", text: "Fransa adına Orta Afrika'da gerçekleştirdiği keşif seyahati sayesinde bu ülkenin Kongo Nehri'nin kuzey yakasında hak elde etmesini sağlayan İtalyan asıllı kaşif kimdir?", options: ["Giovanni Miani", "René-Auguste Caillié", "Ignatius Knoblecher", "Don Giovanni Beltrame", "Pierre Savorgnan de Brazza"], correct: 4},
+        {source: "2022-2023 Bütünleme - Soru 11", text: "1418 yılı sonrası Avrupalı keşif seyahatlerinin hedefi haline gelen Afrika Kıtası oransal olarak en fazla hangi yüzyılda sömürgeleştirilmiştir?", options: ["17. yüzyıl", "16. yüzyıl", "19. yüzyıl", "18. yüzyıl", "15. yüzyıl"], correct: 2},
+        {source: "2022-2023 Bütünleme - Soru 12", text: "Osmanlı Devleti aşağıdaki bölgelerden hangisini Fransızlar tarafından işgal edilme tehlikesi karşısında 1835'te doğrudan merkeze bağlamıştır?", options: ["Fas", "Trablusgarp", "Cezayir", "Tunus", "Mısır"], correct: 2},
+        {source: "2022-2023 Bütünleme - Soru 13", text: "Önceleri sadece bilimsel amaçlar etrafında faaliyet gösteren Fransız Coğrafya Derneğinin 1871'de koloni topraklarının genişletilmesi için harekete geçmesinin temel sebebi aşağıdakilerden hangisidir?", options: ["Kamuoyunun bu yöndeki şiddetli talebi", "Dönemin başbakanı Jules Ferry'nin bu yöndeki hırsı", "İngiltere ile rekabet etmesi", "Almanya'ya mağlubiyetin yol açtığı maddi kayıpların telafisi", "Afrika'nın uygarlaştırılmak istenmesi"], correct: 3},
+        {source: "2022-2023 Bütünleme - Soru 14", text: "Avrupalılarca uzun yıllar altınlarla dolu, müreffeh bir şehir olarak hayal edilen ancak Fransız seyyah René-Auguste Caillié'in gerçekleştirdiği seyahat sonucunda şartlarının oldukça kötü olduğu anlaşılan Afrika şehri aşağıdakilerden hangisidir?", options: ["Tinbüktü", "Gabon", "Zanzibar", "Djenne", "Hargeisa"], correct: 0},
+        {source: "2022-2023 Bütünleme - Soru 15", text: "Aşağıdakilerden hangisi 19. yüzyılda Sahra Afrika'sında güç mücadelesinde bulunan devletlerden biri değildir?", options: ["Rusya", "Belçika", "Almanya", "Fransa", "İngiltere"], correct: 0},
+        {source: "2022-2023 Bütünleme - Soru 16", text: "İngiliz Kraliyet Coğrafya Derneği tarafından David Livingstone'a yardım etmek üzere gönderilen heyetin başında yer alan ve Livingstone'un hayatını kaybettiği anlaşılınca Derneğin isteği üzerine Afrika'da müstakil bir keşif seyahati gerçekleştiren kaşif aşağıdakilerden hangisidir?", options: ["Samuel Baker", "Richard F. Burton", "John Hanning Speke", "Verney Lovett Cameron", "Henry Morton Stanley"], correct: 4},
+        {source: "2022-2023 Bütünleme - Soru 17", text: "Boerler hakkında aşağıdakilerden hangisi yanlıştır?", options: ["Yoğun olarak çiftçilik yapıyorlardı.", "Tanrının Afrika'daki yerli halkı kendilerinin emrine verdiğine inanıyorlardı.", "Boer Felemenkçe köylü anlamına gelir.", "İngiliz idaresini kolayca benimsediler.", "Kalvinist mezhebine bağlıdırlar."], correct: 3},
+        {source: "2022-2023 Bütünleme - Soru 18", text: "Afrika'ya dair 1876'da Brüksel'de yapılan Coğrafya Konferansı hakkında aşağıdaki değerlendirmelerden hangisi yanlıştır?", options: ["Katılımcılar arasında fiilen Afrika'yı gezmiş kişiler yer almıştır.", "Afrika içlerine ulaşılmasında yaşanan zorluklar ve çözüm önerileri ele alınmıştır.", "Afrika'da köle ticaretinin ortadan kaldırılması için Avrupa müdahalesi önerilmiştir.", "Afrika'nın doğal kaynaklar bakımından zenginliğine dikkat çekilmiştir.", "Afrikalıların yapılacak bilimsel ve teknik çalışmalara şiddetle karşı çıkacakları savunulmuştur."], correct: 4},
+        {source: "2022-2023 Bütünleme - Soru 19", text: "Aşağıdaki hangisi II. Leopold'ün 1885'te kurulan Serbest Kongo Devleti'nin sınırlarını genişletme çalışmaları sırasında muhatap olduğu siyasi güçler arasında yer almaz?", options: ["İngiltere", "İtalya", "Portekiz", "Mısır", "Fransa"], correct: 1},
+        {source: "2022-2023 Bütünleme - Soru 20", text: "19. yüzyılın sonlarında Çinhindi Yarımadası'nda İngiltere ile Fransa arasında paylaşılmak suretiyle iki sömürgeci gücün yayılma sahaları arasında bir tampon bölge hâline getirilen ülke aşağıdakilerden hangisidir?", options: ["Kamboçya", "Myanmar (Burma)", "Vietnam", "Tayland (Siam)", "Laos"], correct: 3},
+
+        // --- 2. PDF: 2023-2024 Bütünleme (20 Soru) ---
+        {source: "2023-2024 Bütünleme - Soru 1", text: "Osmanlı Devleti'nin Kuzey ve Orta Afrika'da sömürgeci devletlere karşı yürüttüğü mücadelede tam anlamıyla başarı sağlayamamasının en önemli sebebi aşağıdakilerden hangisidir?", options: ["Bölgenin ekonomik yetersizliği", "Donanma gücünün yetersizliği", "Bölge halkının isyanları", "Bölgeye olan coğrafi uzaklık", "Batılı devletlerin aşırı saldırgan politikası"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 2", text: "Belçika Kralı II. Leopold'ün Henry Morton Stanley'i Kongo havzasına göndermesinin asıl amacı aşağıdakilerden hangisidir?", options: ["Köle ticaretinin sona erdirilmesi için çalışmak", "Bölgede araştırma gezilerinde bulunmak", "Kongo Nehri ve çevresinde hâkimiyet tesis ettirmek", "Yerli halkların korunması için tedbirler almak", "Ticaretin geliştirilmesine çalışmak"], correct: 2},
+        {source: "2023-2024 Bütünleme - Soru 3", text: "Bugün Tayland sınırlarında azınlık olarak yaşamlarını sürdürmekte olan Patani Müslümanları hangi antlaşma sonucunda bu ülkenin hakimiyetine bırakılmışlardır?", options: ["1909 Bangkok Antlaşması", "1898 Paris Antlaşması", "1824 Londra Antlaşması", "1850 Tientsin Antlaşması", "1842 Nankin Antlaşması"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 4", text: "19. yüzyılın ortalarında Hollanda'nın ticari tekelinde bulunan Japonya'nın, diğer devletlerin ticaretine açılması için ilk ciddi girişim hangi devlet tarafından yapılmıştır?", options: ["Almanya", "İngiltere", "İspanya", "Fransa", "ABD"], correct: 4},
+        {source: "2023-2024 Bütünleme - Soru 5", text: "Fransız Doğu Hindistan Şirketi, Hindistan'da ticari faaliyetlerde bulunmak için ilk olarak aşağıdaki hangi devletle mücadele etmek zorunda kalmıştır?", options: ["İngiltere", "Almanya", "ABD", "Hollanda", "İspanya"], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 6", text: "Filipinler'deki İspanyol sömürge yönetimine karşı mücadele eden sürgündeki milliyetçi lider Emilio Aguinaldo'nun ülkeye dönmesini aşağıdakilerden hangisi desteklemiştir?", options: ["Belçika", "ABD", "İngiltere", "Fransa", "Almanya"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 7", text: "Çıktığı denizaşırı seyahatte öldürülen Portekizli denizci Macellan söz konusu seyahati hangi devlet adına yapmaktaydı?", options: ["Cenova", "İspanya", "Portekiz", "Fransa", "Hollanda"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 8", text: "Fransa adına Orta Afrika'da gerçekleştirdiği keşif seyahati sayesinde bu ülkenin Kongo Nehri'nin kuzey yakasında hak elde etmesini sağlayan İtalyan asıllı kâşif kimdir?", options: ["Giovanni Miani", "Pierre Savorgnan de Brazza", "Ignatius Knoblecher", "Don Giovanni Beltrame", "René-Auguste Caillié"], correct: 1},
+        {source: "2023-2024 Bütünleme - Soru 9", text: "Sömürgecilerin 19. yüzyılda Afrika'nın içlerine yaptıkları seyahatler hakkında aşağıdakilerden hangisi söylenemez?", options: ["Rehberler yerel halktan seçilmekteydi.", "Yükler deve, öküz ve eşeklerle taşınmaktaydı.", "Tropik hastalıklar seyahatleri güçleştirmekteydi.", "Seyahatler büyük oranda at sırtında gerçekleştirilmekteydi.", "Kalabalık gruplar halinde seyahat edilmekteydi."], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 10", text: "Aşağıdakilerden hangisi sömürgeci tüccarlar tarafından Afrika'nın Atlas Okyanusu kıyılarına verilen isimlerden biri değildir?", options: ["Fildişi Sahili", "Altın Sahili", "Kauçuk Sahili", "Köle Sahili", "Biber Sahili"], correct: 2},
+        {source: "2023-2024 Bütünleme - Soru 11", text: "Osmanlı Devleti 19. yüzyılın sonlarında Mısır'ın güneyi ve Sudan'daki topraklarını aşağıdaki hangi iki devlete karşı korumak için ciddi bir diplomatik ve siyasi mücadele sergilemiştir?", options: ["Fransa - İtalya", "İngiltere - Fransa", "İngiltere - İtalya", "İngiltere - Belçika", "Fransa - Belçika"], correct: 2},
+        {source: "2023-2024 Bütünleme - Soru 12", text: "Önceleri sadece bilimsel amaçlar etrafında faaliyet gösteren Fransız Coğrafya Derneğinin 1871'de koloni topraklarının genişletilmesi için harekete geçmesinin temel sebebi aşağıdakilerden hangisidir?", options: ["Afrika'nın uygarlaştırılmak istenmesi", "Dönemin başbakanı Jules Ferry'nin bu yöndeki hırsı", "Almanya'ya mağlubiyetin yol açtığı maddi kayıpların telafisi", "İngiltere ile rekabet etmesi", "Kamuoyunun bu yöndeki şiddetli talebi"], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 13", text: "Sahip oldukları altın rezervlerini erken tarihlerde tamamen tüketen Avrupalılar altın konusunda, coğrafi keşifler sürecinde ilk önce hangi kıtaya yönelmişlerdir?", options: ["Afrika", "Asya", "Güney Amerika", "Avustralya", "Kuzey Amerika"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 14", text: "İngilizlerin 1858 sonrası Hindistan'daki yönetim anlayışına dair aşağıdakilerden hangisi doğrudur?", options: ["Müslümanların Hindulaştırılmasını savunan radikal gruplara karşı çıkmışlardır.", "Hindu ve Müslüman toplumları arasındaki uyumu artırmaya çalışmışlardır.", "Yönetimde Müslümanları öne çıkarmışlardır.", "Müslüman toplumun birlik içinde kalmasına yönelik politikalar uygulamışlardır.", "Bazı eyaletlerdeki resmi dairelerde Urduca yerine Hintçe kullanımını getirmişlerdir."], correct: 4},
+        {source: "2023-2024 Bütünleme - Soru 15", text: "Aşağıdakilerden hangisi II. Leopold'ün 1885'te kurulan Serbest Kongo Devleti'nin sınırlarını genişletme çalışmaları sırasında muhatap olduğu siyasi güçler arasında yer almaz?", options: ["İngiltere", "Mısır", "Fransa", "İtalya", "Portekiz"], correct: 3},
+        {source: "2023-2024 Bütünleme - Soru 16", text: "Fransa'nın Fas'ı işgal etme girişimlerini engellemek amacıyla bir dönem Fas ile Osmanlı Devleti arasındaki ilişkilerin güçlenmesini desteklemiş olan devlet aşağıdakilerden hangisidir?", options: ["İngiltere", "İtalya", "İspanya", "ABD", "Belçika"], correct: 2},
+        {source: "2023-2024 Bütünleme - Soru 17", text: "İngilizler 1667 tarihli Breda Antlaşması ile New Netherland kolonisini hangi ülkeden almıştır?", options: ["Hollanda", "İspanya", "Portekiz", "Fransa", "Meksika"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 18", text: "1898'de Faşoda'da İngiltere ile çatışma noktasına gelen Fransa, Batı Sudan'dan aşağıdaki yerlerin hangisi karşılığında vazgeçmiştir?", options: ["Madagaskar", "Çad", "Nijer", "Tunus", "Orta Afrika"], correct: 0},
+        {source: "2023-2024 Bütünleme - Soru 19", text: "Avrupalılarca uzun yıllar altınlarla dolu, zengin bir şehir olarak hayal edilen ancak Fransız seyyah René-Auguste Caillié tarafından yapılan seyahat sonucunda şartlarının oldukça kötü olduğu anlaşılan Afrika şehri aşağıdakilerden hangisidir?", options: ["Zengibar", "Gabon", "Gondokoro", "Djenne", "Tinbüktü"], correct: 4},
+        {source: "2023-2024 Bütünleme - Soru 20", text: "Fransızların 17. yüzyılda yerleşip zaman içinde en kârlı köle plantasyonuna dönüştürdükleri sömürge ülkesi aşağıdakilerden hangisidir?", options: ["Kostarika", "El Salvador", "Belize", "Bahamalar", "Haiti"], correct: 4},
+
+        // --- 3. PDF: 2024-2025 Bütünleme (18 Soru) ---
+        {source: "2024-2025 Bütünleme - Soru 1", text: "Osmanlı idaresindeki Tunus'u ele geçirmek için mücadele eden sömürgeci iki devlet aşağıdakilerden hangisinde doğru olarak eşleştirilmiştir?", options: ["İngiltere - Fransa", "Fransa - Almanya", "İngiltere - Almanya", "Fransa - İtalya", "Almanya - İtalya"], correct: 3},
+        {source: "2024-2025 Bütünleme - Soru 2", text: "II. Leopold'ün girişimleriyle Brüksel'de toplanan Coğrafya Konferansı'nda kurulmasına karar verilen Uluslararası Afrika Birliği'ne üye ülkelerin Afrika'nın belirli bölgelerini keşfetmeleri konusunda anlaşılmıştır. Pierre Savorgnan de Brazza 1879-1882 yılları arasında bu amaçla Afrika'da gerçekleştirdiği keşif gezisine hangi ülke adına çıkmıştır?", options: ["Portekiz", "Fransa", "Almanya", "İtalya", "Belçika"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 3", text: "Hindistan'a ilk önce ulaşarak sömürgecilik faaliyetlerine başlayan devlet aşağıdakilerden hangisidir?", options: ["İspanya", "Fransa", "İngiltere", "Portekiz", "Hollanda"], correct: 3},
+        {source: "2024-2025 Bütünleme - Soru 4", text: "Serbest Kongo Devleti'nin bakır zengini Katanga'yı ele geçirmek için karşı karşıya geldiği şirket aşağıdaki ülkelerden hangisinin koruması altındaydı?", options: ["İtalya", "Fransa", "Almanya", "Portekiz", "İngiltere"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 5", text: "Mısır, Kasım 1876'da ilan edilen Goschen Kararnamesi ile hangi iki devletin mali kontrolüne girmiştir?", options: ["İngiltere - Fransa", "Almanya - Osmanlı Devleti", "Almanya - Fransa", "İngiltere - Almanya", "İngiltere - İtalya"], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 6", text: "Osmanlı Devleti aşağıdaki bölgelerden hangisini Fransızlar tarafından işgal edilme tehlikesi karşısında 1835'te doğrudan merkeze bağlamıştır?", options: ["Mısır", "Cezayir", "Trablusgarp", "Fas", "Tunus"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 7", text: "Aşağıdaki isimlerden hangisi II. Leopold tarafından Kongo'da başvurulan insanlık dışı sömürü yöntemleri ve uygulamalarının ortaya çıkarılması yönünde yayım ve çalışmalar gerçekleştirmemiştir?", options: ["Mark Twain", "Edmund Dene Morel", "Joseph Conrad", "Roger Casement", "Henry Morton Stanley"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 8", text: "\"Afrika'ya üç keşif seyahati gerçekleştirmiştir. İlk iki seyahatini R. F. Burton'un liderliğinde üçüncü seyahati ise R. F. Burton ile aralarında çeşitli sebeplerden çıkan anlaşmazlıklardan kaynaklanan ve Nil Nehri'nin kaynağı üzerine yoğunlaşan tartışmalar arasında 1860 yılında müstakil olarak yapmıştır.\" Yukarıdaki paragrafta bahsedilen İngiliz seyyah kimdir?", options: ["Samuel Baker", "Verney Lovett Cameron", "Henry Morton Stanley", "David Livingstone", "John Hanning Speke"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 9", text: "10 Ağustos 1511 tarihinde Alfonso de Albuquerque tarafından ele geçirilerek Portekiz'in Güneydoğu Asya'da yayılmasına merkez olan önemli ticaret şehri aşağıdakilerden hangisidir?", options: ["Cava", "Malaka", "Batavya", "Johor", "Riau"], correct: 1},
+        {source: "2024-2025 Bütünleme - Soru 10", text: "Boerler hakkında aşağıdakilerden hangisi yanlıştır?", options: ["İngiliz idaresini kolayca benimsediler.", "Boer Felemenkçe köylü anlamına gelir.", "Tanrının Afrika'daki yerli halkı kendilerinin emrine verdiğine inanıyorlardı.", "Kalvinist mezhebine bağlıdırlar.", "Yoğun olarak çiftçilik yapıyorlardı."], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 11", text: "Avrupalılar tarafından uzun süredir konumu tespit edilmeye çalışılan Nijer Nehri'ne ulaşmayı başaran ve bu geziye dair yazdığı seyahatname ile Avrupa kamuoyunda Afrika'ya yönelik üst düzey bir ilgi oluşturan İskoç seyyah kimdir?", options: ["Joseph Banks", "Henry Nicholls", "Friedrich Hornemann", "John Ledyard", "Mungo Park"], correct: 4},
+        {source: "2024-2025 Bütünleme - Soru 12", text: "16 Aralık 1773 tarihinde Massachusetts kolonisinin Boston şehrindeki \"Boston Çay Partisi\"nden sonra yaşananlar hakkında aşağıdakilerden hangisi söylenemez?", options: ["Boston valisinin yetkileri Koloni Meclisine devredilmiştir.", "Amerikan Bağımsızlık Savaşı'nı tetiklemiştir.", "Boston Limanı İngilizler tarafından ablukaya alınmıştır.", "İngiliz askerleri Boston'u işgal etmiştir.", "Koloninin beratı iptal edilmiştir."], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 13", text: "Hollanda, 26 Mart 1873'te bir ültimatom vererek \"İstanbul'daki halife ile münasebetlerini kesmesini ve İslam'ın sembolü olarak kabul ettikleri hilal ile yıldızı bayrağından çıkarmasını\" aşağıdaki devletlerin hangisinden talep etmiştir?", options: ["Johor Sultanlığı", "Palembang Sultanlığı", "Banten Sultanlığı", "Açe Sultanlığı", "Bruney Sultanlığı"], correct: 3},
+        {source: "2024-2025 Bütünleme - Soru 14", text: "Amerika Birleşik Devletleri Filipinler, Küba ve Porto Riko'yu 19. yüzyılın sonunda aşağıdaki sömürgeci ülkelerden hangisiyle giriştiği savaşta ele geçirmiştir?", options: ["İspanya", "Fransa", "Almanya", "Hollanda", "İngiltere"], correct: 0},
+        {source: "2024-2025 Bütünleme - Soru 15", text: "Daha önce Portekizlilerin müşterisi konumunda olup onlar adına ticaret yapmaktayken, bağımsızlığını elde ettikten sonra Portekiz'in sömürgelerini ele geçiren devlet aşağıdakilerden hangisidir?", options: ["Fransa", "İngiltere", "Hollanda", "Almanya", "İtalya"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 16", text: "Filipinler'deki İspanyol sömürge yönetimine karşı mücadele eden sürgündeki milliyetçi lider Emilio Aguinaldo'nun ülkeye dönmesini aşağıdakilerden hangisi desteklemiştir?", options: ["İngiltere", "Almanya", "Belçika", "ABD", "Fransa"], correct: 3},
+        {source: "2024-2025 Bütünleme - Soru 17", text: "Almanya'nın Doğu Afrika'daki iki sömürgesi Ruanda ve Burundi I. Dünya Savaşı'nda aşağıdaki hangi ülkenin kontrolüne girmiştir?", options: ["İngiltere", "Fransa", "Belçika", "İtalya", "ABD"], correct: 2},
+        {source: "2024-2025 Bütünleme - Soru 18", text: "Aşağıdakilerden hangisi 19. yüzyılda sömürgeci devletlerin Afrika'da yayılmalarında önemli bir rol oynayan coğrafya dernekleri hakkında söylenemez?", options: ["Fransa'daki coğrafya dernekleri tarafından çeşitli bülten ve dergiler yayınlanmıştır.", "Norveç bu dönemde coğrafya derneklerinin en iyi örgütlendiği ülkelerdendir.", "İngiltere'deki bazı dernekler Tinbüktü şehrine ulaşmak için çeşitli seyahatleri finanse etmiştir.", "1881 yılı itibariyle dünyada toplam 60 coğrafya derneği vardı.", "Fransa'da 1871 yılından sonra coğrafya derneklerinin sayısında ciddi bir artış yaşanmıştır."], correct: 1},
+
+        // --- 4. PDF: Üç Ders 2023-2024 (20 Soru) ---
+        {source: "2023-2024 Üç Ders - Soru 1", text: "Aşağıdakilerden hangisi sonuçları bakımından modern sömürgeciliğin ortaya çıkmasında en önemli rolü oynamıştır?", options: ["Ticaret için yeni pazarlar arayışı", "Coğrafi keşifler", "Avrupa'daki altın rezervlerinin erken tarihte tüketilmesi", "Değerli madenler elde etme isteği", "Baharatın kaynaklarına ulaşma isteği"], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 2", text: "Faaliyetlerine 1885'te başlayan ve kısa süre sonra Alman Hükümetinden imtiyaz almayı başaran Alman Doğu Afrika Şirketinin kurucusu kimdir?", options: ["Frederick Lugard", "Carl Peters", "Joseph Thomson", "Carl Jühlke", "John Kirk"], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 3", text: "İspanya'nın Latin Amerika'daki sömürgelerinin büyük bölümünü kaybetmeye başlamasında etkili olan gelişme aşağıdakilerden hangisidir?", options: ["Fransa karşısında 1659'da aldığı mağlubiyet", "İspanya'nın Napolyon tarafından işgali", "İspanyol armadasının 1588'de İngiltere tarafından yenilmesi", "ABD ile yaptığı savaşta mağlup olması", "Portekiz'in 1648'de bağımsızlığını tekrar kazanması"], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 4", text: "Aşağıdakilerden hangisi, 1876 Brüksel Coğrafya Konferansı'nda kurulması kararlaştırılan Uluslararası Afrika Birliği'nin kamuoyuna ilan edilmeyen amacıdır?", options: ["Bölgede koloniler kurulması", "Bölgenin uygarlaştırılması", "Kongo Irmağı'na kadar olan bölgede bilimsel merkezler kurulması", "Köleliğin kaldırılması için çalışılması", "Bölgenin insan, arazi ve kaynak yönünden incelenerek analiz edilmesi"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 5", text: "Afrika'da sömürge toprağı elde edilmesi yönünde kamuoyundan gelen talep ve faaliyetlerin ilk dönemde, çeşitli gerekçelerle hükümet tarafından ihtiyatla karşılandığı ülke aşağıdakilerden hangisidir?", options: ["Belçika", "Almanya", "ABD", "Rusya", "Japonya"], correct: 1},
+        {source: "2023-2024 Üç Ders - Soru 6", text: "Fransızların 17. yüzyılda yerleşip zaman içinde en kârlı köle plantasyonuna dönüştürdükleri sömürge ülkesi aşağıdakilerden hangisidir?", options: ["Kostarika", "Bahamalar", "Haiti", "Belize", "El Salvador"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 7", text: "Bugün Tayland sınırlarında azınlık olarak yaşamlarını sürdürmekte olan Patani Müslümanları hangi antlaşma sonucunda bu ülkenin hâkimiyetine bırakılmışlardır?", options: ["1850 Tientsin Antlaşması", "1842 Nankin Antlaşması", "1898 Paris Antlaşması", "1909 Bangkok Antlaşması", "1824 Londra Antlaşması"], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 8", text: "Aşağıdakilerden hangisi Kuzey Amerika'daki On Üç Koloni'nin İngiltere Krallığının uygulamaya koyduğu yeni vergilere yönelik itirazlarının gerekçelerinden biridir?", options: ["İngiliz kralının meşru yönetici kabul edilmemesi", "İngilizlerin kolonilerde fazla asker bulundurmaları", "Kolonilerde eğitime yeterince önem verilmemesi", "İngiliz parlamentosunda temsil edilmemeleri", "İngiliz valisinin yetkisini aşması"], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 9", text: "Aşağıdaki devletlerden hangisi Hindistan ve Doğu Asya ile ticaretini, kurduğu bir şirket üzerinden yürütmemiştir?", options: ["Avusturya", "Danimarka", "İsveç", "İspanya", "İngiltere"], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 10", text: "Aşağıdakilerden hangisi sömürgeci tüccarlar tarafından Afrika'nın Atlas Okyanusu kıyılarına verilen isimlerden biri değildir?", options: ["Fildişi Sahili", "Biber Sahili", "Kauçuk Sahili", "Köle Sahili", "Altın Sahili"], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 11", text: "Bugünkü Nijerya'nın batısı ve kuzeyinde ortaya çıkan ve zamanla Batı Afrika'nın en büyük devletlerinden biri konumuna yükselen, 18. yüzyıldan itibaren hanedan çekişmesi nedeniyle zayıflayarak 1888'de İngiliz protektorasına dönüşmüş olan devlet aşağıdakilerden hangisidir?", options: ["Ndongo Krallığı", "Kasanze Krallığı", "Dahomey İmparatorluğu", "Oyo İmparatorluğu", "Aşanti İmparatorluğu"], correct: 3},
+        {source: "2023-2024 Üç Ders - Soru 12", text: "Portekiz'de Prens Henri tarafından Vila do Infante adıyla kurulan denizcilik araştırma merkezinin keşif seferlerini desteklemesinin temel amacı aşağıdakilerden hangisidir?", options: ["Hristiyanlığı yaymak", "Deniz ticaretini geliştirmek", "Yeni tip gemileri denemek", "Afrika'yı araştırmak", "Asya'ya giden bir deniz yolu bulmak"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 13", text: "Hindistan'ın tamamını kontrol altına almak için faaliyetler yürüten Fransız vali aşağıdakilerden hangisidir?", options: ["Joseph François Dupleix", "Godeheu", "Lally Arkot", "De Leyrit", "François Martin"], correct: 0},
+        {source: "2023-2024 Üç Ders - Soru 14", text: "1854 yılında İngiltere'de Kraliyet Coğrafya Derneği tarafından John Hanning Speke ile birlikte Afrika'nın büyük göllerini keşfetmek üzere görevlendirilmiş, daha sonra aynı kişiyle Afrika'ya diğer bir seyahat daha yapmış, yaptığı bu ikinci seyahatte Speke ile yaşadığı anlaşmazlık nedeniyle arası açılmış kaşif, haritacı ve oryantalist kimdir?", options: ["Samuel Baker", "Henry Morton Stanley", "James Augustus Grant", "David Livingstone", "Richard F. Burton"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 15", text: "1776 yılında ilan olunan Amerikan Bağımsızlık Bildirgesi hakkında aşağıdakilerden hangisi söylenemez?", options: ["Halkın kendisini yönetme hakkına vurgu yapılmıştır.", "Yazılmasında Thomas Jefferson'un önemli rolü vardır.", "Köleliğin kaldırılması gerektiği savunulmuştur.", "John Locke'un felsefi görüşlerinden etkilenmiştir.", "Kolonilerin yürüttükleri savaşın nedenini açıklar."], correct: 2},
+        {source: "2023-2024 Üç Ders - Soru 16", text: "Sömürgecilerin 19. yüzyılda Afrika'nın içlerine yaptıkları seyahatler hakkında aşağıdakilerden hangisi söylenemez?", options: ["Seyahatler büyük oranda at sırtında gerçekleştirilmekteydi.", "Rehberler yerel halktan seçilmekteydi.", "Kalabalık gruplar halinde seyahat edilmekteydi.", "Yükler deve, öküz ve eşeklerle taşınmaktaydı.", "Tropik hastalıklar seyahatleri güçleştirmekteydi."], correct: 0},
+        {source: "2023-2024 Üç Ders - Soru 17", text: "Fransa, İngiltere'ye karşı giriştiği aşağıdaki hangi savaş sonucunda Kuzey Amerika'daki sömürgelerini kaybetmiştir?", options: ["Otuz Yıl Savaşları", "Yüzyıl Savaşları", "İspanyol Veraset Savaşları", "Avusturya Veraset Savaşları", "Yedi Yıl Savaşları"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 18", text: "Osmanlı Devleti aşağıdaki bölgelerden hangisini Fransızlar tarafından işgal edilme tehlikesi karşısında 1835'te doğrudan merkeze bağlamıştır?", options: ["Cezayir", "Fas", "Trablusgarp", "Mısır", "Tunus"], correct: 0},
+        {source: "2023-2024 Üç Ders - Soru 19", text: "Sahip oldukları altın rezervlerini erken tarihlerde tamamen tüketen Avrupalılar altın konusunda, coğrafi keşifler sürecinde ilk önce hangi kıtaya yönelmişlerdir?", options: ["Güney Amerika", "Avustralya", "Kuzey Amerika", "Asya", "Afrika"], correct: 4},
+        {source: "2023-2024 Üç Ders - Soru 20", text: "Aşağıdakilerden hangisi 1857 Hindistan Bağımsızlık Savaşı'nın yakın sebebidir?", options: ["Hintli sipahi askerlerine inek yağı kullanılan kartuşlar verilmesi", "İngiliz mallarının Hint pazarını istilası", "İngiliz idaresinin baskıcı tutumu", "İngiliz idaresinin dini hayata yönelik kısıtlamaları", "Vergi toplamada kullanılan zimandari sistemi"], correct: 0}
+    ];
+
+    let questions = [];
+    let currentIdx = 0;
+    let userAnswers = [];
+    let timerInterval = null;
+    let timeLeft = 0;
+
+    function shuffleArray(array) {
+        let arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function startExam() {
+        const countSelect = parseInt(document.getElementById('question-count-select').value);
+        let shuffled = shuffleArray(allQuestions);
+        questions = shuffled.slice(0, countSelect);
+        
+        userAnswers = new Array(questions.length).fill(null);
+        currentIdx = 0;
+        timeLeft = questions.length * 60; // Soru başına 1 dakika
+
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('exam-screen').classList.remove('hidden');
+        document.getElementById('exam-info').style.display = 'flex';
+        document.getElementById('total-q-label').textContent = questions.length;
+        
+        initPalette();
+        loadQuestion(0);
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("Süre sona erdi! Sınavınız otomatik olarak bitiriliyor.");
+                finishExam();
+                return;
+            }
+            timeLeft--;
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            document.getElementById('timer-display').textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+        }, 1000);
+    }
+
+    function initPalette() {
+        const grid = document.getElementById('palette-grid');
+        grid.innerHTML = '';
+        questions.forEach((q, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'palette-btn';
+            btn.textContent = idx + 1;
+            btn.id = `palette-btn-${idx}`;
+            btn.onclick = () => goToQuestion(idx);
+            grid.appendChild(btn);
+        });
+        updatePalette();
+    }
+
+    function updatePalette() {
+        questions.forEach((q, idx) => {
+            const btn = document.getElementById(`palette-btn-${idx}`);
+            if(btn) {
+                btn.className = 'palette-btn';
+                if (userAnswers[idx] !== null) btn.classList.add('answered');
+                if (idx === currentIdx) btn.classList.add('current');
+            }
+        });
+    }
+
+    function loadQuestion(idx) {
+        currentIdx = idx;
+        const q = questions[idx];
+        
+        document.getElementById('current-q-num').textContent = idx + 1;
+        document.getElementById('question-source').textContent = q.source;
+        document.getElementById('question-text').textContent = `${idx + 1}. ${q.text}`;
+
+        const optionsList = document.getElementById('options-list');
+        optionsList.innerHTML = '';
+
+        const letters = ['A', 'B', 'C', 'D', 'E'];
+        q.options.forEach((opt, oIdx) => {
+            const li = document.createElement('li');
+            li.className = `option-item ${userAnswers[idx] === oIdx ? 'selected' : ''}`;
+            li.onclick = () => selectOption(oIdx);
+            
+            li.innerHTML = `
+                <div class="option-letter">${letters[oIdx]}</div>
+                <div>${opt}</div>
+            `;
+            optionsList.appendChild(li);
+        });
+
+        document.getElementById('prev-btn').style.display = idx === 0 ? 'none' : 'block';
+        if (idx === questions.length - 1) {
+            document.getElementById('next-btn').textContent = "Son Soru";
+        } else {
+            document.getElementById('next-btn').textContent = "Sonraki";
+        }
+
+        updatePalette();
+    }
+
+    function selectOption(oIdx) {
+        userAnswers[currentIdx] = oIdx;
+        loadQuestion(currentIdx);
+    }
+
+    function clearAnswer() {
+        userAnswers[currentIdx] = null;
+        loadQuestion(currentIdx);
+    }
+
+    function nextQuestion() {
+        if (currentIdx < questions.length - 1) {
+            loadQuestion(currentIdx + 1);
+        } else {
+            confirmFinish();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentIdx > 0) {
+            loadQuestion(currentIdx - 1);
+        }
+    }
+
+    function goToQuestion(idx) {
+        loadQuestion(idx);
+    }
+
+    function confirmFinish() {
+        const unanswered = userAnswers.filter(a => a === null).length;
+        let msg = "Sınavı bitirmek istediğinize emin misiniz?";
+        if (unanswered > 0) {
+            msg = `Boş bıraktığınız ${unanswered} soru var. Yine de testi bitirmek istiyor musunuz?`;
+        }
+        if (confirm(msg)) {
+            finishExam();
+        }
+    }
+
+    function finishExam() {
+        clearInterval(timerInterval);
+        document.getElementById('exam-screen').classList.add('hidden');
+        document.getElementById('exam-info').style.display = 'none';
+        document.getElementById('result-screen').classList.remove('hidden');
+
+        let correct = 0;
+        let incorrect = 0;
+        let unanswered = 0;
+
+        questions.forEach((q, idx) => {
+            const ans = userAnswers[idx];
+            if (ans === null) {
+                unanswered++;
+            } else if (ans === q.correct) {
+                correct++;
+            } else {
+                incorrect++;
+            }
+        });
+
+        let net = correct - (incorrect / 4);
+        if (net < 0) net = 0;
+
+        let score = (net / questions.length) * 100;
+
+        document.getElementById('final-score').textContent = score.toFixed(2);
+        document.getElementById('stat-correct').textContent = correct;
+        document.getElementById('stat-incorrect').textContent = incorrect;
+        document.getElementById('stat-unanswered').textContent = unanswered;
+        document.getElementById('stat-net').textContent = net.toFixed(2);
+
+        const reviewList = document.getElementById('review-list');
+        reviewList.innerHTML = '';
+
+        const letters = ['A', 'B', 'C', 'D', 'E'];
+        questions.forEach((q, idx) => {
+            const ans = userAnswers[idx];
+            let statusClass = 'unanswered';
+            let statusText = 'Boş Bırakıldı';
+
+            if (ans !== null) {
+                if (ans === q.correct) {
+                    statusClass = 'correct';
+                    statusText = 'Doğru';
+                } else {
+                    statusClass = 'incorrect';
+                    statusText = 'Yanlış';
+                }
+            }
+
+            const item = document.createElement('div');
+            item.className = `review-item ${statusClass}`;
+            
+            let userAnsStr = ans !== null ? `${letters[ans]}) ${q.options[ans]}` : 'Boş';
+            let correctAnsStr = `${letters[q.correct]}) ${q.options[q.correct]}`;
+
+            item.innerHTML = `
+                <div style="font-size:0.85rem; color:#718096; margin-bottom:5px;">${q.source} - <strong>${statusText}</strong></div>
+                <div style="font-weight:600; margin-bottom:10px;">${idx + 1}. ${q.text}</div>
+                <div style="font-size:0.95rem; margin-bottom:5px;">Sizin Cevabınız: <span style="font-weight:600; color:${ans === q.correct ? 'var(--success-color)' : 'var(--accent-color)'};">${userAnsStr}</span></div>
+                <div style="font-size:0.95rem;">Doğru Cevap: <span style="font-weight:600; color:var(--success-color);">${correctAnsStr}</span></div>
+            `;
+            reviewList.appendChild(item);
+        });
+    }
+</script>
+
+</body>
+</html>
